@@ -1,0 +1,113 @@
+.sankalpas {
+  background: #fff;
+  padding-block: var(--section-pad-desktop);
+}
+
+.header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 80px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--text-eyebrow);
+  color: var(--c-pink);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 16px;
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-pink);
+}
+
+.headingPair {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  color: var(--c-text-primary);
+}
+.headingLine1 { display: block; }
+.headingLine2 { display: block; color: var(--c-magenta); font-style: italic; }
+
+.sub {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: var(--text-hero-sub);
+  color: var(--c-text-muted);
+  line-height: 1.75;
+  margin-top: 16px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 80px;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+.row:last-child { margin-bottom: 0; }
+
+.rowReverse {
+  direction: rtl;
+}
+.rowReverse > * {
+  direction: ltr;
+}
+
+.illo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--c-blush-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  margin-inline: auto;
+}
+
+.text .eyebrow {
+  margin-bottom: 8px;
+}
+
+.hindi {
+  font-family: var(--font-hindi);
+  font-size: 14px;
+  color: var(--c-magenta);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.h3 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-h3);
+  color: var(--c-text-primary);
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+
+.body {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--c-text-muted);
+  line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .row { grid-template-columns: 1fr; gap: 40px; }
+  .rowReverse { direction: ltr; }
+}

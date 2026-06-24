@@ -1,0 +1,462 @@
+/* ============================================================
+   Hero.module.css — Magenta card on #FFF9FB page
+   Includes: in-hero nav styles, content, photo, stat cards
+   ============================================================ */
+
+/* ── Outer wrapper — beige frame ── */
+.hero {
+  min-height: 100vh;
+  background: #FFF9FB;
+  padding: 16px;
+}
+
+/* ── The floating magenta card ── */
+.heroCard {
+  background: #9B1152;
+  border-radius: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 32px);
+}
+
+/* ═══════════════════════════════════════
+   IN-HERO NAV — glassy floating pill card
+   ═══════════════════════════════════════ */
+.heroNav {
+  display: flex;
+  align-items: center;
+  margin: 20px auto 0;
+  padding: 0 24px;
+  height: 64px;
+  max-width: 1100px;
+  width: calc(100% - 40px);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  border-radius: 50px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  position: sticky;
+  top: 24px;
+  z-index: 100;
+}
+
+.heroNavLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 28px;
+}
+
+.heroNavLogoImg {
+  height: 32px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.heroNavWordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.heroNavLinks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.heroNavLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 18px; /* Lyra width */
+  border-radius: 20px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  background: none;
+  white-space: nowrap;
+  transition: color 200ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+.heroNavLink:hover, .heroNavItem:hover .heroNavLink {
+  color: #150810;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.heroNavLink svg {
+  opacity: 0.6;
+  transition: transform 200ms ease;
+}
+.heroNavItem:hover .heroNavLink svg {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.heroNavRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.heroNavLogin {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  padding: 7px 12px;
+  white-space: nowrap;
+  transition: color 150ms ease;
+}
+.heroNavLogin:hover { color: #F0BCCB; }
+
+.heroNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 32px;
+  padding: 10px 24px;
+  background: #fff;
+  color: #9B1152;
+  border: none;
+  box-shadow: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+}
+.heroNavBtn:hover {
+  background: #F0BCCB;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Hide hero nav on mobile */
+@media (max-width: 768px) {
+  .heroNavLinks, .heroNavRight { display: none; }
+}
+
+/* ═══════════════════════════════════════
+   HERO CONTENT — fills remaining card height
+   ═══════════════════════════════════════ */
+.inner {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-left: 32px;
+  padding-right: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 52% 48%;
+  align-items: center;
+  flex: 1;
+}
+
+/* ── Left column — vertically centered ── */
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 32px;
+  padding-bottom: 48px;
+  padding-right: 48px;
+  min-height: calc(100vh - 100px);
+}
+
+
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  line-height: var(--lh-h1);
+  margin-bottom: 24px;
+}
+.h1Line1 {
+  display: block;
+  font-weight: 600;
+  color: #fff;
+}
+.h1Line2 {
+  display: block;
+  font-weight: 400;
+  font-style: italic;
+  color: #F0BCCB;
+}
+
+.sub {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: var(--text-hero-sub);
+  color: rgba(255, 255, 255, 0.80);
+  line-height: 1.75;
+  max-width: 500px;
+  margin-bottom: 36px;
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-card);
+  border-radius: var(--r-pill);
+  padding: 16px 36px;
+  background: #fff;
+  color: #9B1152;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  transition: all var(--ease-default);
+  text-decoration: none;
+}
+.btnPrimary:hover {
+  background: #F0BCCB;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+.btnTour {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-card);
+  color: #fff;
+  text-decoration: none;
+  transition: color var(--ease-default);
+}
+.btnTour:hover { color: #F0BCCB; }
+.btnTour:hover .btnArrowCircle {
+  background: #fff;
+  border-color: #fff;
+  color: #9B1152;
+}
+
+.btnArrowCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  transition: all var(--ease-default);
+}
+
+.trustAvatars {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.trustAvatarsStack {
+  display: flex;
+  align-items: center;
+}
+
+.trustAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: -10px;
+}
+.trustAvatar:first-child { margin-left: 0; }
+
+.trustTextColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trustAvatarsText {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.80);
+}
+.trustAvatarsText strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.trustSubText {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ═══════════════════════════════════════
+   RIGHT COLUMN — photo bleeds to card edge
+   ═══════════════════════════════════════ */
+.right {
+  position: relative;
+  align-self: stretch;
+  min-height: 500px;
+}
+
+.photoWrap {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.photoWrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: linear-gradient(to right, #9B1152, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.photoWrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(to left, #9B1152, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes kenBurns {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.photoActive {
+  opacity: 1;
+  z-index: 1;
+  animation: kenBurns 5s ease-in-out forwards;
+}
+
+/* ── Floating stat cards ── */
+.statFloat {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid #F0BCCB;
+  border-radius: var(--r-card-sm);
+  padding: 12px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  z-index: 3;
+}
+
+.statFloatA {
+  top: 32%;
+  left: -20px;
+  transform: translateX(-40px) rotate(-2deg);
+}
+.statFloatA.visible { animation: slideInLeft 0.8s ease 1s both; }
+
+.statFloatB {
+  bottom: 22%;
+  right: 24px;
+  transform: translateX(40px) rotate(2deg);
+}
+.statFloatB.visible { animation: slideInRight 0.8s ease 1.2s both; }
+
+.statIcon {
+  width: 32px;
+  height: 32px;
+  background: var(--c-blush-light);
+  border-radius: var(--r-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.statNumber {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  color: #9B1152;
+  line-height: 1.1;
+}
+
+.statLabel {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--c-text-muted);
+  line-height: 1.3;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    padding-inline: 20px;
+  }
+  .left {
+    padding-right: 0;
+    min-height: auto;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+  .right { min-height: 380px; }
+  .photoFade { width: 60px; }
+}

@@ -1,0 +1,92 @@
+/* ============================================================
+   iSpeak Design Tokens — tokens.css
+   Brand: iSpeak Mental Health | Version 1.0
+   ============================================================ */
+
+:root {
+  /* ── COLOR PALETTE ── */
+  --c-magenta:      #9B1152;
+  --c-pink:         #C5145E;
+  --c-blush-mid:    #F0BCCB;
+  --c-blush-light:  #FDE8F2;
+  --c-blush-xlight: #FFF5F8;
+  --c-page-bg:      #FFF9FB;
+  --c-text-primary: #150810;
+  --c-text-muted:   #6B3A55;
+  --c-footer-bg:    #150810;
+  --c-white:        #FFFFFF;
+  --c-overlay:      rgba(21, 8, 16, 0.55);
+
+  /* ── TYPOGRAPHY ── */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'DM Sans', system-ui, sans-serif;
+  --font-hindi:   'Noto Sans Devanagari', sans-serif;
+
+  /* Display sizes */
+  --text-h1:        clamp(44px, 5vw, 64px);
+  --text-h2:        clamp(36px, 4vw, 52px);
+  --text-h3:        24px;
+  --text-pullquote: 22px;
+  --text-testimonial: 20px;
+
+  /* UI sizes */
+  --text-hero-sub: 17px;
+  --text-body:     15px;
+  --text-card:     14px;
+  --text-small:    13px;
+  --text-caption:  12px;
+  --text-eyebrow:  11px;
+
+  /* Line heights */
+  --lh-h1:   1.05;
+  --lh-h2:   1.1;
+  --lh-body: 1.7;
+
+  /* ── SPACING (8pt grid) ── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+
+  --section-pad-desktop: 100px;
+  --section-pad-tablet:  64px;
+  --section-pad-mobile:  48px;
+
+  --container-max: 1160px;
+  --container-pad: 32px;
+
+  /* ── BORDER RADIUS ── */
+  --r-pill:    32px;
+  --r-card-lg: 22px;
+  --r-card-sm: 14px;
+  --r-icon:    12px;
+  --r-input:   10px;
+  --r-nav:     0 0 20px 20px;
+  --r-faq:     32px;
+  --r-avatar:  50%;
+
+  /* ── SHADOWS ── */
+  --shadow-card:        0 4px 24px rgba(155, 17, 82, 0.08);
+  --shadow-card-hover:  0 12px 40px rgba(155, 17, 82, 0.16);
+  --shadow-nav:         0 4px 24px rgba(155, 17, 82, 0.07);
+  --shadow-mega:        0 24px 60px rgba(155, 17, 82, 0.12);
+  --shadow-btn:         0 4px 16px rgba(197, 20, 94, 0.28);
+  --shadow-btn-hover:   0 8px 28px rgba(197, 20, 94, 0.38);
+
+  /* ── TRANSITIONS ── */
+  --ease-default: 300ms ease;
+  --ease-spring:  400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-carousel: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 20px;
+  }
+}
