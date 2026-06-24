@@ -130,7 +130,7 @@
 
 /* Card A */
 .megaFeatDark {
-  background: linear-gradient(135deg, #C5145E 0%, #9B1152 100%);
+  background: linear-gradient(135deg, #C5145E 0%, #8B0F38 100%);
 }
 .megaFeatDark .megaFeatTitle {
   font-family: var(--font-display);
@@ -173,7 +173,7 @@
   font-style: italic;
   font-weight: 400;
   font-size: 18px;
-  color: #9B1152;
+  color: #8B0F38;
   line-height: 1.2;
 }
 .megaFeatBlue .megaFeatSub {
