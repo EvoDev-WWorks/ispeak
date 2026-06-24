@@ -10,9 +10,9 @@
   padding: 16px;
 }
 
-/* ── The floating magenta card ── */
+/* ── The beige hero card ── */
 .heroCard {
-  background: #8B0F38;
+  background: linear-gradient(to right, #F5EFE6, #FAF7F5);
   border-radius: 24px;
   position: relative;
   display: flex;
@@ -31,12 +31,12 @@
   height: 64px;
   max-width: 1100px;
   width: calc(100% - 40px);
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.30);
+  background: rgba(245, 239, 230, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 15, 56, 0.15);
   border-radius: 50px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
   position: sticky;
   top: 24px;
@@ -55,14 +55,14 @@
 .heroNavLogoImg {
   height: 32px;
   width: auto;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .heroNavWordmark {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 20px;
-  color: #fff;
+  color: #8B0F38;
   letter-spacing: -0.3px;
 }
 
@@ -83,7 +83,7 @@
   font-family: var(--font-ui);
   font-weight: 500;
   font-size: 14px;
-  color: #fff;
+  color: #4A2030;
   cursor: pointer;
   border: none;
   background: none;
@@ -91,9 +91,9 @@
   transition: color 200ms ease, background 200ms ease, box-shadow 200ms ease;
 }
 .heroNavLink:hover, .heroNavItem:hover .heroNavLink {
-  color: #150810;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: #8B0F38;
+  background: rgba(139, 15, 56, 0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .heroNavLink svg {
   opacity: 0.6;
@@ -116,13 +116,16 @@
   font-family: var(--font-ui);
   font-weight: 500;
   font-size: 14px;
-  color: #fff;
+  color: #8A6F5C;
   text-decoration: none;
   padding: 7px 12px;
   white-space: nowrap;
   transition: color 150ms ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-.heroNavLogin:hover { color: #F0BCCB; }
+.heroNavLogin:hover { color: #8B0F38; }
 
 .heroNavBtn {
   display: inline-flex;
@@ -133,19 +136,19 @@
   font-size: 13px;
   border-radius: 32px;
   padding: 10px 24px;
-  background: #fff;
-  color: #8B0F38;
+  background: #8B0F38;
+  color: #fff;
   border: none;
-  box-shadow: none;
+  box-shadow: 0 4px 16px rgba(139, 15, 56, 0.25);
   text-decoration: none;
   cursor: pointer;
   transition: all 200ms ease;
   white-space: nowrap;
 }
 .heroNavBtn:hover {
-  background: #F0BCCB;
+  background: #6e0c2d;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(139, 15, 56, 0.30);
 }
 
 /* Hide hero nav on mobile */
@@ -190,20 +193,20 @@
 .h1Line1 {
   display: block;
   font-weight: 600;
-  color: #fff;
+  color: #8B0F38;
 }
 .h1Line2 {
   display: block;
   font-weight: 400;
   font-style: italic;
-  color: #F0BCCB;
+  color: rgba(139, 15, 56, 0.80);
 }
 
 .sub {
   font-family: var(--font-ui);
   font-weight: 300;
   font-size: var(--text-hero-sub);
-  color: rgba(255, 255, 255, 0.80);
+  color: #4A2030;
   line-height: 1.75;
   max-width: 500px;
   margin-bottom: 36px;
@@ -226,14 +229,14 @@
   font-size: var(--text-card);
   border-radius: var(--r-pill);
   padding: 16px 36px;
-  background: #fff;
-  color: #8B0F38;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  background: #8B0F38;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(139, 15, 56, 0.25);
   transition: all var(--ease-default);
   text-decoration: none;
 }
 .btnPrimary:hover {
-  background: #F0BCCB;
+  background: #6e0c2d;
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
@@ -245,33 +248,33 @@
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: var(--text-card);
-  color: #fff;
+  color: #8B0F38;
   text-decoration: none;
   background: transparent;
-  border: 2px solid #fff;
+  border: 2px solid #8B0F38;
   padding: 16px 36px;
   border-radius: var(--r-pill);
   transition: all var(--ease-default);
 }
 .btnTour:hover { 
-  background: #fff; 
-  color: #8B0F38; 
+  background: #8B0F38; 
+  color: #fff; 
 }
 .btnTour:hover .btnArrowCircle {
-  border-color: #8B0F38;
-  color: #8B0F38;
+  border-color: #fff;
+  color: #fff;
 }
 
 .btnArrowCircle {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.50);
+  border: 1.5px solid rgba(139, 15, 56, 0.50);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: #fff;
+  color: #8B0F38;
   transition: all var(--ease-default);
 }
 
@@ -290,11 +293,11 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.40);
+  border: 2px solid rgba(139, 15, 56, 0.40);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #8B0F38;
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 600;
@@ -311,10 +314,10 @@
 .trustAvatarsText {
   font-family: var(--font-ui);
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.80);
+  color: #4A2030;
 }
 .trustAvatarsText strong {
-  color: #fff;
+  color: #8B0F38;
   font-weight: 600;
 }
 
@@ -322,52 +325,33 @@
   font-family: var(--font-ui);
   font-weight: 300;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(74, 32, 48, 0.65);
 }
 
 /* ═══════════════════════════════════════
-   RIGHT COLUMN — photo bleeds to card edge
+   RIGHT COLUMN — photo as floating card
    ═══════════════════════════════════════ */
 .right {
   position: relative;
   align-self: stretch;
   min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px 32px 0;
 }
 
 .photoWrap {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 48px);
+  max-height: 580px;
+  border-radius: 20px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
-  mask-image: linear-gradient(to right, black 60%, transparent 100%);
-}
-
-.photoWrap::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background: linear-gradient(to right, #8B0F38, transparent);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.photoWrap::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  height: 100%;
-  background: linear-gradient(to left, #8B0F38, transparent);
-  z-index: 2;
-  pointer-events: none;
+  box-shadow:
+    0 20px 60px rgba(139, 15, 56, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(139, 15, 56, 0.08);
 }
 
 @keyframes kenBurns {

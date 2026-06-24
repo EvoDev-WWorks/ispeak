@@ -89,6 +89,11 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
                   <span className={styles.megaFeatCta}>Request a Quote →</span>
                 </Link>
               </div>
+              {/* Stat bar fills the empty space below cards */}
+              <div className={styles.megaStatBar}>
+                <span className={styles.megaStatStar}>★</span>
+                <span><strong>4.8</strong> from 1,200+ clients &nbsp;·&nbsp; Est. Gurugram, 2020</span>
+              </div>
             </div>
           </>
         )}

@@ -4,14 +4,16 @@
 
 .megaWrap {
   position: absolute;
-  top: calc(100% + 8px); /* slightly detached floating card */
+  top: calc(100% + 8px);
   left: 0;
   right: 0;
   z-index: 999;
   animation: megaFadeIn 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
   pointer-events: all;
-  padding: 0 16px; /* space from viewport edges */
+  padding: 0 16px;
 }
+
+
 
 @keyframes megaFadeIn {
   from { opacity: 0; transform: translateY(-8px); }
@@ -21,14 +23,15 @@
 .megaInner {
   max-width: 1200px;
   margin: 0 auto;
-  background: #FFFFFF;
+  background: #F7F1E8;
   border-radius: 0 0 24px 24px;
-  box-shadow: 0 24px 60px rgba(155, 17, 82, 0.14);
-  border-top: 2px solid #C5145E;
+  box-shadow: none;
+  border-top: 2px solid #8B0F38;
   padding: 32px 48px;
   display: flex;
   gap: 48px;
   text-align: left;
+  align-items: flex-start;
 }
 
 /* ── Columns ── */
@@ -39,9 +42,10 @@
 }
 
 .megaFeatCol {
-  flex: 2; /* takes more space for featured cards */
+  flex: 2;
   display: flex;
   flex-direction: column;
+  align-self: flex-start; /* ← fixes the empty gap: column is only as tall as its content */
 }
 
 .megaFeatRow {
@@ -53,7 +57,7 @@
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: 11px;
-  color: #C5145E;
+  color: #8B0F38;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   margin-bottom: 20px;
@@ -72,19 +76,19 @@
   color: inherit;
 }
 .megaRow:hover {
-  background: #FFF5F8;
+  background: rgba(139, 15, 56, 0.06);
 }
 
 .megaIcon {
   width: 32px;
   height: 32px;
-  background: #FDE8F2;
+  background: rgba(139, 15, 56, 0.10);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #C5145E;
+  color: #8B0F38;
 }
 .megaIcon svg {
   width: 16px;
@@ -128,7 +132,7 @@
 }
 .megaFeat:hover { transform: translateY(-2px); }
 
-/* Card A */
+/* Card A — Bold maroon (keep as-is) */
 .megaFeatDark {
   background: linear-gradient(135deg, #C5145E 0%, #8B0F38 100%);
 }
@@ -163,10 +167,10 @@
   margin-top: 12px;
 }
 
-/* Card B */
+/* Card B — Warm beige (Organisations) */
 .megaFeatBlue {
-  background: #FFF5F8;
-  border: 1px solid #F0BCCB;
+  background: #EDE4D6;
+  border: 1px solid rgba(139, 15, 56, 0.12);
 }
 .megaFeatBlue .megaFeatTitle {
   font-family: var(--font-display);
@@ -184,8 +188,54 @@
   line-height: 1.4;
 }
 .megaFeatBlue .megaFeatCta {
-  border: 1.5px solid #C5145E;
+  border: 1.5px solid #8B0F38;
+  color: #8B0F38;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 32px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  text-decoration: none;
+  margin-top: 12px;
+  background: transparent;
+}
+
+/* ── Stat bar below featured cards ── */
+.megaStatBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(139, 15, 56, 0.06);
+  border-radius: 10px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: #4A2030;
+}
+.megaStatBar strong {
+  color: #8B0F38;
+  font-weight: 700;
+}
+.megaStatStar {
   color: #C5145E;
+  font-size: 14px;
+}
+
+/* ── Blush card (Resources / About) ── */
+.megaFeatBlush {
+  background: #EDE4D6;
+  border: 1px solid rgba(139, 15, 56, 0.10);
+}
+.dark  { color: #150810; }
+.muted { color: #6B3A55; }
+.ctaPink {
+  border: 1.5px solid #8B0F38;
+  color: #8B0F38;
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: 13px;
