@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ValuesSection.module.css';
 
@@ -57,55 +57,118 @@ const SvgSeva = () => (
 
 /* ─── Card data ───────────────────────────────────── */
 const CARDS = [
-  { tag: 'ETHICAL CONDUCT', title: 'Sabhyata',  desc: 'We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',  bg: 'linear-gradient(135deg,#6B1535,#1A0510)', btnBg: 'white',    btnColor: '#6B1535', Svg: SvgSabhyata  },
-  { tag: 'CULTURE',          title: 'Sanskriti', desc: 'We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.', bg: 'linear-gradient(135deg,#1A3D0A,#0D2006)', btnBg: '#F0FFE8',  btnColor: '#1A3D0A', Svg: SvgSanskriti },
-  { tag: 'EMPATHY',          title: 'Samvedana', desc: 'We listen before we speak. We feel before we advise. Every individual is met with deep, genuine empathy that makes healing feel possible.',                    bg: 'linear-gradient(135deg,#0D2B5E,#060D1A)', btnBg: '#E8F0FF',  btnColor: '#0D2B5E', Svg: SvgSamvedana },
-  { tag: 'SERVICE TO SOCIETY', title: 'Seva',   desc: 'Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',   bg: 'linear-gradient(135deg,#5C3A0A,#1A1005)', btnBg: '#FFF5E0',  btnColor: '#5C3A0A', Svg: SvgSeva      },
+  { tag: 'ETHICAL CONDUCT',    title: 'Sabhyata',  desc: 'We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',  bg: 'linear-gradient(135deg,#6B1535,#1A0510)', btnBg: 'white',    btnColor: '#6B1535', Svg: SvgSabhyata  },
+  { tag: 'CULTURE',            title: 'Sanskriti', desc: 'We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.', bg: 'linear-gradient(135deg,#1A3D0A,#0D2006)', btnBg: '#F0FFE8',  btnColor: '#1A3D0A', Svg: SvgSanskriti },
+  { tag: 'EMPATHY',            title: 'Samvedana', desc: 'We listen before we speak. We feel before we advise. Every individual is met with deep, genuine empathy that makes healing feel possible.',                    bg: 'linear-gradient(135deg,#0D2B5E,#060D1A)', btnBg: '#E8F0FF',  btnColor: '#0D2B5E', Svg: SvgSamvedana },
+  { tag: 'SERVICE TO SOCIETY', title: 'Seva',      desc: 'Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',   bg: 'linear-gradient(135deg,#5C3A0A,#1A1005)', btnBg: '#FFF5E0',  btnColor: '#5C3A0A', Svg: SvgSeva      },
 ];
 
-/* ─── Stack constants ─────────────────────────────── */
-const PEEKS  = [0, 14, 26, 36];     // px peeking below front card per slot
+const PEEKS  = [0, 14, 26, 36];
 const SCALES = [1, 0.96, 0.92, 0.88];
 const N      = CARDS.length;
-const DUR    = 420;                  // ms — card exit animation duration
 
-/* ─── Component ───────────────────────────────────── */
 export default function ValuesSection() {
-  const [active, setActive]     = useState(0);
-  const [exiting, setExiting]   = useState(false); // true while animating out
-  const touchRef                = useRef({ x: 0, y: 0, t: 0 });
-  const navigate                = useNavigate();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs  = useRef<(HTMLSpanElement | null)[]>([]);
+  const navigate = useNavigate();
 
-  /* Advance to next card */
-  const advance = useCallback(() => {
-    if (exiting || active >= N - 1) return;
-    setExiting(true);
-    setTimeout(() => {
-      setActive(p => p + 1);
-      setExiting(false);
-    }, DUR);
-  }, [active, exiting]);
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-  /* Touch swipe — horizontal left OR vertical up triggers advance */
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() };
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = touchRef.current.x - e.changedTouches[0].clientX;
-    const dy = touchRef.current.y - e.changedTouches[0].clientY;
-    const dt = Date.now() - touchRef.current.t;
-    if (dt > 600) return; // too slow — probably not a deliberate swipe
-    const isSwipeLeft = dx > 44 && dx > Math.abs(dy);
-    const isSwipeUp   = dy > 44 && dy > Math.abs(dx);
-    if (isSwipeLeft || isSwipeUp) advance();
-  };
+    const cards = cardRefs.current.filter(Boolean) as HTMLElement[];
+    const dots  = dotRefs.current.filter(Boolean)  as HTMLElement[];
+    if (!cards.length) return;
+
+    function setDot(idx: number) {
+      dots.forEach((d, i) => {
+        d.style.width   = i === idx ? '26px' : '8px';
+        d.style.opacity = i === idx ? '1'    : '0.28';
+      });
+    }
+
+    function init() {
+      cards.forEach((card, i) => {
+        card.style.transition = 'none';
+        card.style.zIndex     = String(N - i);
+        card.style.opacity    = '1';
+        card.style.transform  = `translateY(${PEEKS[i]}px) scale(${SCALES[i]})`;
+      });
+      setDot(0);
+    }
+
+    function render() {
+      if (!track) return;
+      const rect     = track.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const total    = rect.height - window.innerHeight;
+      if (total <= 0) return;
+
+      /*
+       * Clamp at N-1: the last card (Seva) is NEVER driven off screen.
+       * scroll ↑ naturally reverses progress → back navigation built-in.
+       * After progress reaches N-1, Seva stays pinned & visible until
+       * the track scrolls out of view, then the page continues normally.
+       */
+      const progress = Math.max(0, Math.min(N - 1, (scrolled / total) * N));
+      const frontIdx = Math.min(N - 1, Math.floor(progress));
+      const frac     = progress - Math.floor(progress);
+
+      setDot(frontIdx);
+
+      cards.forEach((card, i) => {
+        const exit = Math.max(0, Math.min(1, progress - i));
+
+        card.style.zIndex = String(N - i + (exit > 0 && exit < 1 ? 10 : 0));
+
+        /* Fully off screen (already seen) */
+        if (exit >= 1) {
+          card.style.transform = 'translateY(-110%)';
+          card.style.opacity   = '0';
+          return;
+        }
+
+        /* Currently exiting — flies straight up */
+        if (exit > 0) {
+          card.style.transform = `translateY(${-(exit * 110)}%)`;
+          card.style.opacity   = String(exit > 0.65 ? 1 - (exit - 0.65) / 0.35 : 1);
+          return;
+        }
+
+        /* Sitting in the stack — advance forward as the card ahead exits */
+        const slot     = Math.max(0, i - Math.floor(progress));
+        const nextSlot = Math.max(0, slot - 1);
+        const moving   = (i === frontIdx + 1); // card directly behind active
+
+        const s0 = Math.min(slot,     PEEKS.length - 1);
+        const s1 = Math.min(nextSlot, PEEKS.length - 1);
+        const t  = moving ? frac : 0;
+
+        const peek  = PEEKS[s0]  + (PEEKS[s1]  - PEEKS[s0])  * t;
+        const scale = SCALES[s0] + (SCALES[s1] - SCALES[s0]) * t;
+
+        card.style.transform = `translateY(${peek}px) scale(${scale})`;
+        card.style.opacity   = '1';
+      });
+    }
+
+    init();
+    window.addEventListener('scroll', render, { passive: true });
+    window.addEventListener('resize', () => { init(); render(); }, { passive: true });
+    render();
+
+    return () => {
+      window.removeEventListener('scroll', render);
+    };
+  }, []);
 
   const goToValues = () => { navigate('/why-ispeak/values'); window.scrollTo(0, 0); };
 
   return (
     <section className={styles.section} aria-labelledby="values-heading">
 
-      {/* ── Heading ────────────────────────────────── */}
+      {/* ── Heading ── */}
       <div className={styles.heading}>
         <div className={styles.eyebrow}>
           <span className={styles.line} />
@@ -121,68 +184,25 @@ export default function ValuesSection() {
         </p>
       </div>
 
-      {/* ── Deck area (swipeable) ───────────────────── */}
-      <div
-        className={styles.deckArea}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        role="region"
-        aria-label="Values cards — swipe to advance"
-      >
-        <div className={styles.deck}>
-          {CARDS.map((card, i) => {
-            const slot    = i - active;              // relative depth from active
-            const isGone   = slot < 0;               // already seen
-            const isActive = slot === 0 && exiting;  // currently flying off
+      {/*
+       * 500vh scroll track:
+       * — 4 cards × 100vh each = 400vh of usable scroll range
+       * — clamped at N-1 so Seva never exits; Seva pins for ~100vh then section ends
+       * — scrolling UP reverses animation (go back) automatically
+       */}
+      <div className={styles.track} ref={trackRef}>
+        <div className={styles.pin}>
 
-            /* Which visual stack slot this card occupies */
-            const displaySlot = isActive
-              ? 0
-              : exiting && slot > 0
-                ? Math.max(0, slot - 1)              // cards behind shift forward during anim
-                : slot;
-            const s = Math.min(Math.max(displaySlot, 0), PEEKS.length - 1);
-
-            let transform: string;
-            let opacity: string;
-            let zIndex: number;
-            let transition: string;
-
-            if (isGone) {
-              /* Already dismissed — hidden above screen */
-              transform  = 'translateY(-110%)';
-              opacity    = '0';
-              zIndex     = 0;
-              transition = 'none';
-            } else if (isActive) {
-              /* Animating off — flies straight up */
-              transform  = 'translateY(-110%)';
-              opacity    = '0';
-              zIndex     = N + 5;
-              transition = `transform ${DUR}ms cubic-bezier(0.55,0,0.1,1), opacity ${Math.round(DUR * 0.55)}ms ease ${Math.round(DUR * 0.15)}ms`;
-            } else {
-              /* Sitting in stack, or advancing forward */
-              transform  = `translateY(${PEEKS[s]}px) scale(${SCALES[s]})`;
-              opacity    = '1';
-              zIndex     = N - Math.max(slot, 0);
-              /* Apply transition only while something is animating */
-              transition = exiting && slot > 0
-                ? `transform ${DUR}ms cubic-bezier(0.55,0,0.1,1)`
-                : 'none';
-            }
-
-            return (
+          <div className={styles.deck}>
+            {CARDS.map((card, i) => (
               <div
                 key={card.title}
                 className={styles.card}
+                ref={(el) => { cardRefs.current[i] = el; }}
                 style={{
                   background: card.bg,
                   ['--btn-bg' as string]:    card.btnBg,
                   ['--btn-color' as string]: card.btnColor,
-                  transform,
-                  opacity,
-                  zIndex,
-                  transition,
                 }}
               >
                 <div className={styles.cardLeft}>
@@ -195,38 +215,21 @@ export default function ValuesSection() {
                   <card.Svg />
                 </div>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* ── Bottom bar: dots + next button ─────────── */}
-        <div className={styles.bottomBar}>
+          {/* Progress dots */}
           <div className={styles.dots} aria-hidden="true">
             {CARDS.map((_, i) => (
               <span
                 key={i}
                 className={styles.dot}
-                style={{
-                  width:   i === active ? '26px' : '8px',
-                  opacity: i === active ? 1 : 0.28,
-                  transition: 'width 0.3s ease, opacity 0.3s ease',
-                }}
+                ref={(el) => { dotRefs.current[i] = el; }}
+                style={{ width: i === 0 ? '26px' : '8px', opacity: i === 0 ? 1 : 0.28 }}
               />
             ))}
           </div>
 
-          {active < N - 1 && (
-            <button
-              className={styles.nextBtn}
-              onClick={advance}
-              aria-label={`Next value: ${CARDS[active + 1].title}`}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M8 12L8 4M4 8L8 4L12 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Next
-            </button>
-          )}
         </div>
       </div>
 
