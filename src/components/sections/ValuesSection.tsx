@@ -4,14 +4,12 @@ import styles from './ValuesSection.module.css';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 /* ══════════════════════════════════════════
-   SVG ILLUSTRATIONS — recolored per card
+   SVG ILLUSTRATIONS
    ══════════════════════════════════════════ */
 
-/* Card 0 — Sabhyata — Justice Scale (white/light pink) */
 const IlloSabhyata = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <polygon points="130,18 133,27 142,27 135,33 138,42 130,36 122,42 125,33 118,27 127,27"
-      fill="rgba(255,255,255,0.9)" />
+    <polygon points="130,18 133,27 142,27 135,33 138,42 130,36 122,42 125,33 118,27 127,27" fill="rgba(255,255,255,0.9)" />
     <rect x="127" y="42" width="6" height="98" rx="3" fill="rgba(255,255,255,0.8)" />
     <rect x="100" y="138" width="60" height="8" rx="4" fill="rgba(255,255,255,0.8)" />
     <rect x="110" y="146" width="40" height="6" rx="3" fill="rgba(255,255,255,0.6)" />
@@ -25,7 +23,6 @@ const IlloSabhyata = () => (
   </svg>
 );
 
-/* Card 1 — Sanskriti — Lotus + Arch (light green) */
 const IlloSanskriti = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" />
@@ -43,7 +40,6 @@ const IlloSanskriti = () => (
   </svg>
 );
 
-/* Card 2 — Samvedana — Two Hands + Heart (light blue) */
 const IlloSamvedana = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M130,88 c0-8 12-8 12 0 c0-8 12-8 12 0 c0 8-12 18-12 18 c0,0-12-10-12-18z" fill="#A8C8FF" />
@@ -64,7 +60,6 @@ const IlloSamvedana = () => (
   </svg>
 );
 
-/* Card 3 — Seva — Community figures (warm gold) */
 const IlloSeva = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <circle cx="130" cy="75" r="14" fill="rgba(255,245,180,0.95)" />
@@ -145,63 +140,101 @@ const VALUES = [
   },
 ];
 
+/* Deck physics constants */
+const STACK_OFFSETS = [0, 20, 36, 48];
+const STACK_SCALES  = [1.00, 0.96, 0.92, 0.88];
+const CARD_COUNT    = VALUES.length;
+
 /* ══════════════════════════════════════════
    COMPONENT
    ══════════════════════════════════════════ */
 
 export default function ValuesSection() {
   const { ref: headingRef, isVisible } = useScrollReveal(0.1);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const trackRef  = useRef<HTMLDivElement>(null);
+  const cardRefs  = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs   = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
-    const onScroll = () => {
-      const rect = track.getBoundingClientRect();
-      const trackTop = -rect.top;
-      const trackHeight = rect.height - window.innerHeight;
-      const progress = Math.max(0, Math.min(1, trackTop / trackHeight));
-
-      const totalCards = VALUES.length;
-      const cardProgress = progress * totalCards;
+    const update = () => {
+      const rect     = track.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const total    = rect.height - window.innerHeight;
+      // progress: 0 → CARD_COUNT-1 as we scroll through the whole track
+      const progress = Math.max(0, Math.min(CARD_COUNT - 1,
+        (scrolled / total) * CARD_COUNT));
 
       cardRefs.current.forEach((card, i) => {
         if (!card) return;
-        const p = Math.max(0, Math.min(1, cardProgress - i));
+        const rel = progress - i; // how far past this card we are
 
-        if (p <= 0) {
-          card.style.transform = 'translateY(0)';
-          card.style.opacity = '1';
-        } else if (p < 1) {
-          card.style.transform = `translateY(${-(p * 100)}%)`;
-          card.style.opacity = String(1 - p * 0.3);
+        if (rel < -1 || (i === 0 && rel < 0)) {
+          // Card not yet reached — sit in its initial stack position
+          // For cards further back, clamp to deepest slot
+          const stackPos = Math.min(i, STACK_OFFSETS.length - 1);
+          card.style.transform =
+            `translateY(${STACK_OFFSETS[stackPos]}px) scale(${STACK_SCALES[stackPos]})`;
+          card.style.opacity   = '1';
+          card.style.zIndex    = String(CARD_COUNT - i);
+
+        } else if (rel >= 0 && rel < 1) {
+          // THIS card is the front card — animating off screen upward
+          const p = rel; // 0→1
+          card.style.transform = `translateY(${-(p * 115)}%) scale(1)`;
+          card.style.opacity   = String(Math.max(0, 1 - p * 0.5));
+          card.style.zIndex    = String(CARD_COUNT - i + 10);
+
+        } else if (rel < 0) {
+          // Card is behind — interpolate toward front as the card ahead departs
+          // rel is in range (-CARD_COUNT, 0)
+          const behindDepth = Math.round(-rel); // 1, 2, 3 — how deep in the deck
+
+          // Where this card currently sits
+          const fromSlot  = Math.min(behindDepth,     STACK_OFFSETS.length - 1);
+          const toSlot    = Math.min(behindDepth - 1, STACK_OFFSETS.length - 1);
+          const fromScale = STACK_SCALES[fromSlot];
+          const fromY     = STACK_OFFSETS[fromSlot];
+          const toScale   = STACK_SCALES[toSlot];
+          const toY       = STACK_OFFSETS[toSlot];
+
+          // p = how far the card ahead of us has animated (0→1)
+          const frontRel = Math.max(0, Math.min(1, progress - (i - 1)));
+          const curScale = fromScale + (toScale - fromScale) * frontRel;
+          const curY     = fromY     + (toY     - fromY)     * frontRel;
+
+          card.style.transform = `translateY(${curY}px) scale(${curScale})`;
+          card.style.opacity   = '1';
+          card.style.zIndex    = String(CARD_COUNT - i);
+
         } else {
-          card.style.transform = 'translateY(-100%)';
-          card.style.opacity = '0';
+          // Fully gone
+          card.style.transform = 'translateY(-115%)';
+          card.style.opacity   = '0';
+          card.style.zIndex    = '0';
         }
       });
 
-      // Update progress dots
-      const activeIndex = Math.min(totalCards - 1, Math.floor(cardProgress));
+      // Dots
+      const activeIdx = Math.min(CARD_COUNT - 1, Math.floor(progress));
       dotRefs.current.forEach((dot, i) => {
         if (!dot) return;
-        dot.style.opacity = i === activeIndex ? '1' : '0.25';
-        dot.style.width = i === activeIndex ? '24px' : '8px';
+        dot.style.width   = i === activeIdx ? '24px' : '8px';
+        dot.style.opacity = i === activeIdx ? '1'    : '0.3';
       });
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // run once on mount
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', update, { passive: true });
+    update(); // initialise on mount
+    return () => window.removeEventListener('scroll', update);
   }, []);
 
   return (
     <section id="values" className={styles.values} aria-labelledby="values-heading">
 
-      {/* ── Heading ── */}
+      {/* Heading */}
       <div className="container">
         <header
           className={`${styles.header} ${isVisible ? 'reveal visible' : 'reveal'}`}
@@ -218,29 +251,22 @@ export default function ValuesSection() {
         </header>
       </div>
 
-      {/* ── Scroll Track ── */}
+      {/* 500vh scroll track */}
       <div className={styles.scrollTrack} ref={trackRef}>
-        <div className={styles.stickyContainer}>
+        <div className={styles.deckWrapper}>
 
-          {/* Cards stacked absolutely */}
+          {/* Cards */}
           {VALUES.map((v, i) => (
             <div
               key={v.index}
               className={styles.valueCard}
-              data-index={v.index}
+              data-card={v.index}
               ref={(el) => { cardRefs.current[i] = el; }}
-              style={{
-                background: v.bg,
-                zIndex: VALUES.length - i,
-              }}
-              aria-label={v.headline}
+              style={{ background: v.bg }}
             >
-              {/* Left: text */}
+              {/* Left */}
               <div className={styles.cardLeft}>
-                <span
-                  className={styles.cardLabel}
-                  style={{ background: 'rgba(255,255,255,0.15)', color: 'white' }}
-                >
+                <span className={styles.cardLabel}>
                   {v.label}
                 </span>
                 <h3 className={styles.cardHeadline} style={{ color: v.titleColor }}>
@@ -258,21 +284,20 @@ export default function ValuesSection() {
                 </Link>
               </div>
 
-              {/* Right: illustration */}
+              {/* Right */}
               <div className={styles.cardRight} aria-hidden="true">
                 <v.Illo />
               </div>
             </div>
           ))}
 
-          {/* Progress Dots */}
+          {/* Progress dots */}
           <div className={styles.dots} aria-hidden="true">
             {VALUES.map((_, i) => (
               <span
                 key={i}
                 className={styles.dot}
                 ref={(el) => { dotRefs.current[i] = el; }}
-                style={{ opacity: i === 0 ? 1 : 0.25, width: i === 0 ? '24px' : '8px' }}
               />
             ))}
           </div>
