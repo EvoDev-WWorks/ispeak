@@ -4,11 +4,10 @@ import styles from './ValuesSection.module.css';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 /* ══════════════════════════════════════════
-   SVG ILLUSTRATIONS — inline, light tones on dark bg
-   viewBox 0 0 260 200
+   SVG ILLUSTRATIONS — recolored per card
    ══════════════════════════════════════════ */
 
-/* Card 1 — Sabhyata — Justice Scale (white/light pink) */
+/* Card 0 — Sabhyata — Justice Scale (white/light pink) */
 const IlloSabhyata = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <polygon points="130,18 133,27 142,27 135,33 138,42 130,36 122,42 125,33 118,27 127,27"
@@ -26,7 +25,7 @@ const IlloSabhyata = () => (
   </svg>
 );
 
-/* Card 2 — Sanskriti — Lotus + Arch (light green/white) */
+/* Card 1 — Sanskriti — Lotus + Arch (light green) */
 const IlloSanskriti = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" />
@@ -37,19 +36,17 @@ const IlloSanskriti = () => (
     <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" transform="rotate(300 130 90)" />
     <circle cx="130" cy="90" r="16" fill="rgba(150,255,120,0.5)" />
     <circle cx="130" cy="90" r="9" fill="rgba(240,255,232,0.95)" />
-    <rect x="100" y="138" width="60" height="46" rx="0" fill="none"
-      stroke="rgba(200,255,180,0.65)" strokeWidth="3" />
+    <rect x="100" y="138" width="60" height="46" rx="0" fill="none" stroke="rgba(200,255,180,0.65)" strokeWidth="3" />
     <path d="M100,138 Q130,110 160,138" fill="none" stroke="rgba(220,255,200,0.85)" strokeWidth="3" />
     <rect x="115" y="158" width="30" height="26" rx="2" fill="rgba(200,255,180,0.2)" />
     <line x1="80" y1="184" x2="180" y2="184" stroke="rgba(200,255,180,0.4)" strokeWidth="2" />
   </svg>
 );
 
-/* Card 3 — Samvedana — Two Hands + Heart (light blue/white) */
+/* Card 2 — Samvedana — Two Hands + Heart (light blue) */
 const IlloSamvedana = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M130,88 c0-8 12-8 12 0 c0-8 12-8 12 0 c0 8-12 18-12 18 c0,0-12-10-12-18z"
-      fill="#A8C8FF" />
+    <path d="M130,88 c0-8 12-8 12 0 c0-8 12-8 12 0 c0 8-12 18-12 18 c0,0-12-10-12-18z" fill="#A8C8FF" />
     <ellipse cx="72" cy="115" rx="28" ry="18" fill="rgba(232,240,255,0.85)" />
     <ellipse cx="92" cy="100" rx="8" ry="14" fill="rgba(232,240,255,0.85)" transform="rotate(-20 92 100)" />
     <ellipse cx="104" cy="97" rx="7" ry="13" fill="rgba(220,232,255,0.8)" transform="rotate(-10 104 97)" />
@@ -67,7 +64,7 @@ const IlloSamvedana = () => (
   </svg>
 );
 
-/* Card 4 — Seva — Community (warm gold/white) */
+/* Card 3 — Seva — Community figures (warm gold) */
 const IlloSeva = () => (
   <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <circle cx="130" cy="75" r="14" fill="rgba(255,245,180,0.95)" />
@@ -90,49 +87,61 @@ const IlloSeva = () => (
 );
 
 /* ══════════════════════════════════════════
-   VALUE DATA
+   DATA
    ══════════════════════════════════════════ */
 
-const values = [
+const VALUES = [
   {
-    id: 0,
+    index: 0,
     label: 'ETHICAL CONDUCT',
     headline: 'Sabhyata',
     desc: 'We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',
     link: '/why-ispeak/values',
     Illo: IlloSabhyata,
-    cardStyle: styles.card0,
-    btnStyle: styles.btn0,
+    bg: 'linear-gradient(135deg, #6B1535 0%, #1A0510 100%)',
+    titleColor: '#FFFFFF',
+    descColor: 'rgba(255,255,255,0.75)',
+    btnBg: '#FFFFFF',
+    btnColor: '#6B1535',
   },
   {
-    id: 1,
+    index: 1,
     label: 'CULTURE',
     headline: 'Sanskriti',
     desc: 'We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.',
     link: '/why-ispeak/values',
     Illo: IlloSanskriti,
-    cardStyle: styles.card1,
-    btnStyle: styles.btn1,
+    bg: 'linear-gradient(135deg, #1A3D0A 0%, #0D2006 100%)',
+    titleColor: '#F0FFE8',
+    descColor: 'rgba(240,255,232,0.8)',
+    btnBg: '#F0FFE8',
+    btnColor: '#1A3D0A',
   },
   {
-    id: 2,
+    index: 2,
     label: 'EMPATHY',
     headline: 'Samvedana',
     desc: 'We listen before we speak. We feel before we advise. Every individual who comes to us is met with deep, genuine empathy that makes healing feel possible.',
     link: '/why-ispeak/values',
     Illo: IlloSamvedana,
-    cardStyle: styles.card2,
-    btnStyle: styles.btn2,
+    bg: 'linear-gradient(135deg, #0D2B5E 0%, #060D1A 100%)',
+    titleColor: '#E8F0FF',
+    descColor: 'rgba(232,240,255,0.8)',
+    btnBg: '#E8F0FF',
+    btnColor: '#0D2B5E',
   },
   {
-    id: 3,
+    index: 3,
     label: 'SERVICE TO SOCIETY',
     headline: 'Seva',
     desc: 'Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',
     link: '/why-ispeak/values',
     Illo: IlloSeva,
-    cardStyle: styles.card3,
-    btnStyle: styles.btn3,
+    bg: 'linear-gradient(135deg, #5C3A0A 0%, #1A1005 100%)',
+    titleColor: '#FFF5E0',
+    descColor: 'rgba(255,245,224,0.8)',
+    btnBg: '#FFF5E0',
+    btnColor: '#5C3A0A',
   },
 ];
 
@@ -141,40 +150,63 @@ const values = [
    ══════════════════════════════════════════ */
 
 export default function ValuesSection() {
-  const { ref, isVisible } = useScrollReveal(0.1);
+  const { ref: headingRef, isVisible } = useScrollReveal(0.1);
+  const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  /* Scroll listener — adds .scrolled-past when card scrolls above viewport */
   useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
     const onScroll = () => {
-      cardRefs.current.forEach((el) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 160) {
-          el.classList.add(styles.scrolledPast);
+      const rect = track.getBoundingClientRect();
+      const trackTop = -rect.top;
+      const trackHeight = rect.height - window.innerHeight;
+      const progress = Math.max(0, Math.min(1, trackTop / trackHeight));
+
+      const totalCards = VALUES.length;
+      const cardProgress = progress * totalCards;
+
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return;
+        const p = Math.max(0, Math.min(1, cardProgress - i));
+
+        if (p <= 0) {
+          card.style.transform = 'translateY(0)';
+          card.style.opacity = '1';
+        } else if (p < 1) {
+          card.style.transform = `translateY(${-(p * 100)}%)`;
+          card.style.opacity = String(1 - p * 0.3);
         } else {
-          el.classList.remove(styles.scrolledPast);
+          card.style.transform = 'translateY(-100%)';
+          card.style.opacity = '0';
         }
       });
+
+      // Update progress dots
+      const activeIndex = Math.min(totalCards - 1, Math.floor(cardProgress));
+      dotRefs.current.forEach((dot, i) => {
+        if (!dot) return;
+        dot.style.opacity = i === activeIndex ? '1' : '0.25';
+        dot.style.width = i === activeIndex ? '24px' : '8px';
+      });
     };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // run once on mount
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <section id="values" className={styles.values} aria-labelledby="values-heading">
 
-      {/* ── Transition Strip ── */}
-      <div className={styles.transitionStrip} aria-hidden="true">
-        <p className={styles.transitionText}>
-          Trusted by families, professionals, and organisations across India.
-        </p>
-      </div>
-
-      <div className="container" ref={ref}>
-
-        {/* ── Heading Block ── */}
-        <header className={`${styles.header} ${isVisible ? 'reveal visible' : 'reveal'}`}>
+      {/* ── Heading ── */}
+      <div className="container">
+        <header
+          className={`${styles.header} ${isVisible ? 'reveal visible' : 'reveal'}`}
+          ref={headingRef}
+        >
           <span className={styles.eyebrow}>Our Values</span>
           <h2 className={styles.headingPair} id="values-heading">
             <span className={styles.headingLine1}>Rooted in culture,</span>
@@ -184,22 +216,46 @@ export default function ValuesSection() {
             Our four foundational values guide everything — from the therapy room to communities across India.
           </p>
         </header>
+      </div>
 
-        {/* ── Scroll-Stacked Cards ── */}
-        <div className={styles.valuesStack}>
-          {values.map((v, i) => (
+      {/* ── Scroll Track ── */}
+      <div className={styles.scrollTrack} ref={trackRef}>
+        <div className={styles.stickyContainer}>
+
+          {/* Cards stacked absolutely */}
+          {VALUES.map((v, i) => (
             <div
-              key={v.id}
-              className={`${styles.valueCard} ${v.cardStyle}`}
+              key={v.index}
+              className={styles.valueCard}
+              data-index={v.index}
               ref={(el) => { cardRefs.current[i] = el; }}
-              style={{ zIndex: values.length - i }}
+              style={{
+                background: v.bg,
+                zIndex: VALUES.length - i,
+              }}
+              aria-label={v.headline}
             >
               {/* Left: text */}
               <div className={styles.cardLeft}>
-                <span className={styles.cardLabel}>{v.label}</span>
-                <h3 className={styles.cardHeadline}>{v.headline}</h3>
-                <p className={styles.cardDesc}>{v.desc}</p>
-                <Link to={v.link} className={`${styles.cardBtn} ${v.btnStyle}`}>Learn More »</Link>
+                <span
+                  className={styles.cardLabel}
+                  style={{ background: 'rgba(255,255,255,0.15)', color: 'white' }}
+                >
+                  {v.label}
+                </span>
+                <h3 className={styles.cardHeadline} style={{ color: v.titleColor }}>
+                  {v.headline}
+                </h3>
+                <p className={styles.cardDesc} style={{ color: v.descColor }}>
+                  {v.desc}
+                </p>
+                <Link
+                  to={v.link}
+                  className={styles.cardBtn}
+                  style={{ background: v.btnBg, color: v.btnColor }}
+                >
+                  Learn More »
+                </Link>
               </div>
 
               {/* Right: illustration */}
@@ -208,9 +264,22 @@ export default function ValuesSection() {
               </div>
             </div>
           ))}
-        </div>
 
+          {/* Progress Dots */}
+          <div className={styles.dots} aria-hidden="true">
+            {VALUES.map((_, i) => (
+              <span
+                key={i}
+                className={styles.dot}
+                ref={(el) => { dotRefs.current[i] = el; }}
+                style={{ opacity: i === 0 ? 1 : 0.25, width: i === 0 ? '24px' : '8px' }}
+              />
+            ))}
+          </div>
+
+        </div>
       </div>
+
     </section>
   );
 }

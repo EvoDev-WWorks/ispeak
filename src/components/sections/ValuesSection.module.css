@@ -1,30 +1,9 @@
 /* ══════════════════════════════════
-   TRANSITION STRIP (between Services and Values)
-   ══════════════════════════════════ */
-.transitionStrip {
-  height: 80px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F4 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.transitionText {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-style: italic;
-  color: #9B1B4B;
-  opacity: 0.8;
-  text-align: center;
-  padding: 0 24px;
-}
-
-/* ══════════════════════════════════
-   SECTION WRAPPER
+   SECTION
    ══════════════════════════════════ */
 .values {
   background: #FFF0F4;
   padding-top: 72px;
-  padding-bottom: 0;
 }
 
 /* ══════════════════════════════════
@@ -33,7 +12,8 @@
 .header {
   text-align: center;
   max-width: 560px;
-  margin: 0 auto 40px;
+  margin: 0 auto;
+  padding-bottom: 48px;
 }
 
 .eyebrow {
@@ -86,77 +66,48 @@
 }
 
 /* ══════════════════════════════════
-   SCROLL-STACKED CARD CONTAINER
+   SCROLL TRACK — 400vh gives room for 4 cards
    ══════════════════════════════════ */
-.valuesStack {
+.scrollTrack {
+  height: 400vh;
   position: relative;
-  /* 4 cards × ~500px each, gives scroll room */
-  padding-bottom: 100px;
 }
 
 /* ══════════════════════════════════
-   INDIVIDUAL VALUE CARD — BASE
+   STICKY CONTAINER — stays in place while track scrolls
    ══════════════════════════════════ */
-.valueCard {
+.stickyContainer {
   position: sticky;
   top: 80px;
-  height: auto;
-  min-height: 320px;
-  max-height: 500px;
+  height: calc(100vh - 120px);
+  max-height: 480px;
+  margin: 0 auto;
+  max-width: 900px;
+  /* needed for absolute children + dots */
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+/* ══════════════════════════════════
+   VALUE CARDS — all stacked absolutely
+   ══════════════════════════════════ */
+.valueCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 24px;
   display: flex;
   align-items: center;
   padding: 56px 64px;
-  margin-bottom: 24px;
-  transition: transform 0.4s ease, opacity 0.4s ease;
   will-change: transform;
+  /* transition only for paint, not scroll-driven — kept short */
+  transition: opacity 0.05s linear;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
 }
 
-/* Scroll-past shrink state */
-.scrolledPast {
-  transform: scale(0.95) translateY(-20px);
-  opacity: 0.7;
-}
-
-/* ══════════════════════════════════
-   CARD COLOR PALETTES
-   ══════════════════════════════════ */
-
-/* Card 1 — Sabhyata — Deep Crimson */
-.card0 {
-  background: linear-gradient(135deg, #6B1535 0%, #1A0510 100%);
-}
-.card0 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
-.card0 .cardHeadline { color: #FFFFFF; }
-.card0 .cardDesc { color: rgba(255,255,255,0.75); }
-
-/* Card 2 — Sanskriti — Deep Forest Green */
-.card1 {
-  background: linear-gradient(135deg, #2D5016 0%, #0D1F07 100%);
-}
-.card1 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
-.card1 .cardHeadline { color: #F0FFE8; }
-.card1 .cardDesc { color: rgba(240,255,232,0.8); }
-
-/* Card 3 — Samvedana — Deep Ocean Blue */
-.card2 {
-  background: linear-gradient(135deg, #1A3A6B 0%, #070D1A 100%);
-}
-.card2 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
-.card2 .cardHeadline { color: #E8F0FF; }
-.card2 .cardDesc { color: rgba(232,240,255,0.8); }
-
-/* Card 4 — Seva — Deep Amber */
-.card3 {
-  background: linear-gradient(135deg, #6B4A10 0%, #1A1007 100%);
-}
-.card3 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
-.card3 .cardHeadline { color: #FFF5E0; }
-.card3 .cardDesc { color: rgba(255,245,224,0.8); }
-
-/* ══════════════════════════════════
-   CARD INTERNALS
-   ══════════════════════════════════ */
+/* ── Card Left ── */
 .cardLeft {
   flex: 0 0 55%;
   display: flex;
@@ -203,14 +154,11 @@
   align-self: flex-start;
   transition: opacity 0.2s ease;
 }
-.cardBtn:hover { opacity: 0.85; }
+.cardBtn:hover {
+  opacity: 0.85;
+}
 
-/* Per-card button colors */
-.btn0 { background: white;    color: #6B1535; }
-.btn1 { background: #F0FFE8;  color: #2D5016; }
-.btn2 { background: #E8F0FF;  color: #1A3A6B; }
-.btn3 { background: #FFF5E0;  color: #6B4A10; }
-
+/* ── Card Right ── */
 .cardRight {
   flex: 0 0 45%;
   display: flex;
@@ -224,62 +172,88 @@
 }
 
 /* ══════════════════════════════════
+   PROGRESS DOTS
+   ══════════════════════════════════ */
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.dot {
+  height: 8px;
+  border-radius: 999px;
+  background: white;
+  display: block;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+/* ══════════════════════════════════
    MOBILE — max-width 768px
    ══════════════════════════════════ */
 @media (max-width: 768px) {
   .values {
-    padding-top: 40px;
-  }
-
-  .transitionStrip {
-    height: 60px;
-  }
-  .transitionText {
-    font-size: 13px;
+    padding-top: 48px;
   }
 
   .header {
-    padding: 0 16px;
-    margin-bottom: 24px;
+    padding: 0 20px 36px;
   }
   .headingLine1 { font-size: 28px; }
   .headingLine2 { font-size: 32px; }
   .sub { font-size: 13px; }
 
-  .valuesStack {
-    padding-bottom: 60px;
+  .scrollTrack {
+    /* Each card gets 80vh on mobile */
+    height: 320vh;
+  }
+
+  .stickyContainer {
+    top: 60px;
+    height: auto;
+    min-height: 480px;
+    max-height: none;
+    border-radius: 20px;
+    margin: 0 16px;
+    overflow: hidden;
   }
 
   .valueCard {
     flex-direction: column;
-    padding: 32px 24px 0;
-    max-height: none;
-    min-height: auto;
-    top: 60px;
+    align-items: flex-start;
+    padding: 32px 24px 72px;
+    min-height: 480px;
+    height: 100%;
   }
 
   .cardLeft {
     flex: none;
     padding-right: 0;
+    width: 100%;
   }
 
   .cardHeadline { font-size: 28px; }
-  .cardDesc { font-size: 14px; }
-
+  .cardDesc { font-size: 14px; margin-top: 10px; }
   .cardBtn {
     font-size: 13px;
     padding: 10px 22px;
     margin-top: 20px;
-    margin-bottom: 24px;
   }
 
   .cardRight {
     flex: none;
-    align-self: center;
+    width: 100%;
+    margin-top: 24px;
+    justify-content: flex-start;
   }
   .cardRight svg {
-    width: 70%;
-    max-width: 180px;
+    width: 55%;
+    max-width: 160px;
     height: auto;
   }
 }
