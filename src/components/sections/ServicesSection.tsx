@@ -367,11 +367,6 @@ export default function ServicesSection() {
           <div className={styles.sub}>
             Evidence-based support rooted in cultural understanding.
           </div>
-          <div className={styles.pillRow}>
-            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">🌿</span> Multilingual Support</span>
-            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">✦</span> Evidence-Based Care</span>
-            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">🤝</span> Culturally Sensitive</span>
-          </div>
         </header>
 
         {/* Cards */}
