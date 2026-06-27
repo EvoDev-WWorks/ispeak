@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Hero.module.css';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import MegaMenu from '../layout/MegaMenu';
 
 type NavKey = 'services' | 'programs' | 'why' | 'resources' | 'about' | null;
@@ -42,79 +41,256 @@ function HeroSlideshow() {
   );
 }
 
+/* ── Mobile slideshow — separate from desktop, image-first on mobile ── */
+const mobileSlides = [
+  { src: '/images/hero-3.jpeg', alt: 'iSpeak therapy session', mobilePos: '60% top' },
+  { src: '/images/hero-1.jpeg', alt: 'iSpeak counselling support', mobilePos: 'center 20%' },
+  { src: '/images/hero-2.jpeg', alt: 'iSpeak team wellness', mobilePos: 'center top' },
+];
 
-
-export default function Hero() {
-  const { ref, isVisible } = useScrollReveal(0.01);
-  const [open, setOpen] = useState<NavKey>(null);
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const show = (key: NavKey) => {
-    if (leaveTimer.current) clearTimeout(leaveTimer.current);
-    setOpen(key);
-  };
-  const hide = () => { leaveTimer.current = setTimeout(() => setOpen(null), 120); };
-  const keepOpen = () => { if (leaveTimer.current) clearTimeout(leaveTimer.current); };
+function MobileHeroSlideshow() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(null); };
+    if (paused) return;
+    const interval = setInterval(() => {
+      setActive(prev => (prev + 1) % mobileSlides.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [paused]);
+
+  const handleTap = () => setPaused(p => !p);
+
+  return (
+    <div className={styles.mobileHeroImage} onTouchStart={handleTap}>
+      {mobileSlides.map((slide, i) => (
+        <img
+          key={slide.src}
+          src={slide.src}
+          alt={slide.alt}
+          className={`${styles.mobileSlide} ${i === active ? styles.mobileSlideActive : ''}`}
+          style={{ objectPosition: slide.mobilePos }}
+        />
+      ))}
+      <div className={styles.mobileDots}>
+        {mobileSlides.map((_, i) => (
+          <button
+            key={i}
+            className={`${styles.mobileDot} ${i === active ? styles.mobileDotActive : ''}`}
+            onClick={() => setActive(i)}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+const mobileNavItems = [
+  {
+    key: 'services',
+    label: 'Services',
+    links: [
+      { to: '/services/individual',  label: 'Individual Counselling' },
+      { to: '/services/couple',      label: 'Couple Counselling' },
+      { to: '/services/adolescent',  label: 'Adolescent Counselling' },
+      { to: '/services/family',      label: 'Family Counselling' },
+      { to: '/programs/corporate',   label: 'Corporate Wellness' },
+    ],
+  },
+  {
+    key: 'programs',
+    label: 'Programs',
+    links: [
+      { to: '/programs/corporate', label: 'Corporate Wellness Programs' },
+      { to: '/programs/school',    label: 'School Wellness Programs' },
+      { to: '/programs/sports',    label: "Sports Athletes' Wellness" },
+    ],
+  },
+  {
+    key: 'why',
+    label: 'Why iSpeak',
+    links: [
+      { to: '/why-ispeak/why-choose', label: 'Why choose iSpeak' },
+      { to: '/why-ispeak/values',     label: 'Our Values & Purpose' },
+      { to: '/why-ispeak/impact',     label: 'Our Impact' },
+      { to: '/why-ispeak/beliefs',    label: 'Our Beliefs' },
+    ],
+  },
+  {
+    key: 'resources',
+    label: 'Resources',
+    links: [
+      { to: '/resources/blog',      label: 'Blog' },
+      { to: '/resources/self-help', label: 'Self Help Resources' },
+      { to: '/resources/events',    label: 'Events & Webinars' },
+      { to: '/resources/faqs',      label: 'FAQs' },
+    ],
+  },
+  {
+    key: 'about',
+    label: 'About',
+    links: [
+      { to: '/about',   label: 'About us' },
+      { to: '/careers', label: 'Careers' },
+      { to: '/press',   label: 'Press' },
+      { to: '/contact', label: 'Contact us' },
+    ],
+  },
+];
+
+export default function Hero() {
+  const [open,            setOpen]            = useState<NavKey>(null);
+  const [mobileMenuOpen,  setMobileMenuOpen]  = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* ── Desktop mega-menu hover helpers ── */
+  const show     = (key: NavKey) => { if (leaveTimer.current) clearTimeout(leaveTimer.current); setOpen(key); };
+  const hide     = () => { leaveTimer.current = setTimeout(() => setOpen(null), 120); };
+  const keepOpen = () => { if (leaveTimer.current) clearTimeout(leaveTimer.current); };
+
+  /* ── ESC closes both menus ── */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setOpen(null); setMobileMenuOpen(false); }
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
+
+  /* ── Lock body scroll when mobile overlay is open ── */
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
+  const toggleAccordion = (key: string) =>
+    setMobileAccordion(prev => (prev === key ? null : key));
+
+  const closeMenu = () => { setMobileMenuOpen(false); setMobileAccordion(null); };
 
   return (
     <section className={styles.hero}>
       <div id="hero-card" className={styles.heroCard}>
 
-        {/* ═══ IN-HERO NAV — scrolls with card ═══ */}
+        {/* ═══ IN-HERO NAV ═══ */}
         <nav className={styles.heroNav} aria-label="Hero navigation">
+
+          {/* Logo */}
           <Link to="/" className={styles.heroNavLogo}>
             <img src="/images/logo.png" alt="iSpeak" className={styles.heroNavLogoImg} />
             <span className={styles.heroNavWordmark}>iSpeak</span>
           </Link>
 
+          {/* Desktop links */}
           <div className={styles.heroNavLinks}>
             <div className={styles.heroNavItem} onMouseEnter={() => show('services')} onMouseLeave={hide}>
               <button className={styles.heroNavLink}>Services <Chevron /></button>
               <MegaMenu id="services" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
-
             <div className={styles.heroNavItem} onMouseEnter={() => show('programs')} onMouseLeave={hide}>
               <button className={styles.heroNavLink}>Programs <Chevron /></button>
               <MegaMenu id="programs" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
-
             <div className={styles.heroNavItem} onMouseEnter={() => show('why')} onMouseLeave={hide}>
               <button className={styles.heroNavLink}>Why iSpeak <Chevron /></button>
               <MegaMenu id="why" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
-
             <div className={styles.heroNavItem} onMouseEnter={() => show('resources')} onMouseLeave={hide}>
               <button className={styles.heroNavLink}>Resources <Chevron /></button>
               <MegaMenu id="resources" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
-
             <div className={styles.heroNavItem} onMouseEnter={() => show('about')} onMouseLeave={hide}>
               <button className={styles.heroNavLink}>About <Chevron /></button>
               <MegaMenu id="about" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
           </div>
 
+          {/* Desktop CTA */}
           <div className={styles.heroNavRight}>
-            <a href="https://wa.me/919711240950" target="_blank" rel="noreferrer" className={styles.heroNavLogin} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.662-2.06-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              Chat with us
-            </a>
             <Link to="/contact" className={styles.heroNavBtn}>Book a Session</Link>
           </div>
+
+          {/* ── Mobile: book btn + hamburger ── */}
+          <div className={styles.mobileControls}>
+            <Link to="/contact" className={styles.mobileNavBtn}>Book a Session</Link>
+            <button
+              className={styles.hamburger}
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <span /><span /><span />
+            </button>
+          </div>
         </nav>
+
+        {/* ═══ MOBILE FULL-SCREEN OVERLAY ═══ */}
+        <div
+          className={`${styles.mobileOverlay} ${mobileMenuOpen ? styles.mobileOverlayOpen : ''}`}
+          aria-hidden={!mobileMenuOpen}
+          role="dialog"
+          aria-label="Navigation menu"
+        >
+          {/* Overlay header */}
+          <div className={styles.overlayHeader}>
+            <Link to="/" className={styles.heroNavLogo} onClick={closeMenu}>
+              <img src="/images/logo.png" alt="iSpeak" className={styles.heroNavLogoImg} />
+              <span className={styles.heroNavWordmark}>iSpeak</span>
+            </Link>
+            <button className={styles.overlayClose} onClick={closeMenu} aria-label="Close navigation menu">
+              ✕
+            </button>
+          </div>
+
+          {/* Accordion items */}
+          <nav className={styles.overlayNav} aria-label="Mobile navigation">
+            {mobileNavItems.map(item => (
+              <div key={item.key} className={styles.overlayItem}>
+                <button
+                  className={styles.overlayItemBtn}
+                  onClick={() => toggleAccordion(item.key)}
+                  aria-expanded={mobileAccordion === item.key}
+                >
+                  <span>{item.label}</span>
+                  <span className={`${styles.overlayChevron} ${mobileAccordion === item.key ? styles.overlayChevronOpen : ''}`}>
+                    ›
+                  </span>
+                </button>
+                <div className={`${styles.overlaySubLinks} ${mobileAccordion === item.key ? styles.overlaySubLinksOpen : ''}`}>
+                  {item.links.map(link => (
+                    <Link key={link.to + link.label} to={link.to} className={styles.overlaySubLink} onClick={closeMenu}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </nav>
+
+          {/* Overlay footer */}
+          <div className={styles.overlayFooter}>
+            <a
+              href="https://wa.me/919999999999"
+              className={styles.overlayWhatsApp}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>💬</span> Chat with us on WhatsApp
+            </a>
+            <Link to="/contact" className={styles.overlayBookBtn} onClick={closeMenu}>
+              Book a Session
+            </Link>
+          </div>
+        </div>
 
         {/* ═══ HERO CONTENT ═══ */}
         <div className={styles.inner}>
 
-          {/* Left */}
+          {/* Left — text */}
           <div className={styles.left}>
             <h1 className={styles.h1}>
               <span className={styles.h1Line1}>World-Class Mental Health Care</span>
@@ -133,37 +309,28 @@ export default function Hero() {
               </Link>
             </div>
 
-            <div className={styles.trustAvatars}>
-              <div className={styles.trustTextColumn}>
-                <p className={styles.trustAvatarsText}>
-                  <strong>4.8 ★</strong> &nbsp;Trusted by <strong>50,000+</strong> individuals across 10+ countries
-                </p>
-                <p className={styles.trustSubText}>
-                  Featured in Indian Express · Trusted by 11+ Universities · Est. Gurugram, 2020
-                </p>
+            <div className={styles.statPillRow}>
+              <div className={styles.statPill}>
+                <span className={styles.statPillNumber}>50,000+</span>
+                <span className={styles.statPillLabel}>Individuals</span>
+              </div>
+              <div className={styles.statPill}>
+                <span className={styles.statPillNumber}>10+</span>
+                <span className={styles.statPillLabel}>Countries</span>
+              </div>
+              <div className={styles.statPill}>
+                <span className={styles.statPillNumber}>11+</span>
+                <span className={styles.statPillLabel}>Universities</span>
               </div>
             </div>
           </div>
 
-          {/* Right — photo slideshow */}
-          <div className={styles.right} ref={ref}>
+          {/* Mobile-only slideshow — photo slideshow below text on ≤768px */}
+          <MobileHeroSlideshow />
+
+          {/* Right — photo fills flush */}
+          <div className={styles.right}>
             <HeroSlideshow />
-
-            <div className={`${styles.statFloat} ${styles.statFloatA} ${isVisible ? styles.visible : ''}`}>
-              <span className={styles.statIcon}>🧠</span>
-              <div>
-                <div className={styles.statNumber}>9 in 10</div>
-                <div className={styles.statLabel}>clients report<br/>improvement</div>
-              </div>
-            </div>
-
-            <div className={`${styles.statFloat} ${styles.statFloatB} ${isVisible ? styles.visible : ''}`}>
-              <span className={styles.statIcon}>⏱️</span>
-              <div>
-                <div className={styles.statNumber}>48 hrs</div>
-                <div className={styles.statLabel}>to your first<br/>session</div>
-              </div>
-            </div>
           </div>
 
         </div>

@@ -88,5 +88,9 @@
 @media (max-width: 768px) {
   :root {
     --container-pad: 20px;
+    --section-pad-desktop: 48px;   /* override 100px → 48px on mobile */
+    --text-h1: clamp(32px, 9vw, 40px);
+    --text-h2: clamp(28px, 7vw, 36px);
+    --text-h3: 20px;
   }
 }
