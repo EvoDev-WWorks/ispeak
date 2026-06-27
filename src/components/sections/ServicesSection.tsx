@@ -359,17 +359,19 @@ export default function ServicesSection() {
     <section id="services" className={styles.services} aria-labelledby="services-heading">
       <div className="container">
         <header className={`${styles.header} ${isVisible ? 'reveal visible' : 'reveal'}`} ref={ref}>
-          <span className={styles.eyebrow}>
-            <span className={styles.eyebrowDot}></span>What We Offer
-          </span>
+          <span className={styles.eyebrow}>What We Offer</span>
           <h2 className={styles.headingPair} id="services-heading">
             <span className={styles.headingLine1}>Care that speaks</span>
             <span className={styles.headingLine2}>your language</span>
           </h2>
-          <p className={styles.sub}>
-            From personal counselling to enterprise wellness — evidence-based
-            support rooted in cultural understanding.
-          </p>
+          <div className={styles.sub}>
+            Evidence-based support rooted in cultural understanding.
+          </div>
+          <div className={styles.pillRow}>
+            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">🌿</span> Multilingual Support</span>
+            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">✦</span> Evidence-Based Care</span>
+            <span className={styles.pill}><span className={styles.pillIcon} aria-hidden="true">🤝</span> Culturally Sensitive</span>
+          </div>
         </header>
 
         {/* Cards */}
