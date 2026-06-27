@@ -1,13 +1,34 @@
 /* ══════════════════════════════════
-   SECTION
+   TRANSITION STRIP (between Services and Values)
    ══════════════════════════════════ */
-.values {
-  background: #FFF8FA;
-  padding: 80px 0 100px;
+.transitionStrip {
+  height: 80px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF0F4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.transitionText {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  color: #9B1B4B;
+  opacity: 0.8;
+  text-align: center;
+  padding: 0 24px;
 }
 
 /* ══════════════════════════════════
-   HEADING
+   SECTION WRAPPER
+   ══════════════════════════════════ */
+.values {
+  background: #FFF0F4;
+  padding-top: 72px;
+  padding-bottom: 0;
+}
+
+/* ══════════════════════════════════
+   HEADING BLOCK
    ══════════════════════════════════ */
 .header {
   text-align: center;
@@ -65,119 +86,86 @@
 }
 
 /* ══════════════════════════════════
-   DESKTOP TAB BUTTONS
+   SCROLL-STACKED CARD CONTAINER
    ══════════════════════════════════ */
-.tabs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.tab {
-  background: white;
-  border: 1.5px solid #E8C0CC;
-  border-radius: 999px;
-  padding: 10px 28px;
-  font-size: 14px;
-  font-family: var(--font-ui);
-  font-weight: 500;
-  color: #8A2040;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.tab:hover {
-  background: #FFF0F4;
-  border-color: #CC6080;
-}
-.tabActive {
-  background: #9B1B4B;
-  color: white;
-  border-color: #9B1B4B;
-}
-
-/* ══════════════════════════════════
-   MOBILE DOT INDICATORS (hidden desktop)
-   ══════════════════════════════════ */
-.dots {
-  display: none;
-}
-
-/* ══════════════════════════════════
-   STACKED CARD CONTAINER
-   ══════════════════════════════════ */
-.stack {
+.valuesStack {
   position: relative;
-  max-width: 860px;
-  margin: 0 auto;
-  height: 340px;
-}
-
-/* Ghost card base */
-.ghostCard {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  border-radius: 20px;
-}
-.ghostCard1 {
-  background: #F5D0DC;
-  transform: translateY(16px) scale(0.94);
-  z-index: 1;
-}
-.ghostCard2 {
-  background: #FAE4EC;
-  transform: translateY(8px) scale(0.97);
-  z-index: 2;
+  /* 4 cards × ~500px each, gives scroll room */
+  padding-bottom: 100px;
 }
 
 /* ══════════════════════════════════
-   MAIN CARD
+   INDIVIDUAL VALUE CARD — BASE
    ══════════════════════════════════ */
-.mainCard {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  z-index: 3;
-  background: linear-gradient(135deg, #6B1535 0%, #1A0510 100%);
-  border-radius: 20px;
+.valueCard {
+  position: sticky;
+  top: 80px;
+  height: auto;
+  min-height: 320px;
+  max-height: 500px;
+  border-radius: 24px;
   display: flex;
   align-items: center;
-  padding: 48px 56px;
-  box-shadow: 0 20px 60px rgba(100, 10, 40, 0.25);
-  gap: 40px;
+  padding: 56px 64px;
+  margin-bottom: 24px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  will-change: transform;
 }
 
-/* Fade animations */
-.cardShow {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.cardHide {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+/* Scroll-past shrink state */
+.scrolledPast {
+  transform: scale(0.95) translateY(-20px);
+  opacity: 0.7;
 }
 
-/* ── Card Left ── */
+/* ══════════════════════════════════
+   CARD COLOR PALETTES
+   ══════════════════════════════════ */
+
+/* Card 1 — Sabhyata — Deep Crimson */
+.card0 {
+  background: linear-gradient(135deg, #6B1535 0%, #1A0510 100%);
+}
+.card0 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
+.card0 .cardHeadline { color: #FFFFFF; }
+.card0 .cardDesc { color: rgba(255,255,255,0.75); }
+
+/* Card 2 — Sanskriti — Deep Forest Green */
+.card1 {
+  background: linear-gradient(135deg, #2D5016 0%, #0D1F07 100%);
+}
+.card1 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
+.card1 .cardHeadline { color: #F0FFE8; }
+.card1 .cardDesc { color: rgba(240,255,232,0.8); }
+
+/* Card 3 — Samvedana — Deep Ocean Blue */
+.card2 {
+  background: linear-gradient(135deg, #1A3A6B 0%, #070D1A 100%);
+}
+.card2 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
+.card2 .cardHeadline { color: #E8F0FF; }
+.card2 .cardDesc { color: rgba(232,240,255,0.8); }
+
+/* Card 4 — Seva — Deep Amber */
+.card3 {
+  background: linear-gradient(135deg, #6B4A10 0%, #1A1007 100%);
+}
+.card3 .cardLabel { background: rgba(255,255,255,0.15); color: white; }
+.card3 .cardHeadline { color: #FFF5E0; }
+.card3 .cardDesc { color: rgba(255,245,224,0.8); }
+
+/* ══════════════════════════════════
+   CARD INTERNALS
+   ══════════════════════════════════ */
 .cardLeft {
   flex: 0 0 55%;
   display: flex;
   flex-direction: column;
+  padding-right: 40px;
 }
 
 .cardLabel {
   display: inline-block;
-  background: rgba(255,255,255,0.15);
-  color: white;
   font-size: 11px;
   font-family: var(--font-ui);
   font-weight: 500;
@@ -190,9 +178,8 @@
 
 .cardHeadline {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 600;
-  color: white;
   margin-top: 16px;
   line-height: 1.1;
 }
@@ -200,15 +187,12 @@
 .cardDesc {
   font-family: var(--font-ui);
   font-size: 15px;
-  color: rgba(255,255,255,0.75);
   line-height: 1.7;
   margin-top: 12px;
 }
 
 .cardBtn {
   display: inline-block;
-  background: white;
-  color: #9B1B4B;
   border-radius: 999px;
   padding: 12px 28px;
   font-size: 14px;
@@ -217,13 +201,16 @@
   text-decoration: none;
   margin-top: 28px;
   align-self: flex-start;
-  transition: background 0.2s ease;
+  transition: opacity 0.2s ease;
 }
-.cardBtn:hover {
-  background: #FFE4EE;
-}
+.cardBtn:hover { opacity: 0.85; }
 
-/* ── Card Right ── */
+/* Per-card button colors */
+.btn0 { background: white;    color: #6B1535; }
+.btn1 { background: #F0FFE8;  color: #2D5016; }
+.btn2 { background: #E8F0FF;  color: #1A3A6B; }
+.btn3 { background: #FFF5E0;  color: #6B4A10; }
+
 .cardRight {
   flex: 0 0 45%;
   display: flex;
@@ -233,7 +220,7 @@
 .cardRight svg {
   width: 100%;
   max-width: 220px;
-  height: 200px;
+  height: 180px;
 }
 
 /* ══════════════════════════════════
@@ -241,108 +228,58 @@
    ══════════════════════════════════ */
 @media (max-width: 768px) {
   .values {
-    padding: 56px 0 64px;
+    padding-top: 40px;
+  }
+
+  .transitionStrip {
+    height: 60px;
+  }
+  .transitionText {
+    font-size: 13px;
   }
 
   .header {
     padding: 0 16px;
-    margin-bottom: 28px;
-  }
-
-  .headingLine1 { font-size: 28px; }
-  .headingLine2 { font-size: 32px; }
-  .sub { font-size: 13px; padding: 0 4px; }
-
-  /* Hide desktop tabs, show dots */
-  .tabs { display: none; }
-
-  .dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     margin-bottom: 24px;
   }
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: #E8C0CC;
-    border: none;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    padding: 0;
-  }
-  .dotActive {
-    width: 24px;
-    background: #9B1B4B;
+  .headingLine1 { font-size: 28px; }
+  .headingLine2 { font-size: 32px; }
+  .sub { font-size: 13px; }
+
+  .valuesStack {
+    padding-bottom: 60px;
   }
 
-  /* Stack — mobile sizing */
-  .stack {
-    width: 92%;
-    margin: 0 auto;
-    height: auto;
-    min-height: 440px;
-  }
-
-  .ghostCard1 {
-    transform: translateY(10px) scale(0.95);
-    height: 100%;
-    min-height: 440px;
-  }
-  .ghostCard2 {
-    transform: translateY(5px) scale(0.975);
-    height: 100%;
-    min-height: 440px;
-  }
-
-  /* Main card — mobile: vertical stack */
-  .mainCard {
-    position: relative;
+  .valueCard {
     flex-direction: column;
-    align-items: stretch;
-    height: auto;
-    padding: 32px 28px 0 28px;
-    gap: 0;
+    padding: 32px 24px 0;
+    max-height: none;
+    min-height: auto;
+    top: 60px;
   }
 
   .cardLeft {
     flex: none;
+    padding-right: 0;
   }
 
-  .cardLabel {
-    font-size: 10px;
-  }
-
-  .cardHeadline {
-    font-size: 26px;
-    margin-top: 12px;
-  }
-
-  .cardDesc {
-    font-size: 14px;
-    line-height: 1.65;
-    margin-top: 10px;
-  }
+  .cardHeadline { font-size: 28px; }
+  .cardDesc { font-size: 14px; }
 
   .cardBtn {
     font-size: 13px;
-    padding: 11px 24px;
+    padding: 10px 22px;
     margin-top: 20px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
-  /* Illustration bleeds at bottom */
   .cardRight {
     flex: none;
     align-self: center;
   }
   .cardRight svg {
-    width: 75%;
-    max-width: 220px;
+    width: 70%;
+    max-width: 180px;
     height: auto;
-    display: block;
-    margin: 0 auto;
   }
 }
