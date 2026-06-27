@@ -1,7 +1,5 @@
 .marqueeStrip {
-  background: #fff;
-  border-top: 1px solid var(--c-blush-mid);
-  border-bottom: 1px solid var(--c-blush-mid);
+  background: #8B1A3C;
   padding: 28px 0;
   overflow: hidden;
 }
@@ -13,7 +11,7 @@
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--c-text-muted);
+  color: rgba(255,255,255,0.6);
   margin-bottom: 18px;
 }
 
@@ -26,6 +24,7 @@
 
 .track {
   display: flex;
+  align-items: center;
   gap: 0;
   width: max-content;
   animation: marquee 30s linear infinite;
@@ -39,22 +38,26 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 32px;
+  padding: 0 6px;
   white-space: nowrap;
 }
 
-.name {
+.chip {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  padding: 8px 20px;
   font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 15px;
-  color: rgba(197, 20, 94, 0.5);
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .sep {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--c-blush-mid);
+  color: rgba(255,255,255,0.3);
+  font-size: 8px;
   flex-shrink: 0;
 }
 

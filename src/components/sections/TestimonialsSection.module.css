@@ -58,10 +58,15 @@
   max-width: 85vw;
   background: var(--c-page-bg);
   border: 1px solid var(--c-blush-mid);
+  border-left: 3px solid transparent;
   border-radius: var(--r-card-lg);
   padding: 40px;
   flex-shrink: 0;
-  transition: opacity var(--ease-carousel), transform var(--ease-carousel);
+  transition: opacity var(--ease-carousel), transform var(--ease-carousel), border-left-color var(--ease-carousel);
+}
+
+.cardActive {
+  border-left-color: #8B1A3C;
 }
 
 .stars {

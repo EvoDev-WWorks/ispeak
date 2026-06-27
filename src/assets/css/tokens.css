@@ -17,6 +17,12 @@
   --c-white:        #FFFFFF;
   --c-overlay:      rgba(21, 8, 16, 0.55);
 
+  /* ── BRAND TOKENS (maroon palette) ── */
+  --c-hero-bg:      #FAF7F4;
+  --c-outer-bg:     #FFFFFF;
+  --c-maroon:       #8B1A3C;
+  --c-rose:         #C4517A;
+
   /* ── TYPOGRAPHY ── */
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-ui:      'DM Sans', system-ui, sans-serif;
@@ -72,12 +78,12 @@
   --r-avatar:  50%;
 
   /* ── SHADOWS ── */
-  --shadow-card:        0 4px 24px rgba(155, 17, 82, 0.08);
-  --shadow-card-hover:  0 12px 40px rgba(155, 17, 82, 0.16);
-  --shadow-nav:         0 4px 24px rgba(155, 17, 82, 0.07);
-  --shadow-mega:        0 24px 60px rgba(155, 17, 82, 0.12);
-  --shadow-btn:         0 4px 16px rgba(197, 20, 94, 0.28);
-  --shadow-btn-hover:   0 8px 28px rgba(197, 20, 94, 0.38);
+  --shadow-card:        0 4px 24px rgba(139, 26, 60, 0.08);
+  --shadow-card-hover:  0 12px 40px rgba(139, 26, 60, 0.14);
+  --shadow-nav:         0 4px 24px rgba(139, 26, 60, 0.07);
+  --shadow-mega:        0 24px 60px rgba(139, 26, 60, 0.12);
+  --shadow-btn:         0 4px 16px rgba(139, 26, 60, 0.28);
+  --shadow-btn-hover:   0 8px 28px rgba(139, 26, 60, 0.38);
 
   /* ── TRANSITIONS ── */
   --ease-default: 300ms ease;

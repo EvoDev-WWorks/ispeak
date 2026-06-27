@@ -12,7 +12,7 @@ export default function MarqueeStrip() {
     "Gurugram University",
     "SGT University",
     "Chandigarh University",
-    "BHU"
+    "BHU",
   ];
 
   return (
@@ -23,8 +23,8 @@ export default function MarqueeStrip() {
           {/* Double map for seamless loop */}
           {[...universities, ...universities].map((uni, i) => (
             <div key={i} className={styles.item} role="listitem">
-              <span className={styles.name}>{uni}</span>
-              <span className={styles.sep} aria-hidden="true"></span>
+              <span className={styles.chip}>{uni}</span>
+              <span className={styles.sep} aria-hidden="true">◆</span>
             </div>
           ))}
         </div>

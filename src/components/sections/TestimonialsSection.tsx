@@ -90,7 +90,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <article 
               key={i} 
-              className={styles.card} 
+              className={`${styles.card} ${i === current ? styles.cardActive : ''}`}
               role="listitem"
               style={{
                 opacity: i === current ? 1 : 0.45,

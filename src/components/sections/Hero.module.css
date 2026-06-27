@@ -846,3 +846,15 @@
   .statPillRow { flex-wrap: wrap; gap: 8px; }
   .statPill    { flex: 1 1 auto; min-width: 0; }
 }
+
+/* ── Wave Divider — hero → maroon marquee ── */
+.waveDivider {
+  position: relative;
+  margin-top: -2px;
+  line-height: 0;
+}
+.waveDivider svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+}

@@ -1,5 +1,5 @@
 .values {
-  background: var(--c-magenta);
+  background: #8B1A3C;
   padding-block: var(--section-pad-desktop);
 }
 
@@ -16,7 +16,7 @@
   font-family: var(--font-ui);
   font-weight: 500;
   font-size: var(--text-eyebrow);
-  color: var(--c-pink);
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   margin-bottom: 16px;
@@ -24,17 +24,17 @@
 
 .eyebrowDark {
   background: rgba(0,0,0,0.2);
-  color: var(--c-blush-light);
+  color: rgba(255,255,255,0.8);
   padding: 6px 16px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .eyebrowDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--c-blush-light);
+  background: rgba(255,255,255,0.6);
 }
 
 .headingPair {
@@ -48,13 +48,13 @@
 }
 
 .headingLine1 { display: block; }
-.headingLine2 { display: block; color: var(--c-blush-mid); font-style: italic; }
+.headingLine2 { display: block; color: rgba(255,255,255,0.65); font-style: italic; }
 
 .sub {
   font-family: var(--font-ui);
   font-weight: 300;
   font-size: var(--text-hero-sub);
-  color: rgba(255,255,255,0.70);
+  color: rgba(255,255,255,0.75);
   line-height: 1.75;
   margin-top: 16px;
 }
@@ -68,31 +68,34 @@
 }
 
 .valueCard {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--r-card-lg);
-  padding: 32px 24px;
+  background: #FAF7F4;
+  border: 1px solid rgba(139,26,60,0.12);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(139,26,60,0.06);
+  padding: 36px 28px;
   text-align: center;
-  transition: all var(--ease-default);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
 }
 .valueCard:hover {
-  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px rgba(139,26,60,0.12);
 }
 
-.icon {
-  font-size: 36px;
-  margin-bottom: 20px;
+.iconWrap {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+}
+.iconWrap svg {
+  width: 100%;
+  height: 100%;
 }
 
 .name {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--text-h3);
-  color: #fff;
+  color: #150810;
   margin-bottom: 4px;
 }
 
@@ -100,7 +103,7 @@
   font-family: var(--font-ui);
   font-weight: 500;
   font-size: 13px;
-  color: var(--c-blush-mid);
+  color: #8B1A3C;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 16px;
@@ -110,7 +113,7 @@
   font-family: var(--font-ui);
   font-weight: 300;
   font-size: 14px;
-  color: rgba(255,255,255,0.7);
+  color: #6B3A55;
   line-height: 1.6;
   margin-bottom: 24px;
 }
@@ -118,14 +121,14 @@
 .divider {
   border: 0;
   height: 1px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(139,26,60,0.12);
   margin-bottom: 16px;
 }
 
 .hindi {
   font-family: var(--font-hindi);
-  font-size: 18px;
-  color: var(--c-blush-mid);
+  font-size: 22px;
+  color: rgba(139,26,60,0.35);
 }
 
 @media (max-width: 1024px) {

@@ -50,12 +50,13 @@
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 240px 1fr;
   gap: 80px;
   align-items: center;
   margin-bottom: 80px;
   max-width: 1100px;
   margin-inline: auto;
+  position: relative;
 }
 .row:last-child { margin-bottom: 0; }
 
@@ -67,19 +68,40 @@
 }
 
 .illo {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
-  background: var(--c-blush-light);
+  background: #FAF7F4;
+  border: 1px solid rgba(139,26,60,0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 80px;
   margin-inline: auto;
+  flex-shrink: 0;
+}
+.illo svg {
+  width: 64px;
+  height: 64px;
+}
+
+.text {
+  position: relative;
 }
 
 .text .eyebrow {
   margin-bottom: 8px;
+}
+
+.watermark {
+  font-family: var(--font-hindi);
+  font-size: 28px;
+  color: rgba(139,26,60,0.25);
+  position: absolute;
+  top: -8px;
+  right: 0;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
 }
 
 .hindi {
@@ -108,6 +130,10 @@
 }
 
 @media (max-width: 900px) {
-  .row { grid-template-columns: 1fr; gap: 40px; }
+  .row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
   .rowReverse { direction: ltr; }
+  .watermark { font-size: 22px; top: -4px; }
 }

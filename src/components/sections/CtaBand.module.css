@@ -55,32 +55,19 @@
   font-weight: 500;
   font-size: clamp(36px, 4.5vw, 52px);
   line-height: 1.1;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 .h2Line1 { color: #fff; display: block; }
 .h2Line2 { color: var(--c-blush-mid); font-style: italic; display: block; }
 
-.quote {
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 14px;
-  padding: 20px 28px;
-  margin-bottom: 36px;
-  text-align: left;
-}
-.quoteText {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 18px;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-.quoteAttr {
+.socialProof {
   font-family: var(--font-ui);
-  font-weight: 300;
-  font-size: 13px;
-  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 32px;
+  letter-spacing: 0.1px;
 }
+
 
 .ctaRow {
   display: flex;
