@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './ServicesSection.module.css';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
-
-type Category = 'all' | 'individual' | 'couples' | 'organisations' | 'youth';
 
 /* ══════════════════════════════════════════
    ILLUSTRATION COMPONENTS
@@ -300,12 +297,10 @@ const IlloSchool = () => (
 
 export default function ServicesSection() {
   const { ref, isVisible } = useScrollReveal();
-  const [activeTab, setActiveTab] = useState<Category>('all');
 
   const services = [
     {
       id: 'ind',
-      category: 'individual' as Category,
       Illustration: IlloIndividual,
       bgColor: '#7B7FB5',
       title: 'Individual Counselling',
@@ -315,7 +310,6 @@ export default function ServicesSection() {
     },
     {
       id: 'cpl',
-      category: 'couples' as Category,
       Illustration: IlloCouple,
       bgColor: '#E8705A',
       title: 'Couple Counselling',
@@ -325,7 +319,6 @@ export default function ServicesSection() {
     },
     {
       id: 'adol',
-      category: 'youth' as Category,
       Illustration: IlloAdolescent,
       bgColor: '#2D6B6B',
       title: 'Adolescent Counselling',
@@ -335,7 +328,6 @@ export default function ServicesSection() {
     },
     {
       id: 'fam',
-      category: 'couples' as Category,
       Illustration: IlloFamily,
       bgColor: '#E8A5B8',
       title: 'Family Counselling',
@@ -345,7 +337,6 @@ export default function ServicesSection() {
     },
     {
       id: 'corp',
-      category: 'organisations' as Category,
       Illustration: IlloCorporate,
       bgColor: '#C4A882',
       title: 'Corporate Wellness EAP',
@@ -355,7 +346,6 @@ export default function ServicesSection() {
     },
     {
       id: 'sch',
-      category: 'youth' as Category,
       Illustration: IlloSchool,
       bgColor: '#7DB8A0',
       title: 'School Wellness Programme',
@@ -364,11 +354,6 @@ export default function ServicesSection() {
       cta: 'Enquire for Schools →',
     },
   ];
-
-  const filteredServices =
-    activeTab === 'all'
-      ? services
-      : services.filter((s) => s.category === activeTab);
 
   return (
     <section id="services" className={styles.services} aria-labelledby="services-heading">
@@ -387,21 +372,13 @@ export default function ServicesSection() {
           </p>
         </header>
 
-        {/* Tabs */}
-        <div className={styles.tabs} role="tablist" aria-label="Service categories">
-          <button className={`${styles.tab} ${activeTab === 'all' ? styles.isActive : ''}`} onClick={() => setActiveTab('all')} role="tab">For All</button>
-          <button className={`${styles.tab} ${activeTab === 'individual' ? styles.isActive : ''}`} onClick={() => setActiveTab('individual')} role="tab">For Individuals</button>
-          <button className={`${styles.tab} ${activeTab === 'couples' ? styles.isActive : ''}`} onClick={() => setActiveTab('couples')} role="tab">Couples &amp; Families</button>
-          <button className={`${styles.tab} ${activeTab === 'organisations' ? styles.isActive : ''}`} onClick={() => setActiveTab('organisations')} role="tab">For Organisations</button>
-          <button className={`${styles.tab} ${activeTab === 'youth' ? styles.isActive : ''}`} onClick={() => setActiveTab('youth')} role="tab">Youth &amp; Schools</button>
-        </div>
-
         {/* Cards */}
-        <div className={styles.grid} role="tabpanel">
-          {filteredServices.map((service, index) => (
+        <div className={styles.grid} role="list">
+          {services.map((service, index) => (
             <article
               key={service.id}
               className={styles.card}
+              role="listitem"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Illustration header */}
