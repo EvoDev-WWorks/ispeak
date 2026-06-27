@@ -1,175 +1,176 @@
+/* ═══════════════════════════════════════
+   SECTION
+   ═══════════════════════════════════════ */
 .valuesSection {
   background: #FFF0F4;
-  padding-top: 80px;
+  padding: 80px 0 0;
 }
 
-.valuesHeading {
+/* ═══════════════════════════════════════
+   HEADING
+   ═══════════════════════════════════════ */
+.vsHeading {
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto 56px;
-  padding: 0 24px;
+  max-width: 580px;
+  margin: 0 auto 52px;
+  padding: 0 20px;
 }
-
-.valuesEyebrow {
+.vsEyebrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.eyebrowLine {
-  flex: 1;
-  max-width: 80px;
-  height: 1px;
-  background: #E8B4C4;
-}
-.eyebrowText {
+  gap: 14px;
+  margin-bottom: 18px;
   font-size: 11px;
   letter-spacing: 0.2em;
   color: #A0526A;
   font-family: sans-serif;
 }
-.valuesTitle {
-  font-size: 44px;
+.vsLine {
+  flex: 1;
+  max-width: 70px;
+  height: 1px;
+  background: #E8B4C4;
+  display: block;
+}
+.vsHeading h2 {
+  font-size: 42px;
+  font-weight: 500;
   line-height: 1.15;
   color: #1A0A10;
-  font-weight: 500;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-family: var(--font-display);
 }
-.valuesItalic {
+.vsHeading h2 em {
   font-style: italic;
   color: #9B1B4B;
-  font-size: 48px;
+  font-size: 46px;
 }
-.valuesSub {
+.vsHeading > p {
   font-size: 15px;
   color: #8A6070;
   line-height: 1.6;
+  margin: 0;
   font-family: var(--font-ui);
 }
 
-/* SCROLL TRACK */
-.valuesTrack {
-  height: 400vh;
+/* ═══════════════════════════════════════
+   SCROLL TRACK — 350vh = room for animation
+   ═══════════════════════════════════════ */
+.vsTrack {
+  height: 350vh;
   position: relative;
 }
 
-.valuesPin {
+/* ═══════════════════════════════════════
+   STICKY PIN — stays on screen
+   ═══════════════════════════════════════ */
+.vsPin {
   position: sticky;
-  top: 80px;
-  height: calc(100vh - 100px);
-  max-height: 500px;
+  top: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: calc(100vh - 90px);
+  max-height: 520px;
   justify-content: center;
-  padding-bottom: 40px;
+  padding-bottom: 48px;
 }
 
-/* DECK */
-.valuesDeck {
+/* ═══════════════════════════════════════
+   CARD DECK
+   ═══════════════════════════════════════ */
+.vsDeck {
   position: relative;
-  width: 100%;
-  max-width: 880px;
-  height: 380px;
-  margin: 0 auto;
+  width: min(880px, 92vw);
+  height: min(360px, 55vw);
 }
 
-/* ALL CARDS */
-.vcard {
+/* ═══════════════════════════════════════
+   INDIVIDUAL CARDS
+   NO transition — JS controls every frame
+   ═══════════════════════════════════════ */
+.vsCard {
   position: absolute;
   inset: 0;
-  border-radius: 24px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
-  padding: 52px 60px;
+  padding: clamp(28px, 5vw, 56px) clamp(24px, 5vw, 60px);
   overflow: hidden;
-  transform-origin: center top;
   will-change: transform, opacity;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15); /* added subtle shadow for depth */
+  box-shadow: 0 12px 40px rgba(0,0,0,0.22);
+  /* CRITICAL: no transition property here — JS animates directly */
 }
 
-.vcard0 {
-  background: linear-gradient(135deg, #6B1535 0%, #1A0510 100%);
-  z-index: 4;
-}
-.vcard1 {
-  background: linear-gradient(135deg, #1A3D0A 0%, #0D2006 100%);
-  z-index: 3;
-}
-.vcard2 {
-  background: linear-gradient(135deg, #0D2B5E 0%, #060D1A 100%);
-  z-index: 2;
-}
-.vcard3 {
-  background: linear-gradient(135deg, #5C3A0A 0%, #1A1005 100%);
-  z-index: 1;
-}
-
-.vcardLeft {
+.vsLeft {
   flex: 0 0 55%;
-  padding-right: 40px;
+  padding-right: clamp(16px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.vcardRight {
+.vsRight {
   flex: 0 0 45%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.vcardRight svg {
-  width: 180px;
-  height: 180px;
+.vsRight svg {
+  width: clamp(120px, 20vw, 180px);
+  height: auto;
 }
 
-.vcardLabel {
+.vsTag {
   display: inline-block;
   background: rgba(255,255,255,0.15);
-  color: white;
+  color: #fff;
   font-size: 11px;
-  letter-spacing: 0.15em;
-  padding: 6px 16px;
+  letter-spacing: 0.14em;
+  padding: 5px 14px;
   border-radius: 999px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-family: sans-serif;
 }
-.vcard h3 {
-  font-size: 40px;
+.vsCard h3 {
+  font-size: clamp(28px, 4vw, 40px);
   font-weight: 500;
-  color: white;
-  margin: 0 0 16px;
+  color: #fff;
+  margin: 0 0 14px;
   font-family: serif;
 }
-.vcard p {
-  font-size: 15px;
+.vsCard p {
+  font-size: clamp(13px, 1.4vw, 15px);
   line-height: 1.7;
   color: rgba(255,255,255,0.75);
-  margin: 0 0 28px;
+  margin: 0 0 26px;
   font-family: var(--font-ui);
 }
-.vcard button {
-  background: white;
+.vsCard button {
+  background: var(--btn-bg);
+  color: var(--btn-color);
   border: none;
   border-radius: 999px;
-  padding: 12px 28px;
+  padding: 11px 26px;
   font-size: 14px;
-  cursor: pointer;
   font-weight: 500;
+  cursor: pointer;
   font-family: var(--font-ui);
+  transition: opacity 0.2s ease;
 }
-.vcard0 button { color: #6B1535; }
-.vcard1 button { color: #1A3D0A; background: #F0FFE8; }
-.vcard2 button { color: #0D2B5E; background: #E8F0FF; }
-.vcard3 button { color: #5C3A0A; background: #FFF5E0; }
+.vsCard button:hover { opacity: 0.85; }
 
-/* DOTS */
-.vdots {
+/* ═══════════════════════════════════════
+   PROGRESS DOTS
+   ═══════════════════════════════════════ */
+.vsDots {
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 22px;
 }
-.vdot {
+.vd {
+  display: block;
   height: 8px;
   width: 8px;
   border-radius: 999px;
@@ -177,46 +178,26 @@
   opacity: 0.25;
   transition: width 0.3s ease, opacity 0.3s ease;
 }
-.vdot.active {
-  width: 24px;
-  opacity: 1;
-}
 
-/* MOBILE FALLBACK */
-@media (max-width: 768px) {
-  .valuesSection { padding-top: 48px; }
-  .valuesHeading { padding: 0 20px 32px; }
-  .valuesTitle { font-size: 28px; }
-  .valuesItalic { font-size: 32px; }
-  .valuesSub { font-size: 13px; }
+/* ═══════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════ */
+@media (max-width: 640px) {
+  .vsTrack { height: 400vh; }
+  .vsPin   { max-height: 500px; top: 60px; }
+  .vsDeck  { height: min(440px, 90vw); }
 
-  .valuesTrack { height: 400vh; }
-
-  .valuesPin {
-    top: 70px;
-    height: auto;
-    min-height: 460px;
-    margin: 0 16px;
-    padding-bottom: 48px;
-  }
-
-  .vcard {
-    height: 420px;
+  .vsCard {
     flex-direction: column;
     align-items: flex-start;
-    padding: 32px 24px 24px;
+    padding: 28px 24px 0;
   }
-
-  .vcardLeft { flex: none; padding-right: 0; width: 100%; }
-  .vcard h3 { font-size: 28px; }
-  .vcard p { font-size: 14px; margin-top: 10px; }
-  .vcard button { font-size: 13px; padding: 10px 22px; margin-top: 18px; }
-
-  .vcardRight {
+  .vsLeft  { flex: none; width: 100%; padding-right: 0; }
+  .vsRight {
     flex: none;
     width: 100%;
-    margin-top: 20px;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-top: 12px;
   }
-  .vcardRight svg { width: 50%; max-width: 140px; height: auto; }
+  .vsRight svg { width: 110px; }
 }
