@@ -1,197 +1,198 @@
-/* ══════════════════════════════════
-   SECTION
-   ══════════════════════════════════ */
-.values {
+.valuesSection {
   background: #FFF0F4;
-  padding-top: 72px;
+  padding-top: 80px;
 }
 
-/* ══════════════════════════════════
-   HEADING BLOCK
-   ══════════════════════════════════ */
-.header {
+.valuesHeading {
   text-align: center;
-  max-width: 560px;
-  margin: 0 auto;
-  padding-bottom: 48px;
+  max-width: 600px;
+  margin: 0 auto 56px;
+  padding: 0 24px;
 }
 
-.eyebrow {
+.valuesEyebrow {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  font-family: var(--font-ui);
-  font-weight: 500;
-  font-size: 11px;
-  color: #A0526A;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
   margin-bottom: 20px;
 }
-.eyebrow::before,
-.eyebrow::after {
-  content: '';
+.eyebrowLine {
   flex: 1;
+  max-width: 80px;
   height: 1px;
   background: #E8B4C4;
-  max-width: 60px;
 }
-
-.headingPair { font-family: var(--font-display); line-height: 1.15; }
-.headingLine1 { display: block; font-size: 44px; font-weight: 500; color: #1A0A10; }
-.headingLine2 { display: block; font-size: 48px; font-style: italic; color: #9B1B4B; }
-
-.sub {
-  font-family: var(--font-ui);
-  font-size: 14px;
+.eyebrowText {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #A0526A;
+  font-family: sans-serif;
+}
+.valuesTitle {
+  font-size: 44px;
+  line-height: 1.15;
+  color: #1A0A10;
+  font-weight: 500;
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+}
+.valuesItalic {
+  font-style: italic;
+  color: #9B1B4B;
+  font-size: 48px;
+}
+.valuesSub {
+  font-size: 15px;
   color: #8A6070;
-  line-height: 1.7;
-  margin-top: 16px;
-  text-align: center;
+  line-height: 1.6;
+  font-family: var(--font-ui);
 }
 
-/* ══════════════════════════════════
-   SCROLL TRACK — 500vh
-   ══════════════════════════════════ */
-.scrollTrack {
-  height: 500vh;
+/* SCROLL TRACK */
+.valuesTrack {
+  height: 400vh;
   position: relative;
 }
 
-/* ══════════════════════════════════
-   DECK WRAPPER — sticky, holds all cards
-   ══════════════════════════════════ */
-.deckWrapper {
+.valuesPin {
   position: sticky;
-  top: 100px;
-  height: 420px;
-  max-width: 880px;
-  margin: 0 auto;
-  padding-bottom: 60px;
+  top: 80px;
+  height: calc(100vh - 100px);
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40px;
 }
 
-/* ══════════════════════════════════
-   INDIVIDUAL CARDS — all absolutely stacked
-   ══════════════════════════════════ */
-.valueCard {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* DECK */
+.valuesDeck {
+  position: relative;
   width: 100%;
+  max-width: 880px;
   height: 380px;
+  margin: 0 auto;
+}
+
+/* ALL CARDS */
+.vcard {
+  position: absolute;
+  inset: 0;
   border-radius: 24px;
   display: flex;
   align-items: center;
   padding: 52px 60px;
-  transform-origin: top center;
-  will-change: transform;
-  transition: none;
   overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+  transform-origin: center top;
+  will-change: transform, opacity;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15); /* added subtle shadow for depth */
 }
 
-/* ── Card Left ── */
-.cardLeft {
+.vcard0 {
+  background: linear-gradient(135deg, #6B1535 0%, #1A0510 100%);
+  z-index: 4;
+}
+.vcard1 {
+  background: linear-gradient(135deg, #1A3D0A 0%, #0D2006 100%);
+  z-index: 3;
+}
+.vcard2 {
+  background: linear-gradient(135deg, #0D2B5E 0%, #060D1A 100%);
+  z-index: 2;
+}
+.vcard3 {
+  background: linear-gradient(135deg, #5C3A0A 0%, #1A1005 100%);
+  z-index: 1;
+}
+
+.vcardLeft {
   flex: 0 0 55%;
-  display: flex;
-  flex-direction: column;
   padding-right: 40px;
 }
-
-.cardLabel {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  font-size: 11px;
-  font-family: var(--font-ui);
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  padding: 6px 16px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  align-self: flex-start;
-}
-
-.cardHeadline {
-  font-family: var(--font-display);
-  font-size: 40px;
-  font-weight: 600;
-  margin-top: 16px;
-  line-height: 1.1;
-}
-
-.cardDesc {
-  font-family: var(--font-ui);
-  font-size: 15px;
-  line-height: 1.7;
-  margin-top: 12px;
-}
-
-.cardBtn {
-  display: inline-block;
-  border-radius: 999px;
-  padding: 12px 28px;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: var(--font-ui);
-  text-decoration: none;
-  margin-top: 28px;
-  align-self: flex-start;
-  transition: opacity 0.2s ease;
-}
-.cardBtn:hover { opacity: 0.85; }
-
-/* ── Card Right ── */
-.cardRight {
+.vcardRight {
   flex: 0 0 45%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.cardRight svg {
-  width: 100%;
-  max-width: 220px;
+.vcardRight svg {
+  width: 180px;
   height: 180px;
 }
 
-/* ══════════════════════════════════
-   PROGRESS DOTS
-   ══════════════════════════════════ */
-.dots {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+.vcardLabel {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+}
+.vcard h3 {
+  font-size: 40px;
+  font-weight: 500;
+  color: white;
+  margin: 0 0 16px;
+  font-family: serif;
+}
+.vcard p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 28px;
+  font-family: var(--font-ui);
+}
+.vcard button {
+  background: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: var(--font-ui);
+}
+.vcard0 button { color: #6B1535; }
+.vcard1 button { color: #1A3D0A; background: #F0FFE8; }
+.vcard2 button { color: #0D2B5E; background: #E8F0FF; }
+.vcard3 button { color: #5C3A0A; background: #FFF5E0; }
+
+/* DOTS */
+.vdots {
   display: flex;
   gap: 8px;
   align-items: center;
-  z-index: 20;
+  margin-top: 20px;
 }
-
-.dot {
+.vdot {
   height: 8px;
   width: 8px;
   border-radius: 999px;
-  background: white;
-  opacity: 0.3;
-  display: block;
+  background: #9B1B4B;
+  opacity: 0.25;
   transition: width 0.3s ease, opacity 0.3s ease;
 }
+.vdot.active {
+  width: 24px;
+  opacity: 1;
+}
 
-/* ══════════════════════════════════
-   MOBILE
-   ══════════════════════════════════ */
+/* MOBILE FALLBACK */
 @media (max-width: 768px) {
-  .values { padding-top: 48px; }
-  .header { padding: 0 20px 32px; }
-  .headingLine1 { font-size: 28px; }
-  .headingLine2 { font-size: 32px; }
-  .sub { font-size: 13px; }
+  .valuesSection { padding-top: 48px; }
+  .valuesHeading { padding: 0 20px 32px; }
+  .valuesTitle { font-size: 28px; }
+  .valuesItalic { font-size: 32px; }
+  .valuesSub { font-size: 13px; }
 
-  .scrollTrack { height: 400vh; }
+  .valuesTrack { height: 400vh; }
 
-  .deckWrapper {
+  .valuesPin {
     top: 70px;
     height: auto;
     min-height: 460px;
@@ -199,23 +200,23 @@
     padding-bottom: 48px;
   }
 
-  .valueCard {
+  .vcard {
     height: 420px;
     flex-direction: column;
     align-items: flex-start;
     padding: 32px 24px 24px;
   }
 
-  .cardLeft { flex: none; padding-right: 0; width: 100%; }
-  .cardHeadline { font-size: 28px; }
-  .cardDesc { font-size: 14px; margin-top: 10px; }
-  .cardBtn { font-size: 13px; padding: 10px 22px; margin-top: 18px; }
+  .vcardLeft { flex: none; padding-right: 0; width: 100%; }
+  .vcard h3 { font-size: 28px; }
+  .vcard p { font-size: 14px; margin-top: 10px; }
+  .vcard button { font-size: 13px; padding: 10px 22px; margin-top: 18px; }
 
-  .cardRight {
+  .vcardRight {
     flex: none;
     width: 100%;
     margin-top: 20px;
     justify-content: flex-start;
   }
-  .cardRight svg { width: 50%; max-width: 140px; height: auto; }
+  .vcardRight svg { width: 50%; max-width: 140px; height: auto; }
 }

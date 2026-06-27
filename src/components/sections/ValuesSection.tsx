@@ -1,310 +1,216 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './ValuesSection.module.css';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
-
-/* ══════════════════════════════════════════
-   SVG ILLUSTRATIONS
-   ══════════════════════════════════════════ */
-
-const IlloSabhyata = () => (
-  <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <polygon points="130,18 133,27 142,27 135,33 138,42 130,36 122,42 125,33 118,27 127,27" fill="rgba(255,255,255,0.9)" />
-    <rect x="127" y="42" width="6" height="98" rx="3" fill="rgba(255,255,255,0.8)" />
-    <rect x="100" y="138" width="60" height="8" rx="4" fill="rgba(255,255,255,0.8)" />
-    <rect x="110" y="146" width="40" height="6" rx="3" fill="rgba(255,255,255,0.6)" />
-    <rect x="76" y="58" width="108" height="5" rx="2.5" fill="rgba(255,255,255,0.85)" />
-    <line x1="90" y1="63" x2="72" y2="100" stroke="rgba(255,255,255,0.7)" strokeWidth="2" />
-    <line x1="170" y1="63" x2="188" y2="100" stroke="rgba(255,255,255,0.7)" strokeWidth="2" />
-    <ellipse cx="72" cy="104" rx="26" ry="8" fill="rgba(255,255,255,0.85)" />
-    <path d="M46,104 Q59,116 72,116 Q85,116 98,104" fill="rgba(255,255,255,0.5)" />
-    <ellipse cx="188" cy="104" rx="26" ry="8" fill="rgba(255,255,255,0.85)" />
-    <path d="M162,104 Q175,116 188,116 Q201,116 214,104" fill="rgba(255,255,255,0.5)" />
-  </svg>
-);
-
-const IlloSanskriti = () => (
-  <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" />
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" transform="rotate(60 130 90)" />
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(180,255,160,0.75)" transform="rotate(120 130 90)" />
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" transform="rotate(180 130 90)" />
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(180,255,160,0.75)" transform="rotate(240 130 90)" />
-    <ellipse cx="130" cy="78" rx="14" ry="30" fill="rgba(200,255,180,0.85)" transform="rotate(300 130 90)" />
-    <circle cx="130" cy="90" r="16" fill="rgba(150,255,120,0.5)" />
-    <circle cx="130" cy="90" r="9" fill="rgba(240,255,232,0.95)" />
-    <rect x="100" y="138" width="60" height="46" rx="0" fill="none" stroke="rgba(200,255,180,0.65)" strokeWidth="3" />
-    <path d="M100,138 Q130,110 160,138" fill="none" stroke="rgba(220,255,200,0.85)" strokeWidth="3" />
-    <rect x="115" y="158" width="30" height="26" rx="2" fill="rgba(200,255,180,0.2)" />
-    <line x1="80" y1="184" x2="180" y2="184" stroke="rgba(200,255,180,0.4)" strokeWidth="2" />
-  </svg>
-);
-
-const IlloSamvedana = () => (
-  <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M130,88 c0-8 12-8 12 0 c0-8 12-8 12 0 c0 8-12 18-12 18 c0,0-12-10-12-18z" fill="#A8C8FF" />
-    <ellipse cx="72" cy="115" rx="28" ry="18" fill="rgba(232,240,255,0.85)" />
-    <ellipse cx="92" cy="100" rx="8" ry="14" fill="rgba(232,240,255,0.85)" transform="rotate(-20 92 100)" />
-    <ellipse cx="104" cy="97" rx="7" ry="13" fill="rgba(220,232,255,0.8)" transform="rotate(-10 104 97)" />
-    <ellipse cx="115" cy="98" rx="6" ry="12" fill="rgba(210,228,255,0.75)" transform="rotate(5 115 98)" />
-    <ellipse cx="124" cy="102" rx="6" ry="11" fill="rgba(210,228,255,0.75)" transform="rotate(15 124 102)" />
-    <ellipse cx="74" cy="100" rx="7" ry="12" fill="rgba(220,232,255,0.8)" transform="rotate(40 74 100)" />
-    <rect x="30" y="110" width="50" height="22" rx="10" fill="rgba(200,220,255,0.75)" />
-    <ellipse cx="188" cy="115" rx="28" ry="18" fill="rgba(232,240,255,0.85)" />
-    <ellipse cx="168" cy="100" rx="8" ry="14" fill="rgba(232,240,255,0.85)" transform="rotate(20 168 100)" />
-    <ellipse cx="156" cy="97" rx="7" ry="13" fill="rgba(220,232,255,0.8)" transform="rotate(10 156 97)" />
-    <ellipse cx="145" cy="98" rx="6" ry="12" fill="rgba(210,228,255,0.75)" transform="rotate(-5 145 98)" />
-    <ellipse cx="136" cy="102" rx="6" ry="11" fill="rgba(210,228,255,0.75)" transform="rotate(-15 136 102)" />
-    <ellipse cx="186" cy="100" rx="7" ry="12" fill="rgba(220,232,255,0.8)" transform="rotate(-40 186 100)" />
-    <rect x="180" y="110" width="50" height="22" rx="10" fill="rgba(200,220,255,0.75)" />
-  </svg>
-);
-
-const IlloSeva = () => (
-  <svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="130" cy="75" r="14" fill="rgba(255,245,180,0.95)" />
-    <rect x="118" y="88" width="24" height="36" rx="10" fill="rgba(255,245,180,0.95)" />
-    <rect x="90" y="78" width="32" height="10" rx="5" fill="rgba(255,235,150,0.9)" transform="rotate(-30 90 78)" />
-    <rect x="138" y="68" width="32" height="10" rx="5" fill="rgba(255,235,150,0.9)" transform="rotate(30 138 68)" />
-    <circle cx="130" cy="22" r="9" fill="rgba(255,240,160,0.7)" />
-    <rect x="122" y="30" width="16" height="22" rx="7" fill="rgba(255,240,160,0.7)" />
-    <circle cx="130" cy="160" r="9" fill="rgba(255,240,160,0.7)" />
-    <rect x="122" y="168" width="16" height="22" rx="7" fill="rgba(255,240,160,0.7)" />
-    <circle cx="54" cy="98" r="9" fill="rgba(255,240,160,0.7)" />
-    <rect x="46" y="106" width="16" height="22" rx="7" fill="rgba(255,240,160,0.7)" />
-    <circle cx="206" cy="98" r="9" fill="rgba(255,240,160,0.7)" />
-    <rect x="198" y="106" width="16" height="22" rx="7" fill="rgba(255,240,160,0.7)" />
-    <line x1="130" y1="62" x2="130" y2="38" stroke="rgba(255,235,150,0.35)" strokeWidth="1.5" strokeDasharray="4 3" />
-    <line x1="118" y1="110" x2="70" y2="104" stroke="rgba(255,235,150,0.35)" strokeWidth="1.5" strokeDasharray="4 3" />
-    <line x1="142" y1="110" x2="190" y2="104" stroke="rgba(255,235,150,0.35)" strokeWidth="1.5" strokeDasharray="4 3" />
-    <line x1="130" y1="124" x2="130" y2="152" stroke="rgba(255,235,150,0.35)" strokeWidth="1.5" strokeDasharray="4 3" />
-  </svg>
-);
-
-/* ══════════════════════════════════════════
-   DATA
-   ══════════════════════════════════════════ */
-
-const VALUES = [
-  {
-    index: 0,
-    label: 'ETHICAL CONDUCT',
-    headline: 'Sabhyata',
-    desc: 'We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',
-    link: '/why-ispeak/values',
-    Illo: IlloSabhyata,
-    bg: 'linear-gradient(135deg, #6B1535 0%, #1A0510 100%)',
-    titleColor: '#FFFFFF',
-    descColor: 'rgba(255,255,255,0.75)',
-    btnBg: '#FFFFFF',
-    btnColor: '#6B1535',
-  },
-  {
-    index: 1,
-    label: 'CULTURE',
-    headline: 'Sanskriti',
-    desc: 'We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.',
-    link: '/why-ispeak/values',
-    Illo: IlloSanskriti,
-    bg: 'linear-gradient(135deg, #1A3D0A 0%, #0D2006 100%)',
-    titleColor: '#F0FFE8',
-    descColor: 'rgba(240,255,232,0.8)',
-    btnBg: '#F0FFE8',
-    btnColor: '#1A3D0A',
-  },
-  {
-    index: 2,
-    label: 'EMPATHY',
-    headline: 'Samvedana',
-    desc: 'We listen before we speak. We feel before we advise. Every individual who comes to us is met with deep, genuine empathy that makes healing feel possible.',
-    link: '/why-ispeak/values',
-    Illo: IlloSamvedana,
-    bg: 'linear-gradient(135deg, #0D2B5E 0%, #060D1A 100%)',
-    titleColor: '#E8F0FF',
-    descColor: 'rgba(232,240,255,0.8)',
-    btnBg: '#E8F0FF',
-    btnColor: '#0D2B5E',
-  },
-  {
-    index: 3,
-    label: 'SERVICE TO SOCIETY',
-    headline: 'Seva',
-    desc: 'Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',
-    link: '/why-ispeak/values',
-    Illo: IlloSeva,
-    bg: 'linear-gradient(135deg, #5C3A0A 0%, #1A1005 100%)',
-    titleColor: '#FFF5E0',
-    descColor: 'rgba(255,245,224,0.8)',
-    btnBg: '#FFF5E0',
-    btnColor: '#5C3A0A',
-  },
-];
-
-/* Deck physics constants */
-const STACK_OFFSETS = [0, 20, 36, 48];
-const STACK_SCALES  = [1.00, 0.96, 0.92, 0.88];
-const CARD_COUNT    = VALUES.length;
-
-/* ══════════════════════════════════════════
-   COMPONENT
-   ══════════════════════════════════════════ */
 
 export default function ValuesSection() {
-  const { ref: headingRef, isVisible } = useScrollReveal(0.1);
-  const trackRef  = useRef<HTMLDivElement>(null);
-  const cardRefs  = useRef<(HTMLDivElement | null)[]>([]);
-  const dotRefs   = useRef<(HTMLSpanElement | null)[]>([]);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    
+    const deck = track.querySelector(`.${styles.valuesDeck}`);
+    const cards = Array.from(track.querySelectorAll(`.${styles.vcard}`)) as HTMLElement[];
+    const dots = Array.from(track.querySelectorAll(`.${styles.vdot}`)) as HTMLElement[];
 
-    const update = () => {
-      const rect     = track.getBoundingClientRect();
-      const scrolled = -rect.top;
-      const total    = rect.height - window.innerHeight;
-      // progress: 0 → CARD_COUNT-1 as we scroll through the whole track
-      const progress = Math.max(0, Math.min(CARD_COUNT - 1,
-        (scrolled / total) * CARD_COUNT));
+    if (!deck || cards.length === 0) return;
 
-      cardRefs.current.forEach((card, i) => {
-        if (!card) return;
-        const rel = progress - i; // how far past this card we are
+    // Cards are ordered 0,1,2,3 in DOM but card-0 is on TOP visually
+    // Stack peek: each card behind peeks 14px lower and is scaled down
+    const PEEK   = 14;   // px each card peeks below the one in front
+    const SCALES = [1, 0.965, 0.93, 0.895];
 
-        if (rel < -1 || (i === 0 && rel < 0)) {
-          // Card not yet reached — sit in its initial stack position
-          // For cards further back, clamp to deepest slot
-          const stackPos = Math.min(i, STACK_OFFSETS.length - 1);
-          card.style.transform =
-            `translateY(${STACK_OFFSETS[stackPos]}px) scale(${STACK_SCALES[stackPos]})`;
-          card.style.opacity   = '1';
-          card.style.zIndex    = String(CARD_COUNT - i);
+    function setInitial() {
+      cards.forEach((card, i) => {
+        card.style.transition = 'none';
+        card.style.transform  = 
+          `translateY(${i * PEEK}px) scale(${SCALES[i]})`;
+        card.style.opacity = '1';
+      });
+    }
 
-        } else if (rel >= 0 && rel < 1) {
-          // THIS card is the front card — animating off screen upward
-          const p = rel; // 0→1
-          card.style.transform = `translateY(${-(p * 115)}%) scale(1)`;
-          card.style.opacity   = String(Math.max(0, 1 - p * 0.5));
-          card.style.zIndex    = String(CARD_COUNT - i + 10);
+    setInitial();
 
-        } else if (rel < 0) {
-          // Card is behind — interpolate toward front as the card ahead departs
-          // rel is in range (-CARD_COUNT, 0)
-          const behindDepth = Math.round(-rel); // 1, 2, 3 — how deep in the deck
+    function onScroll() {
+      const rect      = track!.getBoundingClientRect();
+      const scrolled  = -rect.top;
+      const available = rect.height - window.innerHeight;
+      if (available <= 0) return;
 
-          // Where this card currently sits
-          const fromSlot  = Math.min(behindDepth,     STACK_OFFSETS.length - 1);
-          const toSlot    = Math.min(behindDepth - 1, STACK_OFFSETS.length - 1);
-          const fromScale = STACK_SCALES[fromSlot];
-          const fromY     = STACK_OFFSETS[fromSlot];
-          const toScale   = STACK_SCALES[toSlot];
-          const toY       = STACK_OFFSETS[toSlot];
+      // progress: 0 → 4  (one unit per card)
+      const progress = Math.max(0, Math.min(cards.length, 
+        (scrolled / available) * cards.length));
 
-          // p = how far the card ahead of us has animated (0→1)
-          const frontRel = Math.max(0, Math.min(1, progress - (i - 1)));
-          const curScale = fromScale + (toScale - fromScale) * frontRel;
-          const curY     = fromY     + (toY     - fromY)     * frontRel;
+      cards.forEach((card, i) => {
+        // How far we are into THIS card's exit (0 = not started, 1 = done)
+        const exit = Math.max(0, Math.min(1, progress - i));
 
-          card.style.transform = `translateY(${curY}px) scale(${curScale})`;
-          card.style.opacity   = '1';
-          card.style.zIndex    = String(CARD_COUNT - i);
+        if (exit < 1) {
+          // Card is visible — may be animating out
+          // Its stack position shifts as the cards above leave
+          const stackPos = Math.max(0, i - Math.floor(progress));
+          const targetScale = SCALES[Math.min(stackPos, SCALES.length - 1)];
+          const targetY     = stackPos * PEEK;
 
+          if (exit === 0) {
+            // Not reached yet — sit in stack
+            card.style.transform = 
+              `translateY(${targetY}px) scale(${targetScale})`;
+            card.style.opacity   = '1';
+          } else {
+            // THIS card is leaving — slide up
+            // Mix between stack-front position and gone
+            const slideY = -(exit * 110); // % of card height
+            card.style.transform = 
+              `translateY(${slideY}%) scale(${1 - exit * 0.05})`;
+            card.style.opacity   = String(Math.max(0, 1 - exit * 0.6));
+          }
         } else {
-          // Fully gone
-          card.style.transform = 'translateY(-115%)';
+          // Card fully gone
+          card.style.transform = 'translateY(-110%)';
           card.style.opacity   = '0';
-          card.style.zIndex    = '0';
         }
       });
 
-      // Dots
-      const activeIdx = Math.min(CARD_COUNT - 1, Math.floor(progress));
-      dotRefs.current.forEach((dot, i) => {
-        if (!dot) return;
-        dot.style.width   = i === activeIdx ? '24px' : '8px';
-        dot.style.opacity = i === activeIdx ? '1'    : '0.3';
+      // Active dot = whichever card is currently front
+      const active = Math.min(cards.length - 1, Math.floor(progress));
+      dots.forEach((d, i) => {
+        d.classList.toggle(styles.active, i === active);
       });
-    };
+    }
 
-    window.addEventListener('scroll', update, { passive: true });
-    update(); // initialise on mount
-    return () => window.removeEventListener('scroll', update);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
-  return (
-    <section id="values" className={styles.values} aria-labelledby="values-heading">
+  const handleLearnMore = () => {
+    navigate('/why-ispeak/values');
+    window.scrollTo(0, 0);
+  };
 
-      {/* Heading */}
-      <div className="container">
-        <header
-          className={`${styles.header} ${isVisible ? 'reveal visible' : 'reveal'}`}
-          ref={headingRef}
-        >
-          <span className={styles.eyebrow}>Our Values</span>
-          <h2 className={styles.headingPair} id="values-heading">
-            <span className={styles.headingLine1}>Rooted in culture,</span>
-            <span className={styles.headingLine2}>driven by empathy</span>
-          </h2>
-          <p className={styles.sub}>
-            Our four foundational values guide everything — from the therapy room to communities across India.
-          </p>
-        </header>
+  return (
+    <section className={styles.valuesSection} aria-labelledby="values-heading">
+      <div className={styles.valuesHeading}>
+        <div className={styles.valuesEyebrow}>
+          <span className={styles.eyebrowLine}></span>
+          <span className={styles.eyebrowText}>OUR VALUES</span>
+          <span className={styles.eyebrowLine}></span>
+        </div>
+        <h2 className={styles.valuesTitle} id="values-heading">Rooted in culture,<br/>
+          <em className={styles.valuesItalic}>driven by empathy</em>
+        </h2>
+        <p className={styles.valuesSub}>Our four foundational values guide everything — 
+        from the therapy room to communities across India.</p>
       </div>
 
-      {/* 500vh scroll track */}
-      <div className={styles.scrollTrack} ref={trackRef}>
-        <div className={styles.deckWrapper}>
+      <div className={styles.valuesTrack} ref={trackRef}>
+        <div className={styles.valuesPin}>
 
-          {/* Cards */}
-          {VALUES.map((v, i) => (
-            <div
-              key={v.index}
-              className={styles.valueCard}
-              data-card={v.index}
-              ref={(el) => { cardRefs.current[i] = el; }}
-              style={{ background: v.bg }}
-            >
-              {/* Left */}
-              <div className={styles.cardLeft}>
-                <span className={styles.cardLabel}>
-                  {v.label}
-                </span>
-                <h3 className={styles.cardHeadline} style={{ color: v.titleColor }}>
-                  {v.headline}
-                </h3>
-                <p className={styles.cardDesc} style={{ color: v.descColor }}>
-                  {v.desc}
-                </p>
-                <Link
-                  to={v.link}
-                  className={styles.cardBtn}
-                  style={{ background: v.btnBg, color: v.btnColor }}
-                >
-                  Learn More »
-                </Link>
+          <div className={styles.valuesDeck}>
+            {/* Card 3 - Seva */}
+            <div className={`${styles.vcard} ${styles.vcard3}`}>
+              <div className={styles.vcardLeft}>
+                <span className={styles.vcardLabel}>SERVICE TO SOCIETY</span>
+                <h3>Seva</h3>
+                <p>Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.</p>
+                <button onClick={handleLearnMore}>Learn More »</button>
               </div>
-
-              {/* Right */}
-              <div className={styles.cardRight} aria-hidden="true">
-                <v.Illo />
+              <div className={styles.vcardRight}>
+                <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="100" cy="50" r="18" fill="rgba(255,245,224,0.9)"/>
+                  <rect x="88" y="70" width="24" height="36" rx="8" fill="rgba(255,245,224,0.9)"/>
+                  <circle cx="40" cy="110" r="12" fill="rgba(255,245,224,0.5)"/>
+                  <rect x="31" y="124" width="18" height="28" rx="6" fill="rgba(255,245,224,0.5)"/>
+                  <circle cx="160" cy="110" r="12" fill="rgba(255,245,224,0.5)"/>
+                  <rect x="151" y="124" width="18" height="28" rx="6" fill="rgba(255,245,224,0.5)"/>
+                  <circle cx="100" cy="130" r="12" fill="rgba(255,245,224,0.5)"/>
+                  <rect x="91" y="144" width="18" height="28" rx="6" fill="rgba(255,245,224,0.5)"/>
+                  <line x1="100" y1="106" x2="100" y2="130" stroke="rgba(255,245,224,0.4)" strokeWidth="2" strokeDasharray="4 3"/>
+                  <line x1="100" y1="106" x2="40" y2="122" stroke="rgba(255,245,224,0.4)" strokeWidth="2" strokeDasharray="4 3"/>
+                  <line x1="100" y1="106" x2="160" y2="122" stroke="rgba(255,245,224,0.4)" strokeWidth="2" strokeDasharray="4 3"/>
+                </svg>
               </div>
             </div>
-          ))}
 
-          {/* Progress dots */}
-          <div className={styles.dots} aria-hidden="true">
-            {VALUES.map((_, i) => (
-              <span
-                key={i}
-                className={styles.dot}
-                ref={(el) => { dotRefs.current[i] = el; }}
-              />
-            ))}
+            {/* Card 2 - Samvedana */}
+            <div className={`${styles.vcard} ${styles.vcard2}`}>
+              <div className={styles.vcardLeft}>
+                <span className={styles.vcardLabel}>EMPATHY</span>
+                <h3>Samvedana</h3>
+                <p>We listen before we speak. We feel before we advise. Every individual who comes to us is met with deep, genuine empathy that makes healing feel possible.</p>
+                <button onClick={handleLearnMore}>Learn More »</button>
+              </div>
+              <div className={styles.vcardRight}>
+                <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M60 90 Q60 60 90 60 Q100 55 100 70 Q100 55 110 60 Q140 60 140 90 Q140 120 100 145 Q60 120 60 90Z" fill="rgba(232,240,255,0.85)"/>
+                  <circle cx="75" cy="130" r="10" fill="rgba(232,240,255,0.4)"/>
+                  <rect x="69" y="142" width="16" height="26" rx="6" fill="rgba(232,240,255,0.4)"/>
+                  <circle cx="125" cy="130" r="10" fill="rgba(232,240,255,0.4)"/>
+                  <rect x="119" y="142" width="16" height="26" rx="6" fill="rgba(232,240,255,0.4)"/>
+                  <path d="M75 130 Q100 120 125 130" stroke="rgba(232,240,255,0.5)" strokeWidth="1.5" fill="none"/>
+                </svg>
+              </div>
+            </div>
+
+            {/* Card 1 - Sanskriti */}
+            <div className={`${styles.vcard} ${styles.vcard1}`}>
+              <div className={styles.vcardLeft}>
+                <span className={styles.vcardLabel}>CULTURE</span>
+                <h3>Sanskriti</h3>
+                <p>We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.</p>
+                <button onClick={handleLearnMore}>Learn More »</button>
+              </div>
+              <div className={styles.vcardRight}>
+                <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="100" cy="155" rx="50" ry="8" fill="rgba(240,255,232,0.2)"/>
+                  <path d="M100 30 L100 155" stroke="rgba(240,255,232,0.3)" strokeWidth="3"/>
+                  <path d="M100 60 Q130 45 145 60 Q130 80 100 75 Z" fill="rgba(240,255,232,0.7)"/>
+                  <path d="M100 60 Q70 45 55 60 Q70 80 100 75 Z" fill="rgba(240,255,232,0.5)"/>
+                  <path d="M100 90 Q135 72 152 90 Q135 112 100 106 Z" fill="rgba(240,255,232,0.6)"/>
+                  <path d="M100 90 Q65 72 48 90 Q65 112 100 106 Z" fill="rgba(240,255,232,0.4)"/>
+                  <circle cx="100" cy="30" r="8" fill="rgba(240,255,232,0.9)"/>
+                </svg>
+              </div>
+            </div>
+
+            {/* Card 0 - Sabhyata */}
+            <div className={`${styles.vcard} ${styles.vcard0}`}>
+              <div className={styles.vcardLeft}>
+                <span className={styles.vcardLabel}>ETHICAL CONDUCT</span>
+                <h3>Sabhyata</h3>
+                <p>We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.</p>
+                <button onClick={handleLearnMore}>Learn More »</button>
+              </div>
+              <div className={styles.vcardRight}>
+                <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="100" y1="20" x2="100" y2="160" stroke="rgba(255,255,255,0.8)" strokeWidth="3"/>
+                  <line x1="60" y1="60" x2="140" y2="60" stroke="rgba(255,255,255,0.8)" strokeWidth="3"/>
+                  <ellipse cx="65" cy="90" rx="22" ry="10" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.6)" strokeWidth="2"/>
+                  <line x1="65" y1="80" x2="65" y2="60" stroke="rgba(255,255,255,0.6)" strokeWidth="2"/>
+                  <ellipse cx="135" cy="100" rx="22" ry="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="2"/>
+                  <line x1="135" y1="90" x2="135" y2="60" stroke="rgba(255,255,255,0.4)" strokeWidth="2"/>
+                  <rect x="88" y="155" width="24" height="6" rx="3" fill="rgba(255,255,255,0.6)"/>
+                  <polygon points="100,8 104,18 96,18" fill="rgba(255,220,100,0.9)"/>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+
+          <div className={styles.vdots}>
+            <div className={`${styles.vdot} ${styles.active}`}></div>
+            <div className={styles.vdot}></div>
+            <div className={styles.vdot}></div>
+            <div className={styles.vdot}></div>
           </div>
 
         </div>
       </div>
-
     </section>
   );
 }
