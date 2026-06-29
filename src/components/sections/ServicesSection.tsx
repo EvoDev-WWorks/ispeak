@@ -301,6 +301,7 @@ export default function ServicesSection() {
   const services = [
     {
       id: 'ind',
+      tag: 'INDIVIDUAL',
       Illustration: IlloIndividual,
       bgColor: '#7B7FB5',
       title: 'Individual Counselling',
@@ -310,6 +311,7 @@ export default function ServicesSection() {
     },
     {
       id: 'cpl',
+      tag: 'COUPLES',
       Illustration: IlloCouple,
       bgColor: '#E8705A',
       title: 'Couple Counselling',
@@ -319,6 +321,7 @@ export default function ServicesSection() {
     },
     {
       id: 'adol',
+      tag: 'ADOLESCENT',
       Illustration: IlloAdolescent,
       bgColor: '#2D6B6B',
       title: 'Adolescent Counselling',
@@ -328,6 +331,7 @@ export default function ServicesSection() {
     },
     {
       id: 'fam',
+      tag: 'FAMILY',
       Illustration: IlloFamily,
       bgColor: '#E8A5B8',
       title: 'Family Counselling',
@@ -337,6 +341,7 @@ export default function ServicesSection() {
     },
     {
       id: 'corp',
+      tag: 'CORPORATE',
       Illustration: IlloCorporate,
       bgColor: '#C4A882',
       title: 'Corporate Wellness EAP',
@@ -346,6 +351,7 @@ export default function ServicesSection() {
     },
     {
       id: 'sch',
+      tag: 'SCHOOLS',
       Illustration: IlloSchool,
       bgColor: '#7DB8A0',
       title: 'School Wellness Programme',
@@ -376,15 +382,16 @@ export default function ServicesSection() {
               key={service.id}
               className={styles.card}
               role="listitem"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ animationDelay: `${index * 0.1}s`, '--card-accent': service.bgColor } as React.CSSProperties}
             >
               {/* Illustration header */}
-              <div className={styles.cardIllo} aria-hidden="true">
+              <div className={styles.cardIllo} aria-hidden="true" style={{ background: service.bgColor }}>
                 <service.Illustration />
               </div>
 
               {/* Card body */}
               <div className={styles.cardBody}>
+                <span className={styles.cardTag}>{service.tag}</span>
                 <h3 className={styles.cardTitle}>{service.title}</h3>
                 <p className={styles.cardDesc}>{service.desc}</p>
                 <Link to={service.link} className={styles.cardBtn}>

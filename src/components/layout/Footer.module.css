@@ -27,18 +27,9 @@
   margin-bottom: 12px;
 }
 
-.logoMark {
-  width: 40px;
+.logoImg {
   height: 40px;
-  background: var(--c-pink);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  font-family: var(--font-display);
+  width: auto;
 }
 
 .wordmark {

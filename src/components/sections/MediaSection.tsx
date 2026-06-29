@@ -24,7 +24,7 @@ export default function MediaSection() {
               <span className={styles.badge}>Mental Health</span>
               <span className={styles.badge}>Culture</span>
             </div>
-            <h3 className={styles.featHeadline}>'Delulu is the only Solulu' — What psychologists say about Gen Z's viral trend</h3>
+            <h3 className={styles.featHeadline}>'Delulu is the only Solulu': What psychologists say about Gen Z's viral trend</h3>
             <p className={styles.featExcerpt}>
               Gargi Dagar, Founder of iSpeak Psychological Services, Gurugram, breaks down the cognitive patterns behind the trending internet philosophy and what it reveals about how Gen Z processes aspiration and disappointment...
             </p>

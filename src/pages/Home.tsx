@@ -3,9 +3,8 @@ import MarqueeStrip from '../components/sections/MarqueeStrip';
 import StatsStrip from '../components/sections/StatsStrip';
 import ServicesSection from '../components/sections/ServicesSection';
 import ValuesSection from '../components/sections/ValuesSection';
-import SankalpasSection from '../components/sections/SankalpasSection';
+
 import TestimonialsSection from '../components/sections/TestimonialsSection';
-import WhoWeServe from '../components/sections/WhoWeServe';
 import AcademicFootprint from '../components/sections/AcademicFootprint';
 import MediaSection from '../components/sections/MediaSection';
 import CtaBand from '../components/sections/CtaBand';
@@ -19,9 +18,8 @@ export default function Home() {
       <StatsStrip />
       <ServicesSection />
       <ValuesSection />
-      <SankalpasSection />
+
       <TestimonialsSection />
-      <WhoWeServe />
       <AcademicFootprint />
       <MediaSection />
       <CtaBand />

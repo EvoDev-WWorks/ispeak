@@ -28,9 +28,11 @@ const mobileNavItems = [
     key: 'programs',
     label: 'Programs',
     links: [
-      { to: '/programs/corporate', label: 'Corporate Wellness Programs' },
-      { to: '/programs/school',    label: 'School Wellness Programs' },
-      { to: '/programs/sports',    label: "Sports Athletes' Wellness" },
+      { to: '/programs/corporate',      label: 'Corporate Wellness Programs' },
+      { to: '/programs/school',         label: 'School Wellness Programs' },
+      { to: '/programs/sports',         label: "Sports Athletes' Wellness" },
+      { to: '/programs/college-ngo',    label: 'College & NGO Partnerships' },
+      { to: '/programs/exam-aspirants', label: 'Competitive Exam Aspirants' },
     ],
   },
   {
@@ -40,13 +42,14 @@ const mobileNavItems = [
       { to: '/why-ispeak/why-choose', label: 'Why choose iSpeak' },
       { to: '/why-ispeak/values',     label: 'Our Values & Purpose' },
       { to: '/why-ispeak/impact',     label: 'Our Impact' },
-      { to: '/why-ispeak/beliefs',    label: 'Our Beliefs' },
+      { to: '/why-ispeak/beliefs',    label: 'Our Believers' },
     ],
   },
   {
     key: 'resources',
     label: 'Resources',
     links: [
+      { to: '/resources/press',     label: 'Press' },
       { to: '/resources/blog',      label: 'Blog' },
       { to: '/resources/self-help', label: 'Self Help Resources' },
       { to: '/resources/events',    label: 'Events & Webinars' },
@@ -55,12 +58,10 @@ const mobileNavItems = [
   },
   {
     key: 'about',
-    label: 'About',
+    label: 'Lifelong Legacy',
     links: [
-      { to: '/about',   label: 'About us' },
-      { to: '/careers', label: 'Careers' },
-      { to: '/press',   label: 'Press' },
-      { to: '/contact', label: 'Contact us' },
+      { to: '/projects', label: 'Projects' },
+      { to: '/careers',  label: 'Careers with iSpeak' },
     ],
   },
 ];
@@ -166,7 +167,7 @@ export default function Navbar() {
 
             <div className={`${styles.item} ${open === 'about' ? styles.itemActive : ''}`}
               onMouseEnter={() => show('about')} onMouseLeave={hide}>
-              <button className={styles.link}>About <Chevron /></button>
+              <button className={styles.link}>Lifelong Legacy <Chevron /></button>
               <MegaMenu id="about" openId={open} setOpen={setOpen} keepOpen={keepOpen} hide={hide} />
             </div>
           </nav>

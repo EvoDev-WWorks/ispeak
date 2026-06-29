@@ -7,7 +7,7 @@ export default function Footer() {
       <div className={styles.top}>
         <div className={styles.brandCol}>
           <Link to="/" className={styles.brandLogo} aria-label="iSpeak Home">
-            <div className={styles.logoMark}>iS</div>
+            <img src="/images/logo.png" alt="iSpeak" className={styles.logoImg} />
             <span className={styles.wordmark}>iSpeak</span>
           </Link>
           <p className={styles.tagline}>A Step Towards Yourself.</p>
@@ -58,7 +58,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.bottom}>
-        <p className={styles.copy}>© 2026 iSpeak Psychological Services Pvt. Ltd. All rights reserved. · Gurugram, Haryana — 122001</p>
+        <p className={styles.copy}>© 2026 iSpeak Psychological Services Pvt. Ltd. All rights reserved. · Gurugram, Haryana 122001</p>
         <div className={styles.legal}>
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Use</a>

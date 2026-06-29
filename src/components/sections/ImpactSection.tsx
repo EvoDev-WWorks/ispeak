@@ -21,7 +21,7 @@ export default function ImpactSection() {
             <span className={styles.headingLine2}>Measured outcomes.</span>
           </h2>
           <p className={`${styles.sub} ${styles.subWhite}`}>
-            Our clinical framework is built on peer-reviewed research and 6+ years of on-ground experience. We measure what matters — not satisfaction scores, but real transformation.
+            Our clinical framework is built on peer-reviewed research and 6+ years of on-ground experience. We measure what matters, not satisfaction scores, but real transformation.
           </p>
           <Link to="/why-ispeak/impact" className={styles.btnWhiteOutline}>Read our research →</Link>
         </div>

@@ -21,7 +21,7 @@ export default function HowItWorks() {
             <div className={styles.illo} aria-hidden="true">📋</div>
             <p className={styles.num}>01</p>
             <h3 className={styles.title}>Tell us about yourself</h3>
-            <p className={styles.body}>A quick, confidential intake — your goals, your language, your schedule. No pressure. No jargon. Just you.</p>
+            <p className={styles.body}>A quick, confidential intake, your goals, your language, your schedule. No pressure. No jargon. Just you.</p>
           </div>
 
           {/* Connector */}

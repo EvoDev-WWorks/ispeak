@@ -15,7 +15,7 @@ export default function FaqSection() {
     },
     {
       q: "Who can benefit from iSpeak's programmes?",
-      a: "Anyone. Whether you're seeking personal growth, a couple navigating challenges, an employer building a healthier workplace, or a school looking to support students — iSpeak has a programme for you."
+      a: "Anyone. Whether you're seeking personal growth, a couple navigating challenges, an employer building a healthier workplace, or a school looking to support students, iSpeak has a programme for you."
     },
     {
       q: "How do I book a session or enquire about a programme?",

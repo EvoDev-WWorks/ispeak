@@ -231,7 +231,7 @@ const pages: Record<string, PageShellProps> = {
   '/services/individual': {
     breadcrumb: 'Home → Services → Individual Counselling',
     title: 'Individual Counselling',
-    subtitle: 'Personalised one-on-one sessions grounded in evidence-based practice — in your language, on your terms.',
+    subtitle: 'Personalised one-on-one sessions grounded in evidence-based practice, in your language, on your terms.',
     relatedLinks: [
       { label: 'Couple Counselling', desc: 'Structured support for relationships', href: '/services/couple' },
       { label: 'Adolescent Counselling', desc: 'Specialised support for teens', href: '/services/adolescent' },
@@ -301,7 +301,7 @@ const pages: Record<string, PageShellProps> = {
   '/why-ispeak/why-choose': {
     breadcrumb: 'Home → Why iSpeak → Why Choose Us',
     title: 'Why Choose iSpeak',
-    subtitle: 'Culturally-grounded, clinically-rigorous, and globally accessible — mental health care that truly understands you.',
+    subtitle: 'Culturally-grounded, clinically-rigorous, and globally accessible, mental health care that truly understands you.',
     relatedLinks: [
       { label: 'Our Values', desc: 'The four pillars we live by', href: '/why-ispeak/values' },
       { label: 'Our Impact', desc: 'Measurable outcomes and reach', href: '/why-ispeak/impact' },
@@ -311,7 +311,7 @@ const pages: Record<string, PageShellProps> = {
   '/why-ispeak/values': {
     breadcrumb: 'Home → Why iSpeak → Values & Purpose',
     title: 'Values & Purpose',
-    subtitle: 'Sabhyata, Sanskriti, Samvedana, Seva — four Sanskrit values that guide every interaction we have.',
+    subtitle: 'Sabhyata, Sanskriti, Samvedana, Seva, four Sanskrit values that guide every interaction we have.',
     relatedLinks: [
       { label: 'Why Choose iSpeak', desc: 'What sets us apart', href: '/why-ispeak/why-choose' },
       { label: 'Our Beliefs', desc: 'The principles behind our practice', href: '/why-ispeak/beliefs' },
@@ -321,7 +321,7 @@ const pages: Record<string, PageShellProps> = {
   '/why-ispeak/impact': {
     breadcrumb: 'Home → Why iSpeak → Our Impact',
     title: 'Our Impact',
-    subtitle: 'From 50,000+ individuals served to 11+ university partnerships — our outcomes speak for themselves.',
+    subtitle: 'From 50,000+ individuals served to 11+ university partnerships, our outcomes speak for themselves.',
     relatedLinks: [
       { label: 'Why Choose iSpeak', desc: 'What sets us apart', href: '/why-ispeak/why-choose' },
       { label: 'Corporate Wellness', desc: 'Measurable EAP results', href: '/programs/corporate' },
@@ -341,7 +341,7 @@ const pages: Record<string, PageShellProps> = {
   '/resources/blog': {
     breadcrumb: 'Home → Resources → Blog',
     title: 'iSpeak Blog',
-    subtitle: 'Insights on mental health, culture, relationships, and well-being — written by our clinical team.',
+    subtitle: 'Insights on mental health, culture, relationships, and well-being, written by our clinical team.',
     relatedLinks: [
       { label: 'Self-Help Resources', desc: 'Tools and guides for your journey', href: '/resources/self-help' },
       { label: 'Events & Webinars', desc: 'Join our live sessions', href: '/resources/events' },
@@ -361,7 +361,7 @@ const pages: Record<string, PageShellProps> = {
   '/resources/events': {
     breadcrumb: 'Home → Resources → Events & Webinars',
     title: 'Events & Webinars',
-    subtitle: 'Live workshops, community sessions, and expert-led webinars — free and accessible to everyone.',
+    subtitle: 'Live workshops, community sessions, and expert-led webinars, free and accessible to everyone.',
     relatedLinks: [
       { label: 'Blog', desc: 'Insights from our clinical team', href: '/resources/blog' },
       { label: 'Self-Help Resources', desc: 'Tools for your wellbeing journey', href: '/resources/self-help' },

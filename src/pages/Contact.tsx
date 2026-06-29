@@ -17,7 +17,7 @@ export default function Contact() {
         </span>
         <h1 className={styles.h1}>Begin your journey <span className={styles.italic}>today.</span></h1>
         <p className={styles.sub}>
-          We respond to all enquiries within 24 hours. No pressure, no jargon — just a warm, professional conversation.
+          We respond to all enquiries within 24 hours. No pressure, no jargon, just a warm, professional conversation.
         </p>
       </div>
 
@@ -25,7 +25,7 @@ export default function Contact() {
         <div className={styles.info}>
           <h2 className={styles.h2}>We're here<span className={styles.italicPink}>for you.</span></h2>
           <p className={styles.infoDesc}>
-            Whether you're looking for individual therapy, a corporate wellness programme, or simply have a question — we're ready to help. iSpeak is based in Gurugram and serves clients across India and internationally.
+            Whether you're looking for individual therapy, a corporate wellness programme, or simply have a question, we're ready to help. iSpeak is based in Gurugram and serves clients across India and internationally.
           </p>
 
           <div className={styles.detail}>
@@ -38,7 +38,7 @@ export default function Contact() {
           </div>
           <div className={styles.detail}>
             <span className={styles.detailIcon}>📍</span>
-            <div>Headquarters<br/>Gurugram, Haryana — 122001</div>
+            <div>Headquarters<br/>Gurugram, Haryana 122001</div>
           </div>
           <div className={styles.detail}>
             <span className={styles.detailIcon}>🌐</span>

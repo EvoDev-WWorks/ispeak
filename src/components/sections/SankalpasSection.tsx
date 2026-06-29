@@ -39,7 +39,7 @@ const sankalpas = [
     hindi: 'संकल्प',
     watermark: 'संकल्प',
     h3: 'Empowering individuals to overcome psychological challenges',
-    body: 'We believe in the power of resolution. Every person carries the capacity to heal — we provide the clinical expertise, cultural sensitivity, and safe space to help them discover it.',
+    body: 'We believe in the power of resolution. Every person carries the capacity to heal, we provide the clinical expertise, cultural sensitivity, and safe space to help them discover it.',
     delay: '',
     reverse: false,
   },

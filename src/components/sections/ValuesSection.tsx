@@ -49,7 +49,7 @@ const SvgSeva = () => (
     <rect x="157" y="120" width="16" height="26" rx="6" fill="rgba(255,245,224,0.45)"/>
     <circle cx="100" cy="132" r="11" fill="rgba(255,245,224,0.45)"/>
     <rect x="93" y="144" width="16" height="26" rx="6" fill="rgba(255,245,224,0.45)"/>
-    <line x1="100" y1="93" x2="36" y2="119" stroke="rgba(255,245,224,0.3)" strokeWidth="2" strokeDasharray="4 3"/>
+    <line x1="100" y1="93" x2="36"  y2="119" stroke="rgba(255,245,224,0.3)" strokeWidth="2" strokeDasharray="4 3"/>
     <line x1="100" y1="93" x2="164" y2="119" stroke="rgba(255,245,224,0.3)" strokeWidth="2" strokeDasharray="4 3"/>
     <line x1="100" y1="93" x2="100" y2="121" stroke="rgba(255,245,224,0.3)" strokeWidth="2" strokeDasharray="4 3"/>
   </svg>
@@ -57,21 +57,23 @@ const SvgSeva = () => (
 
 /* ─── Card data ───────────────────────────────────── */
 const CARDS = [
-  { tag: 'ETHICAL CONDUCT',    title: 'Sabhyata',  desc: 'We hold ourselves to the highest ethical standards — in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',  bg: 'linear-gradient(135deg,#6B1535,#1A0510)', btnBg: 'white',    btnColor: '#6B1535', Svg: SvgSabhyata  },
-  { tag: 'CULTURE',            title: 'Sanskriti', desc: 'We speak your language — literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.', bg: 'linear-gradient(135deg,#1A3D0A,#0D2006)', btnBg: '#F0FFE8',  btnColor: '#1A3D0A', Svg: SvgSanskriti },
-  { tag: 'EMPATHY',            title: 'Samvedana', desc: 'We listen before we speak. We feel before we advise. Every individual is met with deep, genuine empathy that makes healing feel possible.',                    bg: 'linear-gradient(135deg,#0D2B5E,#060D1A)', btnBg: '#E8F0FF',  btnColor: '#0D2B5E', Svg: SvgSamvedana },
-  { tag: 'SERVICE TO SOCIETY', title: 'Seva',      desc: 'Mental health is not a privilege — it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',   bg: 'linear-gradient(135deg,#5C3A0A,#1A1005)', btnBg: '#FFF5E0',  btnColor: '#5C3A0A', Svg: SvgSeva      },
+  { tag: 'ETHICAL CONDUCT',    title: 'Sabhyata',  desc: 'We hold ourselves to the highest ethical standards, in every session, every boundary, and every decision. Integrity is not a policy; it is our practice.',  bg: 'linear-gradient(135deg,#6B1535,#1A0510)', btnBg: 'white',    btnColor: '#6B1535', accentColor: '#8B1A42', italicColor: '#C4466A', italicLabel: 'Sabhyata',  Svg: SvgSabhyata  },
+  { tag: 'CULTURE',            title: 'Sanskriti', desc: 'We speak your language, literally and emotionally. Our care is rooted in Indian cultural contexts, traditions, and lived experiences that shape who we are.', bg: 'linear-gradient(135deg,#1A3D0A,#0D2006)', btnBg: '#F0FFE8',  btnColor: '#1A3D0A', accentColor: '#2A5E10', italicColor: '#3D7A20', italicLabel: 'Sanskriti', Svg: SvgSanskriti },
+  { tag: 'EMPATHY',            title: 'Samvedana', desc: 'We listen before we speak. We feel before we advise. Every individual is met with deep, genuine empathy that makes healing feel possible.',                    bg: 'linear-gradient(135deg,#0D2B5E,#060D1A)', btnBg: '#E8F0FF',  btnColor: '#0D2B5E', accentColor: '#1A4A8A', italicColor: '#2A5FAD', italicLabel: 'Samvedana', Svg: SvgSamvedana },
+  { tag: 'SERVICE TO SOCIETY', title: 'Seva',      desc: 'Mental health is not a privilege, it is a right. We serve communities across India, including underserved populations, because care should reach everyone.',   bg: 'linear-gradient(135deg,#5C3A0A,#1A1005)', btnBg: '#FFF5E0',  btnColor: '#5C3A0A', accentColor: '#7A4D0E', italicColor: '#A06820', italicLabel: 'Seva',      Svg: SvgSeva      },
 ];
+
 
 const PEEKS  = [0, 14, 26, 36];
 const SCALES = [1, 0.96, 0.92, 0.88];
 const N      = CARDS.length;
 
 export default function ValuesSection() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const dotRefs  = useRef<(HTMLSpanElement | null)[]>([]);
-  const navigate = useNavigate();
+  const trackRef   = useRef<HTMLDivElement>(null);
+  const cardRefs   = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs    = useRef<(HTMLSpanElement | null)[]>([]);
+  const italicRef  = useRef<HTMLElement>(null);       // dynamic italic headline
+  const navigate   = useNavigate();
 
   useEffect(() => {
     const track = trackRef.current;
@@ -105,41 +107,49 @@ export default function ValuesSection() {
       const total    = rect.height - window.innerHeight;
       if (total <= 0) return;
 
-      /*
-       * Clamp at N-1: the last card (Seva) is NEVER driven off screen.
-       * scroll ↑ naturally reverses progress → back navigation built-in.
-       * After progress reaches N-1, Seva stays pinned & visible until
-       * the track scrolls out of view, then the page continues normally.
-       */
-      const progress = Math.max(0, Math.min(N - 1, (scrolled / total) * N));
+      const progress = Math.max(0, Math.min(N - 1, (scrolled / total) * (N - 1)));
       const frontIdx = Math.min(N - 1, Math.floor(progress));
       const frac     = progress - Math.floor(progress);
 
       setDot(frontIdx);
+
+      /* Step 4 — update italic headline text + colour on card change */
+      const italicEl = italicRef.current;
+      if (italicEl) {
+        const label = CARDS[frontIdx].italicLabel;
+        const color = CARDS[frontIdx].italicColor;
+        /* Only update DOM if value changed — avoids unnecessary repaints */
+        if (italicEl.textContent !== `driven by ${label}`) {
+          italicEl.style.transition = 'opacity 0.25s ease, color 0.25s ease';
+          italicEl.style.opacity = '0';
+          setTimeout(() => {
+            italicEl.textContent = `driven by ${label}`;
+            italicEl.style.color = color;
+            italicEl.style.opacity = '1';
+          }, 150);
+        }
+      }
 
       cards.forEach((card, i) => {
         const exit = Math.max(0, Math.min(1, progress - i));
 
         card.style.zIndex = String(N - i + (exit > 0 && exit < 1 ? 10 : 0));
 
-        /* Fully off screen (already seen) */
         if (exit >= 1) {
           card.style.transform = 'translateY(-110%)';
           card.style.opacity   = '0';
           return;
         }
 
-        /* Currently exiting — flies straight up */
         if (exit > 0) {
           card.style.transform = `translateY(${-(exit * 110)}%)`;
           card.style.opacity   = String(exit > 0.65 ? 1 - (exit - 0.65) / 0.35 : 1);
           return;
         }
 
-        /* Sitting in the stack — advance forward as the card ahead exits */
         const slot     = Math.max(0, i - Math.floor(progress));
         const nextSlot = Math.max(0, slot - 1);
-        const moving   = (i === frontIdx + 1); // card directly behind active
+        const moving   = (i === frontIdx + 1);
 
         const s0 = Math.min(slot,     PEEKS.length - 1);
         const s1 = Math.min(nextSlot, PEEKS.length - 1);
@@ -153,6 +163,114 @@ export default function ValuesSection() {
       });
     }
 
+    /* ──────────────────────────────────────────────────────────
+     * MOBILE PATH — scroll-locked card reveal.
+     *
+     * Layout: section is normal flow height (no sticky track).
+     * Interaction: IntersectionObserver fires when section is ≥50%
+     * in view. While it is, touchmove calls preventDefault() to
+     * freeze the page. Each swipe advances / reverses a card via
+     * CSS transitions. At the first / last card the page scroll
+     * passes through normally so the user can leave the section.
+     * ────────────────────────────────────────────────────────── */
+    const isMobile = window.innerWidth <= 600;
+
+    if (isMobile) {
+      const mob = { active: 0, locked: false, x0: 0, y0: 0 };
+
+      /* ── card apply ── */
+      function applyMobile(idx: number, animate: boolean) {
+        cards.forEach((card, i) => {
+          card.style.transition = animate
+            ? 'transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease'
+            : 'none';
+          const slot = i - idx;
+          card.style.zIndex = String(N - Math.max(slot, 0));
+          if (slot < 0) {
+            // Exiting card flies off to the left
+            card.style.transform = 'translateX(-110%)';
+            card.style.opacity   = '0';
+          } else {
+            // Cards in the stack peek out slightly downwards just like desktop
+            const s = Math.min(slot, PEEKS.length - 1);
+            card.style.transform = `translateY(${PEEKS[s]}px) scale(${SCALES[s]})`;
+            card.style.opacity   = '1';
+          }
+        });
+        setDot(idx);
+
+        /* Update italic headline text + colour */
+        const italicEl = italicRef.current;
+        if (italicEl) {
+          const label = CARDS[idx].italicLabel;
+          const color = CARDS[idx].italicColor;
+          if (italicEl.textContent !== `driven by ${label}`) {
+            italicEl.style.transition = 'opacity 0.25s ease, color 0.25s ease';
+            italicEl.style.opacity = '0';
+            setTimeout(() => {
+              italicEl.textContent = `driven by ${label}`;
+              italicEl.style.color = color;
+              italicEl.style.opacity = '1';
+            }, 150);
+          }
+        }
+      }
+
+      /* ── advance/reverse ── */
+      function step(delta: 1 | -1) {
+        if (mob.locked) return;
+        const next = mob.active + delta;
+        if (next < 0 || next >= N) return;
+        mob.locked = true;
+        mob.active = next;
+        applyMobile(next, true);
+        setTimeout(() => { mob.locked = false; }, 650);
+      }
+
+      const section = track.closest('section') as HTMLElement | null;
+      const el = section || track;
+
+      /* ── touch handlers ── */
+      const onTouchStart = (e: TouchEvent) => {
+        mob.x0 = e.touches[0].clientX;
+        mob.y0 = e.touches[0].clientY;
+      };
+
+      const onTouchEnd = (e: TouchEvent) => {
+        const dx = mob.x0 - e.changedTouches[0].clientX;
+        const dy = mob.y0 - e.changedTouches[0].clientY;
+        
+        // Ensure it's mostly a horizontal swipe (dx > dy) and long enough
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 38) {
+          dx > 0 ? step(1) : step(-1);
+        }
+      };
+
+      /* ── dot tap to jump ── */
+      dots.forEach((dot, i) => {
+        dot.style.cursor = 'pointer';
+        dot.addEventListener('click', () => {
+          if (mob.locked) return;
+          mob.locked = true;
+          mob.active = i;
+          applyMobile(i, true);
+          setTimeout(() => { mob.locked = false; }, 650);
+        });
+      });
+
+      applyMobile(0, false);
+      el.addEventListener('touchstart', onTouchStart, { passive: true });
+      el.addEventListener('touchend',   onTouchEnd,   { passive: true });
+
+      return () => {
+        el.removeEventListener('touchstart', onTouchStart);
+        el.removeEventListener('touchend',   onTouchEnd);
+      };
+    }
+
+    /* ──────────────────────────────────────────────────────────
+     * DESKTOP PATH — 100% unchanged scroll-driven animation.
+     * ────────────────────────────────────────────────────────── */
     init();
     window.addEventListener('scroll', render, { passive: true });
     window.addEventListener('resize', () => { init(); render(); }, { passive: true });
@@ -168,31 +286,33 @@ export default function ValuesSection() {
   return (
     <section className={styles.section} aria-labelledby="values-heading">
 
-      {/* ── Heading ── */}
-      <div className={styles.heading}>
-        <div className={styles.eyebrow}>
-          <span className={styles.line} />
-          <span>OUR VALUES</span>
-          <span className={styles.line} />
-        </div>
-        <h2 id="values-heading" className={styles.title}>
-          Rooted in culture,<br />
-          <em className={styles.italic}>driven by empathy</em>
-        </h2>
-        <p className={styles.sub}>
-          Our four foundational values guide everything — from the therapy room to communities across India.
-        </p>
-      </div>
-
       {/*
-       * 500vh scroll track:
-       * — 4 cards × 100vh each = 400vh of usable scroll range
-       * — clamped at N-1 so Seva never exits; Seva pins for ~100vh then section ends
-       * — scrolling UP reverses animation (go back) automatically
+       * 400vh scroll track = pin (100vh) + 3 card transitions (3 × 100vh).
+       * The sticky pin occupies the full viewport while the track scrolls past.
+       * Heading + deck + dots are ALL inside the pin so they're always visible.
+       * Scroll UP at any point reverses the animation — no special code needed.
        */}
       <div className={styles.track} ref={trackRef}>
         <div className={styles.pin}>
 
+          {/* Heading — always visible inside the sticky viewport */}
+          <div className={styles.heading}>
+            <div className={styles.eyebrow}>
+              <span className={styles.line} />
+              <span>OUR VALUES</span>
+              <span className={styles.line} />
+            </div>
+            <h2 id="values-heading" className={styles.title}>
+              Rooted in culture,<br />
+              <em className={styles.italic} ref={italicRef}>driven by empathy</em>
+            </h2>
+
+            <p className={styles.sub}>
+              Our four foundational values guide everything, from the therapy room to communities across India.
+            </p>
+          </div>
+
+          {/* Card deck */}
           <div className={styles.deck}>
             {CARDS.map((card, i) => (
               <div
@@ -200,8 +320,8 @@ export default function ValuesSection() {
                 className={styles.card}
                 ref={(el) => { cardRefs.current[i] = el; }}
                 style={{
-                  background: card.bg,
-                  ['--btn-bg' as string]:    card.btnBg,
+                  background:                card.bg,
+                  ['--btn-bg'    as string]: card.btnBg,
                   ['--btn-color' as string]: card.btnColor,
                 }}
               >

@@ -21,6 +21,7 @@ const icons: Record<string, React.ReactNode> = {
   home: <><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></>,
   briefcase: <><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></>,
   book: <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></>,
+  bookOpen: <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
   activity: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>,
   star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>,
   diamond: <><path d="M6 3h12l4 6-10 13L2 9l4-6z"/><path d="M11 3v19"/><path d="M13 3v19"/></>,
@@ -28,7 +29,10 @@ const icons: Record<string, React.ReactNode> = {
   edit: <><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></>,
   help: <><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="1"/></>,
   phone: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>,
-  mail: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></>
+  mail: <><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></>,
+  newspaper: <><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></>,
+  layers: <><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></>,
+  target: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>,
 };
 
 const SvgIcon = ({ name }: { name: string }) => (
@@ -56,6 +60,7 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
     <div className={styles.megaWrap} onMouseEnter={keepOpen} onMouseLeave={hide}>
       <div className={styles.megaInner}>
         
+        {/* ── CHANGE 1: Removed "Who We Support" column; now 2 columns ── */}
         {id === 'services' && (
           <>
             <div className={styles.megaCol}>
@@ -65,16 +70,8 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <ServiceRow to="/services/adolescent" icon="activity" title="Adolescent Counselling" desc="Specialised care for teens & young adults" onClick={close} />
               <ServiceRow to="/services/family"     icon="users" title="Family Counselling"     desc="Strengthen bonds & resolve patterns" onClick={close} />
             </div>
-            
-            <div className={styles.megaCol}>
-              <p className={styles.megaColHead}>Who We Support</p>
-              <ServiceRow to="/services/individual" icon="user" title="Individuals" onClick={close} />
-              <ServiceRow to="/services/family"     icon="users" title="Couples & Families" onClick={close} />
-              <ServiceRow to="/programs/corporate"  icon="briefcase" title="Organisations" onClick={close} />
-              <ServiceRow to="/programs/school"     icon="book" title="Schools & Colleges" onClick={close} />
-              <ServiceRow to="/programs/sports"     icon="activity" title="Sports Athletes" onClick={close} />
-            </div>
 
+            {/* ── CHANGE 2: Updated "For Organisations" card ── */}
             <div className={styles.megaFeatCol}>
               <p className={styles.megaColHead}>Featured Solutions</p>
               <div className={styles.megaFeatRow}>
@@ -85,8 +82,8 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
                 </Link>
                 <Link to="/programs/corporate" className={`${styles.megaFeat} ${styles.megaFeatBlue}`} onClick={close}>
                   <p className={styles.megaFeatTitle}>For Organisations</p>
-                  <p className={styles.megaFeatSub}>Corporate wellness & EAP</p>
-                  <span className={styles.megaFeatCta}>Request a Quote →</span>
+                  <p className={styles.megaFeatSub}>Tailored packages for teams, schools & institutions</p>
+                  <span className={styles.megaFeatCta}>Contact for Packages →</span>
                 </Link>
               </div>
               {/* Stat bar fills the empty space below cards */}
@@ -98,6 +95,7 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
           </>
         )}
 
+        {/* ── CHANGE 3: Added College & NGO Partnerships and Competitive Exam Aspirants ── */}
         {id === 'programs' && (
           <>
             <div className={styles.megaCol}>
@@ -105,18 +103,22 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <ServiceRow to="/programs/corporate" icon="briefcase" title="Corporate Wellness Programs"  desc="Customised EAP & workforce mental health" onClick={close} />
               <ServiceRow to="/programs/school"    icon="book" title="School Wellness Programs"     desc="From awareness to counsellor training" onClick={close} />
               <ServiceRow to="/programs/sports"    icon="activity" title="Sports Athletes' Wellness Program" desc="Performance psychology & resilience" onClick={close} />
+              <ServiceRow to="/programs/college-ngo" icon="users" title="College & NGO Partnerships" desc="Community mental health at scale" onClick={close} />
+              <ServiceRow to="/programs/exam-aspirants" icon="target" title="Competitive Exam Aspirants" desc="Stress & performance support for students" onClick={close} />
             </div>
             <div className={styles.megaFeatCol}>
               <p className={styles.megaColHead}>Featured</p>
               <Link to="/programs/corporate" className={`${styles.megaFeat} ${styles.megaFeatDark}`} onClick={close}>
                 <p className={styles.megaFeatTitle}>Wellness for every space</p>
-                <p className={styles.megaFeatSub}>Schools, offices, fields — iSpeak goes where you are.</p>
+                <p className={styles.megaFeatSub}>Schools, offices, fields, iSpeak goes where you are.</p>
                 <span className={styles.megaFeatCta}>Explore Programs →</span>
               </Link>
             </div>
           </>
         )}
 
+        {/* ── CHANGE 4: "Our Beliefs" renamed to "Our Believers"
+             CHANGE 5: Added Newsletter and Annual Report buttons to Legacy card ── */}
         {id === 'why' && (
           <>
             <div className={styles.megaCol}>
@@ -124,7 +126,7 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <ServiceRow to="/why-ispeak/why-choose" icon="star" title="Why choose iSpeak" desc="What makes us different" onClick={close} />
               <ServiceRow to="/why-ispeak/values"     icon="diamond" title="Our Values & Purpose" desc="The 4 S's + 3 Sankalpas" onClick={close} />
               <ServiceRow to="/why-ispeak/impact"     icon="bar" title="Our Impact" desc="Numbers, stories & footprint" onClick={close} />
-              <ServiceRow to="/why-ispeak/beliefs"    icon="heart" title="Our Beliefs" desc="The foundation of our practice" onClick={close} />
+              <ServiceRow to="/why-ispeak/beliefs"    icon="heart" title="Our Believers" desc="The foundation of our practice" onClick={close} />
               <ServiceRow to="/contact"               icon="mail" title="Request a Quote for our Services" desc="Get a tailored wellness plan" onClick={close} />
             </div>
             <div className={styles.megaFeatCol}>
@@ -132,16 +134,22 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <div className={`${styles.megaFeat} ${styles.megaFeatDark}`}>
                 <p className={styles.megaFeatTitle}>Running on emotions since 2020</p>
                 <p className={styles.megaFeatSub}>6+ years of transformation globally.</p>
-                <Link to="/why-ispeak/impact" className={styles.megaFeatCta} onClick={close}>See our impact →</Link>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '4px' }}>
+                  <Link to="/why-ispeak/impact" className={styles.megaFeatCta} onClick={close}>See our impact →</Link>
+                  <Link to="/newsletter" className={styles.megaFeatCta} onClick={close}>Newsletter →</Link>
+                  <Link to="/annual-report" className={styles.megaFeatCta} onClick={close}>Annual Report →</Link>
+                </div>
               </div>
             </div>
           </>
         )}
 
+        {/* ── CHANGE 6: Added "Press" at the top of Resources ── */}
         {id === 'resources' && (
           <>
             <div className={styles.megaCol}>
               <p className={styles.megaColHead}>Resources</p>
+              <ServiceRow to="/resources/press"     icon="newspaper" title="Press" desc="Media coverage & press kit" onClick={close} />
               <ServiceRow to="/resources/blog"      icon="edit" title="Blog" desc="Articles on mental health" onClick={close} />
               <ServiceRow to="/resources/self-help" icon="book" title="Self Help Resources" desc="Worksheets & guides" onClick={close} />
               <ServiceRow to="/resources/events"    icon="activity" title="Events & Webinars" desc="Upcoming live sessions" onClick={close} />
@@ -151,29 +159,20 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <p className={styles.megaColHead}>Featured Article</p>
               <div className={`${styles.megaFeat} ${styles.megaFeatBlush}`}>
                 <p className={`${styles.megaFeatTitle} ${styles.dark}`}>'Delulu is the only Solulu'</p>
-                <p className={`${styles.megaFeatSub} ${styles.muted}`}>Gargi Dagar, Founder — Indian Express</p>
+                <p className={`${styles.megaFeatSub} ${styles.muted}`}>Gargi Dagar, Founder, Indian Express</p>
                 <Link to="/resources/blog" className={`${styles.megaFeatCta} ${styles.ctaPink}`} onClick={close}>Read →</Link>
               </div>
             </div>
           </>
         )}
 
+        {/* ── CHANGE 7: "About" replaced with "Lifelong Legacy" — Projects + Careers only, no featured card ── */}
         {id === 'about' && (
           <>
             <div className={styles.megaCol}>
-              <p className={styles.megaColHead}>Company</p>
-              <ServiceRow to="/about"   icon="users" title="About us" desc="Our story, mission & team" onClick={close} />
-              <ServiceRow to="/careers" icon="star" title="Careers" desc="Join our growing team" onClick={close} />
-              <ServiceRow to="/press"   icon="edit" title="Press" desc="iSpeak in the news" onClick={close} />
-              <ServiceRow to="/contact" icon="phone" title="Contact us" desc="Get in touch with our team" onClick={close} />
-            </div>
-            <div className={styles.megaFeatCol}>
-              <p className={styles.megaColHead}>Our Mission</p>
-              <div className={`${styles.megaFeat} ${styles.megaFeatBlush}`}>
-                <p className={`${styles.megaFeatTitle} ${styles.dark}`}>"Curious Minds. Compassionate Practice."</p>
-                <p className={`${styles.megaFeatSub} ${styles.muted}`}>iSpeak Team · Est. 2020</p>
-                <Link to="/about" className={`${styles.megaFeatCta} ${styles.ctaPink}`} onClick={close}>Meet us →</Link>
-              </div>
+              <p className={styles.megaColHead}>Lifelong Legacy</p>
+              <ServiceRow to="/projects"  icon="layers"    title="Projects"           desc="Initiatives driving mental health change" onClick={close} />
+              <ServiceRow to="/careers"   icon="briefcase" title="Careers with iSpeak" desc="Join our team of change-makers" onClick={close} />
             </div>
           </>
         )}
