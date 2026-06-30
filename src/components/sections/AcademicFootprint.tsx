@@ -1,23 +1,9 @@
 import styles from './AcademicFootprint.module.css';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { universityLogos } from '../../data/universityLogos';
 
 export default function AcademicFootprint() {
   const { ref, isVisible } = useScrollReveal(0.2);
-
-  const unis = [
-    "K.R. Mangalam University",
-    "GD Goenka University",
-    "Maharshi Dayanand University",
-    "Amity University, Noida",
-    "Delhi University",
-    "IGNOU New Delhi",
-    "The NorthCap University",
-    "Gurugram University",
-    "SGT University",
-    "Chandigarh University",
-    "Banaras Hindu University",
-    "Amity University, Manesar"
-  ];
 
   return (
     <section id="academic" className={styles.academic} aria-labelledby="academic-heading">
@@ -32,12 +18,18 @@ export default function AcademicFootprint() {
         </header>
 
         <div className={styles.grid}>
-          {unis.map((uni, index) => {
+          {universityLogos.map((uni, index) => {
             const delayClass = `reveal-delay-${index % 4}`;
             return (
               <div key={index} className={`${styles.uniCard} ${isVisible ? `reveal visible ${delayClass}` : `reveal ${delayClass}`}`}>
-                <div className={styles.icon} aria-hidden="true">🎓</div>
-                <p className={styles.name}>{uni}</p>
+                <div className={styles.logoWrapper}>
+                  {uni.logoPath ? (
+                    <img src={uni.logoPath} alt={`${uni.name} logo`} className={styles.logo} loading="lazy" />
+                  ) : (
+                    <div className={styles.icon} aria-hidden="true">🎓</div>
+                  )}
+                </div>
+                <p className={styles.name}>{uni.name}</p>
               </div>
             );
           })}

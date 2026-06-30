@@ -311,6 +311,7 @@ export default function Services() {
         eyebrow="OUR SERVICES"
         headline="Care for every relationship in your life"
         subtext="From the relationship with yourself to the people you love most, explore the support that fits where you are right now."
+        icon="ti-heart-handshake"
       />
       <SubNav items={subnavItems} activeId={activeId} onChange={setActiveId} />
 

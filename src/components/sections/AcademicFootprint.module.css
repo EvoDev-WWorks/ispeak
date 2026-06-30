@@ -83,6 +83,22 @@
   flex-shrink: 0;
 }
 
+.logoWrapper {
+  width: 80px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 .name {
   font-family: var(--font-ui);
   font-weight: 500;

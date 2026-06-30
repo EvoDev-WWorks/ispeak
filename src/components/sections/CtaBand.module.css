@@ -1,46 +1,67 @@
+/* ─────────────────────────────────────
+   Keyframes
+───────────────────────────────────── */
+@keyframes breathe {
+  0%, 100% { transform: scale(0.92); opacity: 0.25; }
+  50%       { transform: scale(1.06); opacity: 0.55; }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Reduced-motion: kill all animations */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+}
+
+/* ─────────────────────────────────────
+   Section shell
+───────────────────────────────────── */
 .ctaBand {
-  background: linear-gradient(135deg, var(--c-pink) 0%, var(--c-magenta) 100%);
-  padding: var(--section-pad-desktop) 32px;
-  text-align: center;
+  background: linear-gradient(150deg, #A11349 0%, var(--c-magenta) 55%, #6E0C2D 100%);
+  padding: 100px 48px;
   position: relative;
   overflow: hidden;
 }
 
-.blob {
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  filter: blur(60px);
-  top: -200px;
-  left: -100px;
-  animation: blobDrift 10s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
+/* ── Two-column inner grid ── */
 .inner {
-  max-width: 680px;
+  max-width: 1100px;
   margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
   position: relative;
   z-index: 1;
+}
+
+/* ─────────────────────────────────────
+   Left column — text
+───────────────────────────────────── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-ui);
-  font-weight: 500;
-  font-size: var(--text-eyebrow);
-  color: var(--c-blush-light);
-  background: rgba(0,0,0,0.2);
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(255,255,255,0.18);
+  padding: 8px 20px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(255,255,255,0.28);
   text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 24px;
+  letter-spacing: 0.8px;
+  margin-bottom: 28px;
 }
 
 .eyebrowDot {
@@ -48,35 +69,55 @@
   height: 6px;
   border-radius: 50%;
   background: var(--c-blush-light);
+  flex-shrink: 0;
 }
 
 .h2 {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(36px, 4.5vw, 52px);
-  line-height: 1.1;
+  font-size: clamp(38px, 5vw, 60px);
+  line-height: 1.08;
   margin-bottom: 20px;
 }
 .h2Line1 { color: #fff; display: block; }
 .h2Line2 { color: var(--c-blush-mid); font-style: italic; display: block; }
 
-.socialProof {
+.subcopy {
   font-family: var(--font-ui);
-  font-size: 14px;
-  color: rgba(255,255,255,0.65);
+  font-size: 15px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
   margin-bottom: 32px;
-  letter-spacing: 0.1px;
+  max-width: 420px;
 }
-
 
 .ctaRow {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
+.trustLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.2px;
+  line-height: 1.6;
+}
+
+.sep {
+  color: var(--c-blush-mid);
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+/* ── Button styles (unchanged from original) ── */
 .btnWhite {
   display: inline-flex;
   align-items: center;
@@ -91,6 +132,7 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   transition: all var(--ease-default);
   text-decoration: none;
+  min-height: 44px;
 }
 .btnWhite:hover {
   transform: translateY(-2px);
@@ -111,9 +153,189 @@
   border: 1.5px solid rgba(255,255,255,0.4);
   transition: all var(--ease-default);
   text-decoration: none;
+  min-height: 44px;
 }
 .btnWhiteOutline:hover {
   background: #fff;
   color: var(--c-magenta);
   border-color: #fff;
+}
+
+/* ─────────────────────────────────────
+   Right column — illustration
+───────────────────────────────────── */
+.illoCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Wrapper positions rings + image relative to each other */
+.illoWrap {
+  position: relative;
+  width: 440px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Concentric breathing rings — absolutely centered */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  inset: 0;
+  margin: auto;
+}
+
+.ring1 {
+  width: 75%;
+  height: 75%;
+  animation: breathe 5s ease-in-out infinite;
+}
+
+.ring2 {
+  width: 88%;
+  height: 88%;
+  animation: breathe 5s ease-in-out 0.5s infinite;
+}
+
+.ring3 {
+  width: 100%;
+  height: 100%;
+  animation: breathe 5s ease-in-out 1s infinite;
+}
+
+/* Illustration image */
+.illo {
+  position: relative;
+  z-index: 2;
+  width: 78%;          /* Sits inside the smallest ring */
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.25));
+  animation: bob 4s ease-in-out infinite;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ─────────────────────────────────────────────────────
+   Responsive ≤ 880px — single column
+───────────────────────────────────────────────────── */
+@media (max-width: 880px) {
+  .ctaBand {
+    padding: 72px 28px;
+    /* Allow rings' breathe animation to extend slightly past section edge */
+    overflow: visible;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    /* Issue #2: 40px gap was creating an oversized jump between trust line and illo.
+       Reduced to 28px to match the heading-to-subtext rhythm. */
+    gap: 28px;
+    text-align: left;
+  }
+
+  /* Illustration below text on mobile */
+  .illoCol {
+    justify-content: flex-start;
+    /* Issue #3 + #4: safe zone for floating chat widget, and let rings breathe */
+    padding-bottom: 80px;
+    overflow: visible;
+  }
+
+  .illoWrap {
+    width: 320px;
+    /* Issue #4: small buffer so bob animation (-8px) and outermost ring
+       don't get clipped by any parent overflow */
+    padding: 10px;
+    overflow: visible;
+  }
+
+  .textCol {
+    align-items: flex-start;
+  }
+
+  .ctaRow {
+    justify-content: flex-start;
+  }
+}
+
+/* ─────────────────────────────────────
+   Responsive ≤ 600px
+───────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ctaBand {
+    padding: 56px 20px;
+  }
+
+  .h2 {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  .illoWrap {
+    width: 260px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    padding: 7px 16px;
+  }
+
+  .subcopy {
+    font-size: 14px;
+  }
+
+  .trustLine {
+    font-size: 11px;
+    gap: 4px;
+    /* Small explicit gap before illustration starts */
+    margin-bottom: 4px;
+  }
+}
+
+/* ─────────────────────────────────────
+   Responsive ≤ 480px — button stacking
+───────────────────────────────────── */
+/* Issue #1: buttons have different natural widths ("Book a Session" shorter
+   label than "Request a Quote →"). Below 480px, stack them column to match
+   widths without relying on flex-stretch across both breakpoints. */
+@media (max-width: 480px) {
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .btnWhite,
+  .btnWhiteOutline {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────
+   Responsive ≤ 375px
+───────────────────────────────────── */
+@media (max-width: 375px) {
+  .ctaBand {
+    padding: 48px 16px;
+  }
+
+  .illoWrap {
+    width: 200px;
+  }
+
+  .h2 {
+    font-size: 26px;
+  }
+
+  /* Issue #3: on the smallest phones (SE) give extra room for chat widget */
+  .illoCol {
+    padding-bottom: 88px;
+  }
 }

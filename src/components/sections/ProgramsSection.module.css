@@ -1,5 +1,5 @@
-.services {
-  background: #fff;
+.programs {
+  background: #FAF7F4;
   padding: 72px 0 56px;
   overflow: hidden;
 }
@@ -10,7 +10,6 @@
   text-align: center;
   max-width: 600px;
   margin: 0 auto 44px;
-  position: relative;
 }
 
 .eyebrow {
@@ -61,14 +60,13 @@
   color: #8A6070;
   margin: 16px auto 0;
   text-align: center;
-  position: relative;
 }
 
 /* ─── CAROUSEL OUTER ─────────────────────── */
 
 .carouselOuter {
   position: relative;
-  padding: 0 56px;
+  padding: 0 56px; /* room for arrows */
 }
 
 /* ─── TRACK ──────────────────────────────── */
@@ -82,6 +80,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   padding: 12px 4px 16px;
+  /* Peek: show ~3.2 cards on desktop (each ~29% wide + gap) */
 }
 .track::-webkit-scrollbar {
   display: none;
@@ -102,12 +101,14 @@
   transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Active (centred) card */
 .cardActive {
   transform: scale(1);
   opacity: 1;
   box-shadow: 0 12px 40px rgba(139,26,60,0.10);
 }
 
+/* Non-centred cards */
 .cardDim {
   transform: scale(0.96);
   opacity: 0.72;
@@ -189,7 +190,7 @@
   background: #2A2C5B;
 }
 
-/* ─── EXPLORE ALL TILE ───────────────────── */
+/* ─── EXPLORE MORE TILE ──────────────────── */
 
 .cardExplore {
   background: #fff;
@@ -275,7 +276,9 @@
   transition: background 200ms ease, opacity 200ms ease;
   box-shadow: 0 4px 16px rgba(0,0,0,0.18);
 }
-.arrow:hover { background: #2A2C5B; }
+.arrow:hover {
+  background: #2A2C5B;
+}
 .arrowPrev { left: 4px; }
 .arrowNext { right: 4px; }
 .arrowDisabled {
@@ -312,22 +315,34 @@
 /* ─── MOBILE ─────────────────────────────── */
 
 @media (max-width: 900px) {
-  .carouselOuter { padding: 0 40px; }
-  .card { flex: 0 0 calc(60% - 10px); }
+  .carouselOuter {
+    padding: 0 40px;
+  }
+  .card {
+    flex: 0 0 calc(60% - 10px);
+  }
 }
 
 @media (max-width: 600px) {
-  .services { padding: 52px 0 44px; }
-  .headingLine1 { font-size: 26px; }
-  .headingLine2 { font-size: 28px; }
+  .programs {
+    padding: 52px 0 44px;
+  }
+  .headingLine1 { font-size: 28px; }
+  .headingLine2 { font-size: 30px; }
   .sub { font-size: 13px; }
   .header { padding: 0 16px; margin-bottom: 28px; }
 
-  .carouselOuter { padding: 0 16px; }
-  .arrow { width: 34px; height: 34px; }
+  .carouselOuter {
+    padding: 0 16px;
+  }
+  .arrow {
+    width: 34px;
+    height: 34px;
+  }
   .arrowPrev { left: -4px; }
   .arrowNext { right: -4px; }
 
+  /* ~1.2 cards visible on mobile */
   .card {
     flex: 0 0 calc(82vw - 32px);
     min-width: unset;

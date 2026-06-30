@@ -68,33 +68,17 @@ const mobileNavItems = [
 
 export default function Navbar() {
   const [open,            setOpen]            = useState<NavKey>(null);
-  const [visible,         setVisible]         = useState(false);
+  const [scrolled,        setScrolled]        = useState(false);
   const [mobileMenuOpen,  setMobileMenuOpen]  = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /* ── IntersectionObserver: watch hero card ── */
+  /* ── Scroll-position: opaque background after 24px ── */
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-        setVisible(pastHero);
-        if (!pastHero) setOpen(null);
-      },
-      { threshold: 0 }
-    );
-
-    const attach = () => {
-      const el = document.getElementById('hero-card');
-      if (el) { observer.observe(el); return true; }
-      return false;
-    };
-
-    if (!attach()) {
-      const t = setInterval(() => { if (attach()) clearInterval(t); }, 80);
-      return () => { observer.disconnect(); clearInterval(t); };
-    }
-    return () => observer.disconnect();
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   /* ── Desktop mega-menu hover helpers ── */
@@ -128,8 +112,7 @@ export default function Navbar() {
           FIXED NAV — hidden above viewport, slides down on cue
           ═══════════════════════════════════════════════════════ */}
       <header
-        className={`${styles.nav} ${visible ? styles.navShow : styles.navHide}`}
-        aria-hidden={!visible}
+        className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`}
       >
         <div className={styles.inner}>
 
@@ -193,7 +176,7 @@ export default function Navbar() {
       </header>
 
       {/* Backdrop to close desktop mega nav */}
-      {open && visible && <div className={styles.backdrop} onClick={() => setOpen(null)} />}
+      {open && <div className={styles.backdrop} onClick={() => setOpen(null)} />}
 
       {/* ═══════════════════════════════════════
           MOBILE FULL-SCREEN OVERLAY (Navbar version)

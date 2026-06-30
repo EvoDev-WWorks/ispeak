@@ -45,12 +45,16 @@
   overflow: hidden;
 }
 
+.embla {
+  overflow: hidden;
+  width: 100%;
+}
+
 .track {
   display: flex;
   gap: 24px;
-  transition: transform var(--ease-carousel);
   padding: 8px 0;
-  width: max-content;
+  touch-action: pan-y pinch-zoom;
 }
 
 .card {
@@ -61,7 +65,8 @@
   border-left: 3px solid transparent;
   border-radius: var(--r-card-lg);
   padding: 40px;
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  min-width: 0;
   transition: opacity var(--ease-carousel), transform var(--ease-carousel), border-left-color var(--ease-carousel);
 }
 
@@ -69,41 +74,75 @@
   border-left-color: #8B1A3C;
 }
 
-.stars {
-  color: #FACC15;
-  font-size: 18px;
-  letter-spacing: 2px;
-  margin-bottom: 16px;
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
-.badge {
-  display: inline-block;
+.quoteMarkGlyph {
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 0.5;
+  color: var(--c-pink);
+  margin-top: 16px;
+}
+
+.badgeRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--c-blush-light);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.badgeIcon {
+  font-size: 14px;
+  color: var(--c-magenta);
+}
+
+.badgeText {
   font-family: var(--font-ui);
   font-weight: 600;
   font-size: 11px;
   color: var(--c-magenta);
-  background: var(--c-blush-light);
-  padding: 4px 10px;
-  border-radius: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 24px;
 }
 
 .quote {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--text-testimonial);
+  font-size: 16px;
   color: var(--c-text-primary);
-  line-height: 1.5;
-  margin-bottom: 32px;
+  line-height: 1.6;
   font-style: italic;
 }
 
-.author {
+.divider {
+  border: none;
+  border-top: 0.5px solid var(--c-blush-mid);
+  margin: 32px 0 24px;
+}
+
+.footerWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.authorWrap {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.activeQuoteIcon {
+  font-size: 24px;
+  color: var(--c-pink);
+  opacity: 0.4;
 }
 
 .avatar {

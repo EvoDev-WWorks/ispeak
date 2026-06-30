@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Contact from './pages/Contact';
 import Services from './pages/Services';
 import Programs from './pages/Programs';
+import Press from './pages/Press';
 
 /* ─────────────────────────────────────────
    PAGE SHELL — replaces all Placeholder pages
@@ -426,7 +427,7 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <main>
+      <main style={{ paddingTop: 'var(--navbar-height, 64px)' }}>
         <Routes>
           <Route path="/" element={<Home />} />
 
@@ -446,6 +447,7 @@ function App() {
           <Route path="/resources/blog" element={<PageShell {...pages['/resources/blog']} />} />
           <Route path="/resources/self-help" element={<PageShell {...pages['/resources/self-help']} />} />
           <Route path="/resources/events" element={<PageShell {...pages['/resources/events']} />} />
+          <Route path="/resources/press" element={<Press />} />
 
           <Route path="/contact" element={<Contact />} />
         </Routes>

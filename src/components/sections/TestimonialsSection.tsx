@@ -1,11 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import styles from './TestimonialsSection.module.css';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 export default function TestimonialsSection() {
   const { ref, isVisible } = useScrollReveal(0.2);
   const [current, setCurrent] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
+
+  const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const plugins = reduceMotion ? [] : [Autoplay({ delay: 8000, stopOnInteraction: true, stopOnMouseEnter: true })];
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, plugins);
   
   const testimonials = [
     {
@@ -17,7 +22,7 @@ export default function TestimonialsSection() {
     },
     {
       badge: "Partner Story",
-      quote: "We rolled out iSpeak's corporate programme for 400 employees. Within three months, HR reported visible shifts in team morale and a significant drop in stress-related leaves.",
+      quote: "We rolled out iSpeak's corporate programme. Within three months, HR reported visible shifts in team morale and a significant drop in stress-related leaves.",
       initials: "AK",
       name: "Arjun K.",
       role: "HR Director, Gurugram"
@@ -46,26 +51,31 @@ export default function TestimonialsSection() {
   ];
 
   const total = testimonials.length;
+  // Duplicate slides so Embla always has enough nodes to loop even on ultra-wide screens
+  const slideData = [...testimonials, ...testimonials];
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCurrent(emblaApi.selectedScrollSnap() % total);
+  }, [emblaApi, total]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((c) => (c + 1) % total);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [total]);
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, onSelect]);
 
   const goTo = (index: number) => {
-    setCurrent((index + total) % total);
+    if (emblaApi) emblaApi.scrollTo(index);
   };
 
-  const getOffset = () => {
-    if (!trackRef.current) return 0;
-    const cards = trackRef.current.children;
-    if (!cards.length) return 0;
-    const wrapWidth = trackRef.current.parentElement?.offsetWidth || 0;
-    const cardW = (cards[0] as HTMLElement).offsetWidth;
-    const center = wrapWidth / 2 - cardW / 2;
-    return -(current * (cardW + 24)) + center;
+  const scrollPrev = () => {
+    if (emblaApi) emblaApi.scrollPrev();
+  };
+
+  const scrollNext = () => {
+    if (emblaApi) emblaApi.scrollNext();
   };
 
   return (
@@ -81,39 +91,47 @@ export default function TestimonialsSection() {
       </div>
 
       <div className={styles.carouselWrap} aria-label="Client testimonials carousel">
-        <div 
-          className={styles.track} 
-          role="list" 
-          ref={trackRef}
-          style={{ transform: `translateX(${getOffset()}px)` }}
-        >
-          {testimonials.map((t, i) => (
+        <div className={styles.embla} ref={emblaRef}>
+          <div className={styles.track} role="list">
+            {slideData.map((t, i) => (
             <article 
               key={i} 
-              className={`${styles.card} ${i === current ? styles.cardActive : ''}`}
+              className={`${styles.card} ${i % total === current ? styles.cardActive : ''}`}
               role="listitem"
               style={{
-                opacity: i === current ? 1 : 0.45,
-                transform: i === current ? 'scale(1)' : 'scale(0.96)'
+                opacity: i % total === current ? 1 : 0.55,
+                transform: i % total === current ? 'scale(1)' : 'scale(0.96)'
               }}
             >
-              <div className={styles.stars} aria-label="5 stars">★★★★★</div>
-              <span className={styles.badge}>{t.badge}</span>
-              <blockquote className={styles.quote}>"{t.quote}"</blockquote>
-              <div className={styles.author}>
-                <div className={styles.avatar} aria-hidden="true">{t.initials}</div>
-                <div>
-                  <p className={styles.name}>{t.name}</p>
-                  <p className={styles.role}>{t.role}</p>
+              <div className={styles.cardHeader}>
+                <span className={styles.quoteMarkGlyph} aria-hidden="true">"</span>
+                <div className={styles.badgeRow}>
+                  <i className={`ti ${t.badge === 'Client Story' ? 'ti-heart-handshake' : 'ti-building'} ${styles.badgeIcon}`}></i>
+                  <span className={styles.badgeText}>{t.badge}</span>
                 </div>
+              </div>
+              <blockquote className={styles.quote}>{t.quote}</blockquote>
+              <hr className={styles.divider} />
+              <div className={styles.footerWrap}>
+                <div className={styles.authorWrap}>
+                  <div className={styles.avatar} aria-hidden="true">{t.initials}</div>
+                  <div>
+                    <p className={styles.name}>{t.name}</p>
+                    <p className={styles.role}>{t.role}</p>
+                  </div>
+                </div>
+                {i % total === current && (
+                  <i className={`ti ti-quote ${styles.activeQuoteIcon}`} aria-hidden="true"></i>
+                )}
               </div>
             </article>
           ))}
         </div>
+        </div>
       </div>
 
       <div className={styles.controls}>
-        <button className={styles.btn} onClick={() => goTo(current - 1)} aria-label="Previous">←</button>
+        <button className={styles.btn} onClick={scrollPrev} aria-label="Previous">←</button>
         <div className={styles.dots} role="tablist">
           {testimonials.map((_, i) => (
             <button 
@@ -124,7 +142,7 @@ export default function TestimonialsSection() {
             />
           ))}
         </div>
-        <button className={styles.btn} onClick={() => goTo(current + 1)} aria-label="Next">→</button>
+        <button className={styles.btn} onClick={scrollNext} aria-label="Next">→</button>
       </div>
     </section>
   );

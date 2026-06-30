@@ -216,7 +216,15 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <div className={`${styles.megaFeat} ${styles.megaFeatBlush}`}>
                 <p className={`${styles.megaFeatTitle} ${styles.dark}`}>'Delulu is the only Solulu'</p>
                 <p className={`${styles.megaFeatSub} ${styles.muted}`}>Gargi Dagar, Founder, Indian Express</p>
-                <Link to="/resources/blog" className={`${styles.megaFeatCta} ${styles.ctaPink}`} onClick={close}>Read →</Link>
+                <a
+                  href="https://indianexpress.com/article/lifestyle/delusionship-decoded-dissecting-gen-zs-2023-term-remixed-reality-9088572/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.megaFeatCta} ${styles.ctaPink}`}
+                  onClick={close}
+                >
+                  Read →
+                </a>
               </div>
             </div>
           </>

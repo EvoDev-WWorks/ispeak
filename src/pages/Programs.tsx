@@ -321,6 +321,7 @@ export default function Programs() {
         eyebrow="OUR PROGRAMS"
         headline="Wellness built for where you are"
         subtext="From offices to classrooms to exam halls, iSpeak designs mental health programmes for the spaces where India works, learns, and grows."
+        icon="ti-building"
       />
       <SubNav items={subnavItems} activeId={activeId} onChange={setActiveId} />
 
