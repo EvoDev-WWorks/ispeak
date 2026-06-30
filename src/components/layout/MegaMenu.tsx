@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './MegaMenu.module.css';
 
 type NavKey = 'services' | 'programs' | 'why' | 'resources' | 'about' | null;
@@ -54,7 +54,16 @@ const ServiceRow = ({ to, icon, title, desc, onClick }: any) => (
 export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMenuProps) {
   if (openId !== id) return null;
 
+  const navigate = useNavigate();
   const close = () => setOpen(null);
+
+  // Navigate to a hash URL — the target page reads location.hash
+  // on mount to open the correct tab directly. No scroll needed.
+  const handleAnchorNav = (path: string, anchorId: string) => {
+    close();
+    navigate(`${path}#${anchorId}`);
+  };
+
 
   return (
     <div className={styles.megaWrap} onMouseEnter={keepOpen} onMouseLeave={hide}>
@@ -63,12 +72,36 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
         {/* ── CHANGE 1: Removed "Who We Support" column; now 2 columns ── */}
         {id === 'services' && (
           <>
-            <div className={styles.megaCol}>
+          <div className={styles.megaCol}>
               <p className={styles.megaColHead}>Our Services</p>
-              <ServiceRow to="/services/individual" icon="user" title="Individual Counselling" desc="One-on-one therapy for personal growth" onClick={close} />
-              <ServiceRow to="/services/couple"     icon="heart" title="Couple Counselling"     desc="Evidence-based relationship support" onClick={close} />
-              <ServiceRow to="/services/adolescent" icon="activity" title="Adolescent Counselling" desc="Specialised care for teens & young adults" onClick={close} />
-              <ServiceRow to="/services/family"     icon="users" title="Family Counselling"     desc="Strengthen bonds & resolve patterns" onClick={close} />
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/services', 'individual-counselling')}>
+                <span className={styles.megaIcon}><SvgIcon name="user" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Individual Counselling</div>
+                  <div className={styles.megaDesc}>One-on-one therapy for personal growth</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/services', 'couple-counselling')}>
+                <span className={styles.megaIcon}><SvgIcon name="heart" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Couple Counselling</div>
+                  <div className={styles.megaDesc}>Evidence-based relationship support</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/services', 'adolescent-counselling')}>
+                <span className={styles.megaIcon}><SvgIcon name="activity" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Adolescent Counselling</div>
+                  <div className={styles.megaDesc}>Specialised care for teens &amp; young adults</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/services', 'family-counselling')}>
+                <span className={styles.megaIcon}><SvgIcon name="users" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Family Counselling</div>
+                  <div className={styles.megaDesc}>Strengthen bonds &amp; resolve patterns</div>
+                </div>
+              </button>
             </div>
 
             {/* ── CHANGE 2: Updated "For Organisations" card ── */}
@@ -77,14 +110,14 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
               <div className={styles.megaFeatRow}>
                 <Link to="/contact" className={`${styles.megaFeat} ${styles.megaFeatDark}`} onClick={close}>
                   <p className={styles.megaFeatTitle}>Start your journey</p>
-                  <p className={styles.megaFeatSub}>Available online & in-person</p>
+                  <p className={styles.megaFeatSub}>Available online &amp; in-person</p>
                   <span className={styles.megaFeatCta}>Book a Session →</span>
                 </Link>
-                <Link to="/programs/corporate" className={`${styles.megaFeat} ${styles.megaFeatBlue}`} onClick={close}>
+                <button className={`${styles.megaFeat} ${styles.megaFeatBlue}`} onClick={() => handleAnchorNav('/programs', 'corporate-wellness')} style={{ textAlign: 'left', cursor: 'pointer', border: 'none' }}>
                   <p className={styles.megaFeatTitle}>For Organisations</p>
-                  <p className={styles.megaFeatSub}>Tailored packages for teams, schools & institutions</p>
+                  <p className={styles.megaFeatSub}>Tailored packages for teams, schools &amp; institutions</p>
                   <span className={styles.megaFeatCta}>Contact for Packages →</span>
-                </Link>
+                </button>
               </div>
               {/* Stat bar fills the empty space below cards */}
               <div className={styles.megaStatBar}>
@@ -98,21 +131,44 @@ export default function MegaMenu({ id, openId, setOpen, keepOpen, hide }: MegaMe
         {/* ── CHANGE 3: Added College & NGO Partnerships and Competitive Exam Aspirants ── */}
         {id === 'programs' && (
           <>
-            <div className={styles.megaCol}>
+          <div className={styles.megaCol}>
               <p className={styles.megaColHead}>Our Programs</p>
-              <ServiceRow to="/programs/corporate" icon="briefcase" title="Corporate Wellness Programs"  desc="Customised EAP & workforce mental health" onClick={close} />
-              <ServiceRow to="/programs/school"    icon="book" title="School Wellness Programs"     desc="From awareness to counsellor training" onClick={close} />
-              <ServiceRow to="/programs/sports"    icon="activity" title="Sports Athletes' Wellness Program" desc="Performance psychology & resilience" onClick={close} />
-              <ServiceRow to="/programs/college-ngo" icon="users" title="College & NGO Partnerships" desc="Community mental health at scale" onClick={close} />
-              <ServiceRow to="/programs/exam-aspirants" icon="target" title="Competitive Exam Aspirants" desc="Stress & performance support for students" onClick={close} />
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/programs', 'corporate-wellness')}>
+                <span className={styles.megaIcon}><SvgIcon name="briefcase" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Corporate Wellness Programs</div>
+                  <div className={styles.megaDesc}>Customised EAP &amp; workforce mental health</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/programs', 'school-wellness')}>
+                <span className={styles.megaIcon}><SvgIcon name="book" /></span>
+                <div>
+                  <div className={styles.megaTitle}>School Wellness Programs</div>
+                  <div className={styles.megaDesc}>From awareness to counsellor training</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/programs', 'college-ngo-partnerships')}>
+                <span className={styles.megaIcon}><SvgIcon name="users" /></span>
+                <div>
+                  <div className={styles.megaTitle}>College &amp; NGO Partnerships</div>
+                  <div className={styles.megaDesc}>Community mental health at scale</div>
+                </div>
+              </button>
+              <button className={styles.megaRow} onClick={() => handleAnchorNav('/programs', 'exam-aspirants')}>
+                <span className={styles.megaIcon}><SvgIcon name="target" /></span>
+                <div>
+                  <div className={styles.megaTitle}>Competitive Exam Aspirants</div>
+                  <div className={styles.megaDesc}>Stress &amp; performance support for students</div>
+                </div>
+              </button>
             </div>
             <div className={styles.megaFeatCol}>
               <p className={styles.megaColHead}>Featured</p>
-              <Link to="/programs/corporate" className={`${styles.megaFeat} ${styles.megaFeatDark}`} onClick={close}>
+              <button className={`${styles.megaFeat} ${styles.megaFeatDark}`} onClick={() => handleAnchorNav('/programs', 'corporate-wellness')} style={{ textAlign: 'left', cursor: 'pointer', border: 'none', width: '100%' }}>
                 <p className={styles.megaFeatTitle}>Wellness for every space</p>
-                <p className={styles.megaFeatSub}>Schools, offices, fields, iSpeak goes where you are.</p>
+                <p className={styles.megaFeatSub}>Schools, offices, fields — iSpeak goes where you are.</p>
                 <span className={styles.megaFeatCta}>Explore Programs →</span>
-              </Link>
+              </button>
             </div>
           </>
         )}

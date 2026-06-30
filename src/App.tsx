@@ -4,6 +4,8 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
+import Services from './pages/Services';
+import Programs from './pages/Programs';
 
 /* ─────────────────────────────────────────
    PAGE SHELL — replaces all Placeholder pages
@@ -428,16 +430,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          {/* Services */}
-          <Route path="/services/individual" element={<PageShell {...pages['/services/individual']} />} />
-          <Route path="/services/couple" element={<PageShell {...pages['/services/couple']} />} />
-          <Route path="/services/adolescent" element={<PageShell {...pages['/services/adolescent']} />} />
-          <Route path="/services/family" element={<PageShell {...pages['/services/family']} />} />
+          {/* Services — consolidated single page */}
+          <Route path="/services" element={<Services />} />
 
-          {/* Programs */}
-          <Route path="/programs/corporate" element={<PageShell {...pages['/programs/corporate']} />} />
-          <Route path="/programs/school" element={<PageShell {...pages['/programs/school']} />} />
-          <Route path="/programs/sports" element={<PageShell {...pages['/programs/sports']} />} />
+          {/* Programs — consolidated single page */}
+          <Route path="/programs" element={<Programs />} />
 
           {/* Why iSpeak */}
           <Route path="/why-ispeak/why-choose" element={<PageShell {...pages['/why-ispeak/why-choose']} />} />

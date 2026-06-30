@@ -74,10 +74,18 @@
   text-decoration: none;
   transition: background 150ms ease;
   color: inherit;
+  /* Support button elements */
+  width: calc(100% + 12px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
 }
 .megaRow:hover {
   background: rgba(139, 15, 56, 0.06);
 }
+
 
 .megaIcon {
   width: 32px;
